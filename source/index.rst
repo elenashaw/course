@@ -1,20 +1,18 @@
-.. Course Notes documentation master file, created by
-   sphinx-quickstart on Wed Dec 24 11:33:36 2025.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. Course Notes documentation master file
 
-Welcome to Course Notes's documentation!
+Welcome to Course Notes!
 ========================================
+
+这里是我的课程笔记库，包含计算机视觉（CV）、算法等内容。
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: 课程目录:
 
-
+   CV/index
 
 Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
