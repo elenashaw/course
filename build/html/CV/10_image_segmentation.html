@@ -1,0 +1,486 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>image segmentation &mdash; Course Notes 0.1 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52efc512"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="review" href="11_local_features_detect.html" />
+    <link rel="prev" title="texture introduction" href="9_texture.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Course Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">计算机视觉 (CV) 课程笔记</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html">Image Acquisition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-representation">Image Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-format">image format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-processing-operations">image processing operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3_pixel_neighborhood.html">pixel connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_color.html"></a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_color.html#color-image-processing">color image processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html">contrast enhancement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#noise-reduction">Noise reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6_edge.html">edge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html">Structure Element</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#distance-transform">distance transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#application">application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8_%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E6%93%8D%E4%BD%9C.html">膨胀与腐蚀</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html">texture introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html#structural-method">structural method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html#texture-synthesis">texture synthesis</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">image segmentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#what-is-it">what is it</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">组件的组合原则</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">定义</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">基本思路</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">分割基准</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">阈值分割</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id6">直方图分割法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ostu">Ostu算法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">熵的分割</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">模糊阈值分割</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">边缘分割</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id10">点检测</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">线检测</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hough">Hough变换</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id12">基本原理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">缺陷</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id17">梯度方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">基于区域形状的分割-区域合并</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id19">两个合并准则</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id20">分裂合并</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id21">运动图像的分割</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html">review</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#harris">harris 角点检测</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#mops">MOPS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#sift">SIFT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#surf">SURF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12_representation_and_descriptions.html">representation and descriptions</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Course Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">计算机视觉 (CV) 课程笔记</a></li>
+      <li class="breadcrumb-item active">image segmentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/CV/10_image_segmentation.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="image-segmentation">
+<h1>image segmentation<a class="headerlink" href="#image-segmentation" title="Link to this heading"></a></h1>
+<section id="what-is-it">
+<h2>what is it<a class="headerlink" href="#what-is-it" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>用组件表示图像</p></li>
+</ul>
+<section id="id1">
+<h3>组件的组合原则<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>接近度</p></li>
+<li><p>相似性</p></li>
+<li><p>共同运动趋势</p></li>
+<li><p>共同区域</p></li>
+<li><p>平行性</p></li>
+<li><p>闭合性</p></li>
+<li><p>对称性</p></li>
+<li><p>连续性</p></li>
+<li><p>熟悉的配置</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>定义<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>R的分割为R1,R2,...</p>
+<ul>
+<li><p>Ri非空</p></li>
+<li><p>Ri的所有并集，等于R</p></li>
+<li><p>Ri，Rj之间没有重叠</p></li>
+<li><p>Ri内的像素，应该具有某些特性</p></li>
+<li><p>Ri，Rj，之间的像素，应该具有不同的特性</p></li>
+<li><p>同一子区域内，像素是连通的</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id3">
+<h3>基本思路<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>从简到繁</p></li>
+<li><p>控制环境，降低分割难度</p></li>
+<li><p>焦点放在增强感兴趣的对象上</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>分割基准<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>阈值</p></li>
+<li><p>边缘</p></li>
+<li><p>区域</p></li>
+<li><p>运动</p></li>
+</ul>
+</section>
+</section>
+<section id="id5">
+<h2>阈值分割<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>适用于背景和环境对比强的图像，而且总能用封闭连通的边界定义不交叠的区域</p></li>
+</ul>
+<section id="id6">
+<h3>直方图分割法<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>最佳阈值</p></li>
+<li><p>熵最小（类似于决策树</p></li>
+<li></li>
+</ul>
+</section>
+<section id="ostu">
+<h3>Ostu算法<a class="headerlink" href="#ostu" title="Link to this heading"></a></h3>
+<p>最大类间方差法</p>
+</section>
+<section id="id7">
+<h3>熵的分割<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+</section>
+<section id="id8">
+<h3>模糊阈值分割<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>反映了和二值图像的相似性</p></li>
+</ul>
+</section>
+</section>
+<section id="id9">
+<h2>边缘分割<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>先确定边缘像素，再连接他们，构成所需的边界</p></li>
+</ul>
+<section id="id10">
+<h3>点检测<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>检测孤立点</p>
+<ul>
+<li><p>卷积核中间是正的，旁边是负的</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id11">
+<h2>线检测<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>滤波器的形状和线的方向很接近，那么强度就越大</p></li>
+</ul>
+</section>
+<section id="hough">
+<h2>Hough变换<a class="headerlink" href="#hough" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>将断开的点连起来</p></li>
+<li><p>霍夫变换是一种用于检测图像中简单形状（例如圆形、直线等）的特征提取方法。</p></li>
+<li><p>受噪声和曲线的影响较小</p></li>
+</ul>
+<section id="id12">
+<h3>基本原理<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<p>参数空间/霍夫空间</p>
+<section id="m-b">
+<h4>m,b空间（不适用于无斜率的<a class="headerlink" href="#m-b" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><img alt="image-20240410083002132" src="../../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240410083002132.png" /></p></li>
+<li><p>横坐标：b</p></li>
+<li><p>纵坐标：m/斜率</p></li>
+<li><p>斜率：-x(原来的坐标)</p></li>
+<li><p>截距：y（原来的坐标）</p></li>
+<li><p>一条直线一个点，一个点一直线</p></li>
+<li><p>mb空间的选择：选择笛卡尔坐标中，最多共点的线。即霍夫空间中，被穿过最多线的点</p></li>
+</ul>
+</section>
+<section id="id13">
+<h4>极坐标空间（适用于无斜率的<a class="headerlink" href="#id13" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><img alt="image-20240410083418257" src="../../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240410083418257.png" /></p></li>
+<li><p><img alt="image-20240410083757897" src="../../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240410083757897.png" /></p>
+<ul>
+<li><p><img alt="image-20240410083845170" src="../../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240410083845170.png" /></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id14">
+<h4>累加器<a class="headerlink" href="#id14" title="Link to this heading"></a></h4>
+<p><img alt="image-20240410084247539" src="../../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240410084247539.png" /></p>
+<ul class="simple">
+<li><p>方法</p>
+<ul>
+<li><p>用网格对rhp-theta图进行分析</p></li>
+<li><p>一条直线路过这个网格，就+1</p></li>
+<li><p>找到最大的网格voting</p></li>
+</ul>
+</li>
+<li><p>交点冗余</p>
+<ul>
+<li><p>theta有theta和theta+180$^o$，实际是一幅图</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id15">
+<h4>应用<a class="headerlink" href="#id15" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>直线检测</p></li>
+</ul>
+</section>
+</section>
+<section id="id16">
+<h3>缺陷<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>时间复杂度高</p></li>
+<li><p>优化：计算梯度，得到方向theta.只需要计算theta的值，</p></li>
+</ul>
+</section>
+</section>
+<section id="id17">
+<h2>梯度方法<a class="headerlink" href="#id17" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>一般不用导数/差分，其实是用滤波器进行计算</p></li>
+<li><p>基本算子</p>
+<ul>
+<li><p>sobel</p></li>
+<li><p>robert</p></li>
+<li><p>Prewwit(无加权的sobel)</p></li>
+</ul>
+</li>
+<li><p>laplacian算子</p>
+<ul>
+<li><p>标量</p></li>
+<li><p>旋转不变性</p></li>
+<li><p>各向同性</p></li>
+<li><p>宽边缘的</p>
+<ul>
+<li><p>平滑效果</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>马尔算子Marr</p>
+<ul>
+<li><p>噪声造成的差分假边缘点</p>
+<ul>
+<li><p>噪声一般是高频信号</p></li>
+<li><p>一般用平滑滤波先进行过滤</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>高斯-拉普拉斯算子LOG</p></li>
+</ul>
+<p>​</p>
+<p>————中间旷课了</p>
+</section>
+<section id="id18">
+<h2>基于区域形状的分割-区域合并<a class="headerlink" href="#id18" title="Link to this heading"></a></h2>
+<section id="id19">
+<h3>两个合并准则<a class="headerlink" href="#id19" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>基于L/Pmin</p></li>
+<li><p>基于共同边界</p></li>
+</ul>
+</section>
+<section id="id20">
+<h3>分裂合并<a class="headerlink" href="#id20" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>利用了图像的金字塔或四叉树结构的层次概念</p>
+<ul>
+<li><p>金字塔</p>
+<ul>
+<li><p>底层是原始图像</p></li>
+<li><p>上层的图像更有概括性</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>从任一中间层开始，根据均匀性测量标准，进行分裂和合并</p></li>
+<li><p>分割原则</p>
+<ul>
+<li><p>灰度均匀性</p></li>
+<li><p>方差最小</p></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<div><p>分割前，先进行模糊滤波处理</p>
+<p>否则会造成过分割</p>
+</div></blockquote>
+</section>
+</section>
+<section id="id21">
+<h2>运动图像的分割<a class="headerlink" href="#id21" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>视频：时间轴上连续的2D图像</p>
+<ul>
+<li><p>空间分割</p></li>
+<li><p>时间分割</p></li>
+</ul>
+</li>
+<li><p>分割原则</p>
+<ul>
+<li><p>差分法：逐像素比较，取前后两帧图像的差别</p>
+<ul>
+<li><p>不适用于照明条件变化的视频</p></li>
+<li><p>去噪分析</p>
+<ul>
+<li><p>连通体分析特点</p></li>
+</ul>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li><p>一阶差分会难以检测到小尺寸目标，缓慢运动</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>光流场：</p></li>
+</ul>
+</li>
+<li><p>差分法：</p>
+<ul>
+<li><p>减背景法：</p>
+<ul>
+<li><p>减去固定背景</p></li>
+<li><p>可以很好的检测运动目标</p></li>
+<li><p>缺点</p>
+<ul>
+<li><p>抑制噪声的能力差</p></li>
+<li><p>受环境变化影响大</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>相邻帧差分法</p>
+<ul>
+<li><p>对运动目标敏感</p></li>
+<li><p>但是对位置信息检测不佳</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>光流场</p></li>
+<li><p>块运动分析block based</p>
+<ul>
+<li><p>块运动</p>
+<ul>
+<li><p>平移。旋转，仿射，透视</p></li>
+</ul>
+</li>
+<li><p>重要的是基于块的匹配</p>
+<ul>
+<li><p>搜索窗口</p></li>
+<li><p>匹配准则</p>
+<ul>
+<li><p>最大互相关</p></li>
+<li><p>最小均方差</p></li>
+<li><p>最小平均绝对值差</p></li>
+<li><p>最大匹配像素数量准则</p></li>
+</ul>
+</li>
+<li><p>搜索策略</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="9_texture.html" class="btn btn-neutral float-left" title="texture introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="11_local_features_detect.html" class="btn btn-neutral float-right" title="review" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, Elena Shaw。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

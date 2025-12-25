@@ -1,0 +1,361 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>contrast enhancement &mdash; Course Notes 0.1 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52efc512"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="edge" href="6_edge.html" />
+    <link rel="prev" title="" href="4_color.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Course Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">计算机视觉 (CV) 课程笔记</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html">Image Acquisition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-representation">Image Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-format">image format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-processing-operations">image processing operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3_pixel_neighborhood.html">pixel connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_color.html"></a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_color.html#color-image-processing">color image processing</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">contrast enhancement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gray-scale-transformation">gray scale transformation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#logarithmic-transformation">logarithmic transformation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exponential-transformation">exponential transformation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linear-gray-scale-transformation">linear gray scale transformation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#histogram-adjustment">histogram adjustment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#def-of-histogram">def of histogram</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">信息缺失</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#histogram-equalization">直方图均衡（histogram equalization）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">直方图匹配</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#noise-reduction">Noise reduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#box">卷积/均值/box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">高斯平滑</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">中值滤波</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">形态学滤波</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="6_edge.html">edge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html">Structure Element</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#distance-transform">distance transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#application">application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8_%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E6%93%8D%E4%BD%9C.html">膨胀与腐蚀</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html">texture introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html#structural-method">structural method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html#texture-synthesis">texture synthesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_image_segmentation.html">image segmentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html">review</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#harris">harris 角点检测</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#mops">MOPS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#sift">SIFT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#surf">SURF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12_representation_and_descriptions.html">representation and descriptions</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Course Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">计算机视觉 (CV) 课程笔记</a></li>
+      <li class="breadcrumb-item active">contrast enhancement</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/CV/5_image enhancement in spatial domain.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="contrast-enhancement">
+<h1>contrast enhancement<a class="headerlink" href="#contrast-enhancement" title="Link to this heading"></a></h1>
+<p><a class="reference external" href="https://medium.com/&#64;gokcenazakyol/what-is-image-enhancement-image-processing-3-32a813087e0a">:sun_with_face:</a></p>
+<section id="gray-scale-transformation">
+<h2>gray scale transformation<a class="headerlink" href="#gray-scale-transformation" title="Link to this heading"></a></h2>
+<section id="logarithmic-transformation">
+<h3><a class="reference external" href="https://medium.com/&#64;gokcenazakyol/what-is-image-enhancement-image-processing-3-32a813087e0a">logarithmic transformation</a><a class="headerlink" href="#logarithmic-transformation" title="Link to this heading"></a></h3>
+<ul>
+<li><p>rules</p>
+<img src="../../../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240306080232830.png" alt="image-20240306080232830" style="zoom:67%;" />
+</li>
+<li><p>role</p>
+<ul class="simple">
+<li><p>调整曝光</p></li>
+<li><p>The general form of the log transformation is <em>s = c * log(1 + r)</em>
+对数变换的一般形式是 s = c * log（1 + r）</p></li>
+<li><p>The log transformation maps a narrow range of low input grey level values into a wider range of output values.
+对数转换将狭窄范围的低输入灰度级别值映射到范围更广的输出值。</p></li>
+<li><p>The inverse log transformation performs the opposite transformation.
+逆对数转换执行相反的转换。</p></li>
+<li><p>Log functions are particularly useful when the input grey level values may have an extremely large range of values
+当输入灰度级别值可能具有非常大的值范围时，log 函数特别有用</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="exponential-transformation">
+<h3>exponential transformation<a class="headerlink" href="#exponential-transformation" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>注意：</p>
+<ul>
+<li><p>对数：</p>
+<ul>
+<li><p>高值压缩</p></li>
+<li><p>低值膨胀</p></li>
+</ul>
+</li>
+<li><p>指数</p>
+<ul>
+<li><p>高值膨胀</p></li>
+<li><p>低值压缩</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="linear-gray-scale-transformation">
+<h3>linear gray scale transformation<a class="headerlink" href="#linear-gray-scale-transformation" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>基本线性拉伸</p></li>
+<li><p>分段拉伸</p></li>
+</ul>
+<img src="https://miro.medium.com/v2/resize:fit:1050/1*Gn7OR0H61fzDH8Y6otzTEg.png" alt="img" style="zoom:50%;" />
+<ul>
+<li><p>Gray Level Slicing 灰度水平切片</p>
+<p><img alt="img" src="https://miro.medium.com/v2/resize:fit:1050/1*aniZdSvZA9kZLcyvBqSZCg.png" /></p>
+</li>
+</ul>
+</section>
+</section>
+<section id="histogram-adjustment">
+<h2>histogram adjustment<a class="headerlink" href="#histogram-adjustment" title="Link to this heading"></a></h2>
+<section id="def-of-histogram">
+<h3>def of histogram<a class="headerlink" href="#def-of-histogram" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>intensity的分布</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>信息缺失<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p>保存了f(x,y)的值，失去了(x,y)的信息</p>
+</section>
+<section id="histogram-equalization">
+<h3>直方图均衡（histogram equalization）<a class="headerlink" href="#histogram-equalization" title="Link to this heading"></a></h3>
+<section id="id2">
+<h4>直方图的均衡性<a class="headerlink" href="#id2" title="Link to this heading"></a></h4>
+</section>
+<section id="id3">
+<h4>全局直方图均衡化<a class="headerlink" href="#id3" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>正变换</p>
+<ul>
+<li><p>gray level:灰度级</p></li>
+<li></li>
+</ul>
+</li>
+<li><p>逆变换</p></li>
+<li><p>缺点</p>
+<ul>
+<li><p>会缺失图像细节</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id4">
+<h4>局部直方图<a class="headerlink" href="#id4" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>原理</p>
+<ul>
+<li><p>使用邻域kernel，对每个邻域方块内的的直方图进行处理</p></li>
+</ul>
+</li>
+<li><p>作用</p>
+<ul>
+<li><p>挖掘图像细节</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id5">
+<h4>注意<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>直方图均衡可以增加图像的全局对比度</p></li>
+<li><p>直方图均衡不能单独应用于图像的红色、绿色和蓝色分量，因为它会导致图像的色彩平衡发生巨大变化</p></li>
+</ul>
+</section>
+</section>
+<section id="id6">
+<h3>直方图匹配<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<section id="id7">
+<h4>直方图均衡化<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
+<hr class="docutils" />
+</section>
+</section>
+</section>
+</section>
+<section id="noise-reduction">
+<h1>Noise reduction<a class="headerlink" href="#noise-reduction" title="Link to this heading"></a></h1>
+<section id="box">
+<h2>卷积/均值/box<a class="headerlink" href="#box" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>filter</p>
+<ul>
+<li><p>单数</p></li>
+<li><p>全是1</p></li>
+<li></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id8">
+<h2>高斯平滑<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<ul>
+<li><p>filter</p>
+<ul>
+<li><p>基本盒</p>
+<p>1 2 1  (/16)</p>
+<p>2 4 2</p>
+<p>1 2 1</p>
+</li>
+<li><p>窗宽：n*n</p></li>
+<li><p>标准差</p></li>
+</ul>
+</li>
+<li><p>滤波器的参数选择</p>
+<ul class="simple">
+<li><p>盒子的边缘应该是接近0</p>
+<ul>
+<li><p>3$\sigma$原则</p>
+<ul>
+<li><p>那么窗宽应该是6$\sigma$​</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>这是个低通滤波器，去除高频成分</p></li>
+<li><p><strong>高斯滤波器在downsize中的作用</strong>（尺寸缩小）</p>
+<ul class="simple">
+<li><p>直接下采样会造成图像严重失真</p></li>
+<li><p>可以预先用高斯滤波器滤波，再进行下采样</p></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<div><p>[!note]</p>
+<ul class="simple">
+<li><p>二维图像里的高频成分： 就是变化比较大的，比如噪声</p></li>
+<li><p>高斯滤波器和高斯滤波器还是卷积</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="id9">
+<h2>中值滤波<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>filter取中值</p></li>
+<li><p><strong>对于椒盐噪声有很好的去噪效果</strong></p></li>
+</ul>
+<blockquote>
+<div><p>[!caution]</p>
+<ul class="simple">
+<li><p>这不是均值，是中值</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="id10">
+<h2>形态学滤波<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<blockquote>
+<div><p>[!Note]</p>
+<p>互相关&amp;卷积</p>
+<ul class="simple">
+<li><p>卷积是互相关在水平和竖直方向上的翻转</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="4_color.html" class="btn btn-neutral float-left" title="" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="6_edge.html" class="btn btn-neutral float-right" title="edge" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, Elena Shaw。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
