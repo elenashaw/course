@@ -2,75 +2,178 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>课程知识库目录 | Elena's Space</title>
     <style>
-        :root { --primary: #4f46e5; --bg: #f8fafc; }
-        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); padding: 40px 20px; color: #1e293b; }
-        .container { max-width: 900px; margin: 0 auto; }
-        h1 { text-align: center; color: var(--primary); margin-bottom: 40px; }
+        :root { 
+            --primary: #4f46e5; 
+            --primary-light: #eef2ff;
+            --bg: #f8fafc; 
+            --text-main: #1e293b;
+            --text-sub: #475569;
+        }
         
+        body { 
+            font-family: "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif; 
+            background: var(--bg); 
+            padding: 40px 20px; 
+            color: var(--text-main); 
+            line-height: 1.6;
+        }
+
+        .container { max-width: 800px; margin: 0 auto; }
+        
+        h1 { 
+            text-align: center; 
+            color: var(--primary); 
+            margin-bottom: 10px; 
+            font-size: 2.2rem;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: var(--text-sub);
+            margin-bottom: 40px;
+        }
+
         /* 一级目录：大类卡片 */
         .category-card {
-            background: white; border: 1px solid #e2e8f0; border-radius: 16px;
-            margin-bottom: 16px; overflow: hidden; transition: 0.3s;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            background: white; 
+            border: 1px solid #e2e8f0; 
+            border-radius: 16px;
+            margin-bottom: 20px; 
+            overflow: hidden; 
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
+
+        .category-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
         .category-header {
-            padding: 24px; cursor: pointer; display: flex; align-items: center;
-            justify-content: space-between; font-size: 1.25rem; font-weight: 600;
+            padding: 24px 30px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center;
+            justify-content: space-between; 
+            font-size: 1.3rem; 
+            font-weight: 600;
+            user-select: none;
         }
+
         .category-header:hover { background: #f1f5f9; }
-        .category-icon { font-size: 1.5rem; margin-right: 15px; }
         
+        .category-title { display: flex; align-items: center; }
+        .category-icon { font-size: 1.6rem; margin-right: 15px; }
+        
+        /* 展开箭头旋转动画 */
+        .arrow { 
+            transition: transform 0.3s ease; 
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+        .active .arrow { transform: rotate(90deg); }
+
         /* 二级目录：子学科列表 */
         .submenu {
-            max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out;
+            max-height: 0; 
+            overflow: hidden; 
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             background: #fdfdff;
         }
-        .submenu.open { max-height: 500px; border-top: 1px solid #eee; }
+        
+        .submenu.open { 
+            max-height: 600px; 
+            border-top: 1px solid #f1f5f9; 
+        }
         
         .sub-item {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 16px 32px; text-decoration: none; color: #475569;
-            border-bottom: 1px solid #f1f5f9; transition: 0.2s;
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            padding: 18px 40px; 
+            text-decoration: none; 
+            color: var(--text-sub);
+            border-bottom: 1px solid #f8fafc; 
+            transition: all 0.2s ease;
         }
-        .sub-item:hover { background: #eef2ff; color: var(--primary); padding-left: 40px; }
-        .arrow { transition: 0.3s; opacity: 0.5; }
-        .active .arrow { transform: rotate(90deg); }
+
+        .sub-item:last-child { border-bottom: none; }
+
+        .sub-item:hover { 
+            background: var(--primary-light); 
+            color: var(--primary); 
+            padding-left: 50px; 
+        }
+
+        .sub-item span {
+            font-size: 0.85rem;
+            background: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>📚 课程知识库</h1>
+        <p class="subtitle">这里记录了我在学术与技术探索中的笔记与思考</p>
 
         <div class="category-card">
             <div class="category-header" onclick="toggleMenu(this)">
-                <div><span class="category-icon">💻</span> 计算机科学 (CS)</div>
+                <div class="category-title"><span class="category-icon">💻</span> 计算机科学 (CS)</div>
                 <span class="arrow">▶</span>
             </div>
             <div class="submenu">
-                <a href="docs/CV/index.html" class="sub-item">计算机视觉 (CV) <span>进入文档 →</span></a>
-                <a href="docs/Algos/index.html" class="sub-item">算法与数据结构 <span>进入文档 →</span></a>
+                <a href="docs/CV/index.html" class="sub-item">计算机视觉 (CV) <span>查看笔记 →</span></a>
+                <a href="docs/Algos/index.html" class="sub-item">算法与数据结构 <span>查看笔记 →</span></a>
             </div>
         </div>
 
         <div class="category-card">
             <div class="category-header" onclick="toggleMenu(this)">
-                <div><span class="category-icon">📐</span> 数学基础</div>
+                <div class="category-title"><span class="category-icon">📐</span> 数学基础</div>
                 <span class="arrow">▶</span>
             </div>
             <div class="submenu">
-                <a href="docs/Math/calculus.html" class="sub-item">微积分 <span>进入文档 →</span></a>
-                <a href="#" class="sub-item">线性代数 (待更新) <span>🔒</span></a>
+                <a href="docs/Math/calculus.html" class="sub-item">微积分 <span>查看笔记 →</span></a>
+                <a href="#" class="sub-item" onclick="alert('正在整理中...')">线性代数 <span>🔒 待更新</span></a>
             </div>
         </div>
+
+        <div class="category-card">
+            <div class="category-header" onclick="toggleMenu(this)">
+                <div class="category-title"><span class="category-icon">⚙️</span> 机械与能源动力</div>
+                <span class="arrow">▶</span>
+            </div>
+            <div class="submenu">
+                <a href="docs/Math/calculus.html" class="sub-item">传热学Ⅰ<span>查看笔记 →</span></a>
+                <a href="#" class="sub-item" onclick="alert('正在整理中...')">传热学Ⅱ<span>🔒 待更新</span></a>
+            </div>
+        </div>
+        
+        <footer>
+            © 2025 Elena Shaw · Powered by Sphinx & GitHub Actions
+        </footer>
     </div>
 
     <script>
         function toggleMenu(header) {
             const card = header.parentElement;
             const menu = header.nextElementSibling;
+            
+            // 切换 active 类用于旋转箭头
             card.classList.toggle('active');
+            // 切换 open 类用于展开内容
             menu.classList.toggle('open');
         }
     </script>
