@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>课程知识库目录 | Elena's Space</title>
+    <style>
+        :root { --primary: #4f46e5; --bg: #f8fafc; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); padding: 40px 20px; color: #1e293b; }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { text-align: center; color: var(--primary); margin-bottom: 40px; }
+        
+        /* 一级目录：大类卡片 */
+        .category-card {
+            background: white; border: 1px solid #e2e8f0; border-radius: 16px;
+            margin-bottom: 16px; overflow: hidden; transition: 0.3s;
+        }
+        .category-header {
+            padding: 24px; cursor: pointer; display: flex; align-items: center;
+            justify-content: space-between; font-size: 1.25rem; font-weight: 600;
+        }
+        .category-header:hover { background: #f1f5f9; }
+        .category-icon { font-size: 1.5rem; margin-right: 15px; }
+        
+        /* 二级目录：子学科列表 */
+        .submenu {
+            max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out;
+            background: #fdfdff; border-top: 0px solid #eee;
+        }
+        .submenu.open { max-height: 500px; border-top: 1px solid #eee; }
+        
+        .sub-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 32px; text-decoration: none; color: #475569;
+            border-bottom: 1px solid #f1f5f9; transition: 0.2s;
+        }
+        .sub-item:hover { background: #eef2ff; color: var(--primary); padding-left: 40px; }
+        .arrow { transition: 0.3s; opacity: 0.5; }
+        .category-card.active .arrow { transform: rotate(90-deg); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 课程知识库</h1>
+
+        <div class="category-card">
+            <div class="category-header" onclick="toggleMenu(this)">
+                <div><span class="category-icon">💻</span> 计算机科学 (CS)</div>
+                <span class="arrow">▶</span>
+            </div>
+            <div class="submenu">
+                <a href="build/html/CV/index.html" class="sub-item">计算机视觉 (CV) <span>进入文档 →</span></a>
+                <a href="build/html/Algos/index.html" class="sub-item">算法与数据结构 <span>进入文档 →</span></a>
+            </div>
+        </div>
+
+        <div class="category-card">
+            <div class="category-header" onclick="toggleMenu(this)">
+                <div><span class="category-icon">📐</span> 数学基础</div>
+                <span class="arrow">▶</span>
+            </div>
+            <div class="submenu">
+                <a href="build/html/Math/calculus.html" class="sub-item">微积分 <span>进入文档 →</span></a>
+                <a href="#" class="sub-item">线性代数 (待更新) <span>🔒</span></a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu(header) {
+            const card = header.parentElement;
+            const menu = header.nextElementSibling;
+            card.classList.toggle('active');
+            menu.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>

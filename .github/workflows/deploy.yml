@@ -1,7 +1,9 @@
 name: Deploy Sphinx
+
 on:
   push:
     branches: [ main ]
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -9,18 +11,25 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+
       - name: Install Dependencies
         run: |
           pip install sphinx sphinx-rtd-theme myst-parser
+
       - name: Build HTML
+        # 这一步绝对不能省，否则 build/html 文件夹是空的
         run: |
           sphinx-build -b html source build/html
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/html
+          folder: build/html
+          branch: gh-pages
+          target-folder: docs  # 将 Sphinx 内容放在 docs 目录下
+          clean: false         # 【非常重要】防止它把根目录的 index.html 删掉
