@@ -22,14 +22,13 @@ jobs:
           pip install sphinx sphinx-rtd-theme myst-parser
 
       - name: Build HTML
-        # 这一步绝对不能省，否则 build/html 文件夹是空的
         run: |
           sphinx-build -b html source build/html
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: build/html
-          branch: gh-pages
-          target-folder: docs  # 将 Sphinx 内容放在 docs 目录下
-          clean: false         # 【非常重要】防止它把根目录的 index.html 删掉
+          folder: .               # 部署根目录下的所有内容（含 index.html）
+          branch: gh-pages         # 部署到成品分支
+          target-folder: .         # 放在 gh-pages 的根目录
+          clean: false             # 不删除旧文件
