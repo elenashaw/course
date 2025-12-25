@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>representation and descriptions &mdash; Course Notes 0.1 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52efc512"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="prev" title="review" href="11_local_features_detect.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Course Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">课程目录:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">计算机视觉 (CV) 课程笔记</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html">Image Acquisition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-representation">Image Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-format">image format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-processing-operations">image processing operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3_pixel_neighborhood.html">pixel connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_color.html"></a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_color.html#color-image-processing">color image processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html">contrast enhancement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#noise-reduction">Noise reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6_edge.html">edge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html">Structure Element</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#distance-transform">distance transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#application">application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8_%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E6%93%8D%E4%BD%9C.html">膨胀与腐蚀</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html">texture introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html#structural-method">structural method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html#texture-synthesis">texture synthesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_image_segmentation.html">image segmentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html">review</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#harris">harris 角点检测</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#mops">MOPS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#sift">SIFT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#surf">SURF</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">representation and descriptions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">标记符着色</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chain-code">chain code(边界特性)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#polygonal-approximate-mpp">polygonal approximate（MPP 算法）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scale-space">scale space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#signature">signature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boundary-segment">boundary segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#skeleton">skeleton</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Course Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">计算机视觉 (CV) 课程笔记</a></li>
+      <li class="breadcrumb-item active">representation and descriptions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/CV/12_representation_and_descriptions.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="representation-and-descriptions">
+<h1>representation and descriptions<a class="headerlink" href="#representation-and-descriptions" title="Link to this heading"></a></h1>
+<blockquote>
+<div><p>[!note]</p>
+<ul class="simple">
+<li><p>边界特性</p></li>
+<li><p>内部区域特性</p>
+<ul>
+<li><p>for further processing</p>
+<ul>
+<li><p>依靠处理任务</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p>大作业为例</p>
+<ul>
+<li><p>汇管区</p>
+<ul>
+<li><p>病变与纤维化</p>
+<ul>
+<li><p>纤维间隔</p></li>
+<li><p>1.汇管区是近圆形的区域</p></li>
+<li><p>2.汇管区是圆形有个尖尖</p>
+<ul>
+<li><p>关注边界特性</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>纤维化的汇管区</p>
+<ul>
+<li><p>细胞核比较多</p>
+<ul>
+<li><p>关注内部特性</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<section id="id1">
+<h2>标记符着色<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>标记图像</p>
+<ul class="simple">
+<li><p>mapping到原图像</p></li>
+<li><p>掩膜标记（overlays）</p>
+<ul>
+<li><p>找出边界，覆盖在上面</p></li>
+</ul>
+</li>
+<li><p>为每个分割好的区域像素分配标识符，进行色块着色，或者画上边界</p>
+<ul>
+<li><p>色块着色的，可以调节透明度</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="chain-code">
+<h2>chain code(边界特性)<a class="headerlink" href="#chain-code" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>线性表表示的缺陷</p>
+<ul>
+<li><p>噪声敏感</p></li>
+<li><p>储存量大</p></li>
+</ul>
+</li>
+<li><p>chain code</p>
+<ul>
+<li><p>mesh resampling</p>
+<ul>
+<li><p>可以去除噪声</p></li>
+<li><p>精度</p></li>
+</ul>
+</li>
+<li><p>起点归一化</p>
+<ul>
+<li><p>让起点那一段的数值和最小</p></li>
+</ul>
+</li>
+<li><p>旋转归一化</p>
+<ul>
+<li><p>使用链码的一次差分（原链码顺时针，差分计算逆时针，溢出的负数补上）</p></li>
+<li><p>首位的差分元素，是首减去末</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="polygonal-approximate-mpp">
+<h2>polygonal approximate（MPP 算法）<a class="headerlink" href="#polygonal-approximate-mpp" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>cells 包裹边界</p></li>
+<li><p>顶点标记</p>
+<ul>
+<li><p>凹点外放</p></li>
+<li><p>凸点不变</p></li>
+</ul>
+</li>
+<li><p>merge and split</p>
+<ul>
+<li><p>在聚合的时候，会有一些拐点因为阈值的原因被忽略</p></li>
+<li><p>引入拆分，弥补合并的缺陷</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="scale-space">
+<h2>scale space<a class="headerlink" href="#scale-space" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>不同方差的高斯滤波</p></li>
+<li><p>去除不必要拐点，留下明显拐点</p>
+<ul>
+<li><p>尺度空间，可以分级拐点的重要性</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="signature">
+<h2>signature<a class="headerlink" href="#signature" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>边界的一维函数，用于简化边界的表达</p></li>
+<li><p>一种方法</p>
+<ul>
+<li><p>以质心为原点，作极坐标</p></li>
+</ul>
+</li>
+<li><p>预处理</p>
+<ul>
+<li><p>旋转归一化</p></li>
+<li><p>比例缩放归一化</p>
+<ul>
+<li><p>如果有噪声，会产生误差</p></li>
+</ul>
+</li>
+<li><p>通常选择离质心最远的点为起点</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="boundary-segment">
+<h2>boundary segment<a class="headerlink" href="#boundary-segment" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>convex hull</p>
+<ul>
+<li><p>区域的最小秃集</p></li>
+</ul>
+</li>
+<li><p>预处理</p>
+<ul>
+<li><p>边界平滑</p></li>
+<li><p>多边形近似</p></li>
+<li><p>去噪（主区域外的噪声会扩大凸集）</p></li>
+</ul>
+</li>
+</ul>
+<p>​</p>
+</section>
+<section id="skeleton">
+<h2>skeleton<a class="headerlink" href="#skeleton" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>MAT</p>
+<ul>
+<li><p>medial axis transformation</p></li>
+</ul>
+</li>
+<li><p>原则</p>
+<ul>
+<li><p>不可删除端点</p></li>
+<li><p>保持连通性</p></li>
+<li><p>不可过度侵蚀</p></li>
+</ul>
+</li>
+<li><p>一些补充</p>
+<ul>
+<li><p>当存在内部噪声孔洞时，骨架会很复杂</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="11_local_features_detect.html" class="btn btn-neutral float-left" title="review" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, Elena Shaw。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

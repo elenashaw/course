@@ -1,0 +1,373 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Structure Element &mdash; Course Notes 0.1 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=52efc512"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="膨胀与腐蚀" href="8_%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E6%93%8D%E4%BD%9C.html" />
+    <link rel="prev" title="edge" href="6_edge.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Course Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">课程目录:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">计算机视觉 (CV) 课程笔记</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html">Image Acquisition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-representation">Image Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-format">image format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-processing-operations">image processing operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3_pixel_neighborhood.html">pixel connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_color.html"></a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_color.html#color-image-processing">color image processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html">contrast enhancement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#noise-reduction">Noise reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6_edge.html">edge</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Structure Element</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#intro">INTRO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#binary-dilation">binary dilation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#def">def</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">操作结果</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#role">role</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#binary-erosion">binary erosion</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">def</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">role</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">复合操作</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fast-operation">fast operation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#binary-opening">开操作（binary opening</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">闭操作</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#hit-or-miss">hit or miss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pattern-spectrum">pattern spectrum</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#parameters">parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#process">process（二值图像）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">作用</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#distance-transform">distance transform</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">intro</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#method">method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#skeletonization">skeletonization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#region-filling">region filling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#thinning-thickening">thinning &amp; thickening</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#application">application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">圆盘与长条的分割</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">齿轮的缺齿检测</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">胸骨肋骨分割</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">指纹图像去噪</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="8_%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E6%93%8D%E4%BD%9C.html">膨胀与腐蚀</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html">texture introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html#structural-method">structural method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html#texture-synthesis">texture synthesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_image_segmentation.html">image segmentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html">review</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#harris">harris 角点检测</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#mops">MOPS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#sift">SIFT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#surf">SURF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12_representation_and_descriptions.html">representation and descriptions</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Course Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">计算机视觉 (CV) 课程笔记</a></li>
+      <li class="breadcrumb-item active">Structure Element</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/CV/7_math morphology.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="structure-element">
+<h1>Structure Element<a class="headerlink" href="#structure-element" title="Link to this heading"></a></h1>
+<blockquote>
+<div><p>其实就是kernel</p>
+</div></blockquote>
+<section id="intro">
+<h2>INTRO<a class="headerlink" href="#intro" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>origin</p>
+<ul>
+<li><p>this is where the definition is based on</p></li>
+</ul>
+</li>
+<li><p>size</p></li>
+<li><p>shape</p>
+<ul>
+<li><p>通过1，0可以定义kernel的形状</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="binary-dilation">
+<h2>binary dilation<a class="headerlink" href="#binary-dilation" title="Link to this heading"></a></h2>
+<section id="def">
+<h3>def<a class="headerlink" href="#def" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>also called 闵可夫斯基和</p></li>
+<li><p>被一个SE（B）膨胀的图像A，表示成</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>操作结果<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>padded image</p></li>
+<li><p>dilated image</p></li>
+</ul>
+</section>
+<section id="role">
+<h3>role<a class="headerlink" href="#role" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>填补空洞</p></li>
+<li><p>OCR填补</p></li>
+</ul>
+</section>
+</section>
+<section id="binary-erosion">
+<h2>binary erosion<a class="headerlink" href="#binary-erosion" title="Link to this heading"></a></h2>
+<section id="id2">
+<h3>def<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+</section>
+<section id="id3">
+<h3>role<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>分离联通的不同物体</p></li>
+<li><p>去噪</p>
+<ul>
+<li><p>复合操作</p>
+<ul>
+<li><p>先腐蚀，后膨胀</p></li>
+<li><p>SE的size选择，基于噪声的size</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id4">
+<h2>复合操作<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<section id="fast-operation">
+<h3>fast operation<a class="headerlink" href="#fast-operation" title="Link to this heading"></a></h3>
+<p>两个小的结构元连续去操作，会比一个大的结构元一次性操作更快</p>
+</section>
+<section id="binary-opening">
+<h3>开操作（binary opening<a class="headerlink" href="#binary-opening" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>操作：A用B腐蚀之后再用B膨胀</p></li>
+<li><p>符号：空心圆</p></li>
+<li><p>结果：剩下的元素都可以包裹kernel</p>
+<ul>
+<li><p>等于把kernel放进去到处滚，生成的被约束的轨迹</p></li>
+<li><p>修边，形成内边界</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id5">
+<h3>闭操作<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>操作：A用B膨胀之后再用B腐蚀</p></li>
+<li><p>符号：实心圆</p></li>
+<li><p>结果</p>
+<ul>
+<li><p>等于把kernel放在外面滚动，补上空缺的</p></li>
+<li><p>包括所有的像素，包括小的边幅。</p></li>
+<li><p>形成外边界</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="hit-or-miss">
+<h2>hit or miss<a class="headerlink" href="#hit-or-miss" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>用于匹配结构元和neigor</p></li>
+<li></li>
+</ul>
+</section>
+<section id="pattern-spectrum">
+<h2>pattern spectrum<a class="headerlink" href="#pattern-spectrum" title="Link to this heading"></a></h2>
+<section id="parameters">
+<h3>parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>rik</p></li>
+</ul>
+</section>
+<section id="process">
+<h3>process（二值图像）<a class="headerlink" href="#process" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>选择合适的se</p>
+<ul>
+<li><p>圆盘，矩形</p></li>
+</ul>
+</li>
+<li><p>开操作</p></li>
+<li><p>从原始图像减去经过开操作的图像</p></li>
+<li><p>得到减的图像，再进行上述的开操作（SE的size是nSE: SE逐渐膨胀），减图像</p>
+<ul>
+<li><p><strong>recursive dilation</strong></p></li>
+<li><p>nSE:可以得到不同尺寸的、相同形状的SE</p></li>
+<li><p><strong>recursive erosion</strong></p></li>
+<li><p>作用：距离变换，分割图像（比如粘连的细胞）</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id6">
+<h3>作用<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>模式识别</p></li>
+<li><p>分类</p>
+<ul>
+<li><p>根据谱的差异性，可以作为一个分类的标准</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="distance-transform">
+<h1>distance transform<a class="headerlink" href="#distance-transform" title="Link to this heading"></a></h1>
+<section id="id7">
+<h2>intro<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>只用于二值图像</p></li>
+<li><p>变换结果：灰度图像</p></li>
+<li><p>实现方法：腐蚀1圈，被腐蚀的记为1.迭代，在第几次腐蚀消失的，记为n</p></li>
+</ul>
+</section>
+<section id="method">
+<h2>method<a class="headerlink" href="#method" title="Link to this heading"></a></h2>
+</section>
+<section id="skeletonization">
+<h2>skeletonization<a class="headerlink" href="#skeletonization" title="Link to this heading"></a></h2>
+</section>
+<section id="region-filling">
+<h2>region filling<a class="headerlink" href="#region-filling" title="Link to this heading"></a></h2>
+</section>
+<section id="thinning-thickening">
+<h2>thinning &amp; thickening<a class="headerlink" href="#thinning-thickening" title="Link to this heading"></a></h2>
+</section>
+</section>
+<section id="application">
+<h1>application<a class="headerlink" href="#application" title="Link to this heading"></a></h1>
+<section id="id8">
+<h2>圆盘与长条的分割<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>SE:大于长条宽度，小于圆盘的直径</p></li>
+<li><p>对二值化图像进行一个开操作</p></li>
+</ul>
+</section>
+<section id="id9">
+<h2>齿轮的缺齿检测<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>开操作，提取大圆盘</p></li>
+<li><p>减去原图像</p></li>
+<li><p>进行label</p></li>
+</ul>
+</section>
+<section id="id10">
+<h2>胸骨肋骨分割<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+</section>
+<section id="id11">
+<h2>指纹图像去噪<a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>先开操作去噪</p></li>
+<li><p>再闭操作连接断开的</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="6_edge.html" class="btn btn-neutral float-left" title="edge" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="8_%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E6%93%8D%E4%BD%9C.html" class="btn btn-neutral float-right" title="膨胀与腐蚀" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, Elena Shaw。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
