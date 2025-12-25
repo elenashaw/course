@@ -1,24 +1,24 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="zh" data-content_root="../">
+<html class="writer-html5" lang="zh" data-content_root="../../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>image segmentation &mdash; Course Notes 0.1 文档</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
-      <script src="../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=52efc512"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="索引" href="../genindex.html" />
-    <link rel="search" title="搜索" href="../search.html" />
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=52efc512"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
     <link rel="next" title="review" href="11_local_features_detect.html" />
     <link rel="prev" title="texture introduction" href="9_texture.html" /> 
 </head>
@@ -31,11 +31,11 @@
 
           
           
-          <a href="../index.html" class="icon icon-home">
+          <a href="../../index.html" class="icon icon-home">
             Course Notes
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -111,18 +111,18 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Course Notes</a>
+          <a href="../../index.html">Course Notes</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="页面导航">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">计算机视觉 (CV) 课程笔记</a></li>
       <li class="breadcrumb-item active">image segmentation</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/CV/10_image_segmentation.md.txt" rel="nofollow"> 查看页面源码</a>
+            <a href="../../_sources/CS/CV/10_image_segmentation.md.txt" rel="nofollow"> 查看页面源码</a>
       </li>
   </ul>
   <hr/>
@@ -246,7 +246,7 @@
 <section id="m-b">
 <h4>m,b空间（不适用于无斜率的<a class="headerlink" href="#m-b" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><img alt="image-20240410083002132" src="../../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240410083002132.png" /></p></li>
+<li><p><img alt="image-20240410083002132" src="../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240410083002132.png" /></p></li>
 <li><p>横坐标：b</p></li>
 <li><p>纵坐标：m/斜率</p></li>
 <li><p>斜率：-x(原来的坐标)</p></li>
@@ -258,17 +258,17 @@
 <section id="id13">
 <h4>极坐标空间（适用于无斜率的<a class="headerlink" href="#id13" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><img alt="image-20240410083418257" src="../../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240410083418257.png" /></p></li>
-<li><p><img alt="image-20240410083757897" src="../../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240410083757897.png" /></p>
+<li><p><img alt="image-20240410083418257" src="../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240410083418257.png" /></p></li>
+<li><p><img alt="image-20240410083757897" src="../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240410083757897.png" /></p>
 <ul>
-<li><p><img alt="image-20240410083845170" src="../../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240410083845170.png" /></p></li>
+<li><p><img alt="image-20240410083845170" src="../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240410083845170.png" /></p></li>
 </ul>
 </li>
 </ul>
 </section>
 <section id="id14">
 <h4>累加器<a class="headerlink" href="#id14" title="Link to this heading"></a></h4>
-<p><img alt="image-20240410084247539" src="../../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240410084247539.png" /></p>
+<p><img alt="image-20240410084247539" src="../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240410084247539.png" /></p>
 <ul class="simple">
 <li><p>方法</p>
 <ul>
