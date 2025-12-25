@@ -1,9 +1,7 @@
 name: Deploy Sphinx
-
 on:
   push:
     branches: [ main ]
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -11,24 +9,21 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-
       - name: Install Dependencies
-        run: |
-          pip install sphinx sphinx-rtd-theme myst-parser
-
+        run: pip install sphinx sphinx-rtd-theme myst-parser
       - name: Build HTML
         run: |
-          sphinx-build -b html source build/html
-
+          # 关键：编译到 docs 文件夹，不占领根目录
+          sphinx-build -b html source docs
+          touch docs/.nojekyll
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: .               # 部署根目录下的所有内容（含 index.html）
-          branch: gh-pages         # 部署到成品分支
-          target-folder: .         # 放在 gh-pages 的根目录
-          clean: false             # 不删除旧文件
+          folder: .               # 包含 index.html 和 docs 文件夹
+          branch: gh-pages
+          target-folder: .
+          clean: true
