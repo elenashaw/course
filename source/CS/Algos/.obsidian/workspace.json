@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "e41c391ce7f159bb",
@@ -185,10 +186,14 @@
   },
   "active": "dfc7b7558922a2c2",
   "lastOpenFiles": [
+    "Pasted image 20251226114051.png",
+    "MemoryOS/asymptotic_complextity.md",
+    "index.md",
+    "basic_theories/asymptotic_complexity.md",
+    "MemoryOS",
     "basic_theories/index.md",
     "basic_theories/新建 文本文档.txt",
     "basic_theories/新建文件夹",
-    "basic_theories/asymptotic_complexity.md",
     "basic_theories/computation_models.md",
     "basic_theories",
     "新建文件夹",
@@ -197,7 +202,6 @@
     "新建 文本文档.txt",
     "computation_and_asymptotic_complexity .md",
     "Ⅰ计算模型和渐进复杂度.md",
-    "computation.md",
-    "index.md"
+    "computation.md"
   ]
 }
