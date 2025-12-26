@@ -11,14 +11,10 @@
             "id": "dfc7b7558922a2c2",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Ⅰ计算模型和渐进复杂度.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Ⅰ计算模型和渐进复杂度"
+              "title": "新标签页"
             }
           }
         ]
@@ -94,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Ⅰ计算模型和渐进复杂度.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +99,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Ⅰ计算模型和渐进复杂度 的反向链接列表"
+              "title": "反向链接"
             }
           },
           {
@@ -113,12 +108,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Ⅰ计算模型和渐进复杂度.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Ⅰ计算模型和渐进复杂度 的出链列表"
+              "title": "出链"
             }
           },
           {
@@ -156,13 +150,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Ⅰ计算模型和渐进复杂度.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Ⅰ计算模型和渐进复杂度 的大纲"
+              "title": "大纲"
             }
           }
         ]
@@ -185,8 +178,16 @@
   },
   "active": "dfc7b7558922a2c2",
   "lastOpenFiles": [
-    "index.md",
+    "basic_theories/asymptotic_complexity.md",
+    "basic_theories/computation_models.md",
+    "basic_theories",
+    "新建文件夹",
+    "computation_models.md",
+    "asymptotic_complexity.md",
     "新建 文本文档.txt",
-    "Ⅰ计算模型和渐进复杂度.md"
+    "computation_and_asymptotic_complexity .md",
+    "Ⅰ计算模型和渐进复杂度.md",
+    "computation.md",
+    "index.md"
   ]
 }
