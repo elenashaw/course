@@ -6,16 +6,18 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1.2. 🚀 渐进复杂度 (Asymptotic Complexity) &mdash; Course Notes 0.1 文档</title>
+  <title>1.2. 🚀 渐进复杂度 (Asymptotic Complexity) &mdash; Course Notes 0.2 文档</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=52efc512"></script>
+      <script src="../../../_static/documentation_options.js?v=65174f78"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="索引" href="../../../genindex.html" />
     <link rel="search" title="搜索" href="../../../search.html" />
@@ -85,7 +87,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="asymptotic-complexity">
+  <section class="tex2jax_ignore mathjax_ignore" id="asymptotic-complexity">
 <h1><span class="section-number">1.2. </span>🚀 渐进复杂度 (Asymptotic Complexity)<a class="headerlink" href="#asymptotic-complexity" title="Link to this heading"></a></h1>
 <p>在算法的丛林中，我们不关注特定机器上的绝对运行秒数（因为 CPU 会变），我们关注的是<strong>趋势</strong>。</p>
 <section id="id1">
@@ -106,24 +108,24 @@
 <p>在评价算法时，由于 <strong>CPU 频率、内存带宽及编译器优化</strong> 等外部环境千差万别，测量<strong>绝对运行时间</strong>（Absolute Running Time）往往会陷入“因机而异”的泥潭。因此，我们需要一套脱离具体硬件的抽象评价体系——<strong>渐进分析</strong>。</p>
 <section id="id2">
 <h3>核心逻辑：从“耗时”到“函数” 🛠️<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
-<p>我们将算法运行所需的时间资源抽象为一个关于输入规模 $n$ 的函数 $T(n)$。</p>
+<p>我们将算法运行所需的时间资源抽象为一个关于输入规模 <span class="math notranslate nohighlight">\(n\)</span> 的函数 <span class="math notranslate nohighlight">\(T(n)\)</span>。</p>
 <ul>
-<li><p><strong>渐进效率 (Asymptotic Efficiency)</strong>：我们不仅关注 $n$ 在较小范围内的具体取值，<strong>更</strong>关注当 $n$ 趋向于无穷大（$n \to \infty$）时，算法运行时间的增长趋势。这衡量的是算法在处理<strong>大规模数据</strong>时的<strong>扩展能力</strong>（Scalability）。</p></li>
+<li><p><strong>渐进效率 (Asymptotic Efficiency)</strong>：我们不仅关注 <span class="math notranslate nohighlight">\(n\)</span> 在较小范围内的具体取值，<strong>更</strong>关注当 <span class="math notranslate nohighlight">\(n\)</span> 趋向于无穷大（<span class="math notranslate nohighlight">\(n \to \infty\)</span>）时，算法运行时间的增长趋势。这衡量的是算法在处理<strong>大规模数据</strong>时的<strong>扩展能力</strong>（Scalability）。</p></li>
 <li><p>忽略次要矛盾，抓住增长本质：</p>
-<p>在数学视角下，随着 $n$ 的增长，函数中的各项贡献度会发生剧变。</p>
+<p>在数学视角下，随着 <span class="math notranslate nohighlight">\(n\)</span> 的增长，函数中的各项贡献度会发生剧变。</p>
 <ul class="simple">
-<li><p><strong>忽略低阶项与常数因子</strong>：当 $n$ 足够大时，常数系数（Constant Factor）和低阶项（Low-order Terms）对函数整体数值的影响将迅速衰减，直至忽略不计。</p></li>
+<li><p><strong>忽略低阶项与常数因子</strong>：当 <span class="math notranslate nohighlight">\(n\)</span> 足够大时，常数系数（Constant Factor）和低阶项（Low-order Terms）对函数整体数值的影响将迅速衰减，直至忽略不计。</p></li>
 <li><p><strong>锁定主导项 (Dominating Term)</strong>：我们只关注运行时间增长的<strong>量级（Order of Growth）</strong>。</p></li>
 </ul>
 <blockquote>
-<div><p><strong>示例</strong>：对于 $T(n) = 0.5n^2 + 100n + 5000$，当 $n$ 达到百万级别时，$0.5n^2$ 将占据数值的绝大部分权重。因此，我们说该算法的渐进复杂度是 $O(n^2)$。</p>
+<div><p><strong>示例</strong>：对于 <span class="math notranslate nohighlight">\(T(n) = 0.5n^2 + 100n + 5000\)</span>，当 <span class="math notranslate nohighlight">\(n\)</span> 达到百万级别时，<span class="math notranslate nohighlight">\(0.5n^2\)</span> 将占据数值的绝大部分权重。因此，我们说该算法的渐进复杂度是 <span class="math notranslate nohighlight">\(O(n^2)\)</span>。</p>
 </div></blockquote>
 </li>
 </ul>
 </section>
 <section id="id3">
 <h3>💡 为什么对于低阶项“忽略”是合理的？<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
-<p>在算法的世界里存在“量级压制”：一个低阶算法（比如 $O(n \log n)$）在处理海量数据时，即便其常数项系数很大，最终表现也一定会优于一个系数很小的高阶算法（如 $O(n^2)$）。</p>
+<p>在算法的世界里存在“量级压制”：一个低阶算法（比如 <span class="math notranslate nohighlight">\(O(n \log n)\)</span>）在处理海量数据时，即便其常数项系数很大，最终表现也一定会优于一个系数很小的高阶算法（如 <span class="math notranslate nohighlight">\(O(n^2)\)</span>）。</p>
 <p><strong>渐进分析的本质，就是为了让我们从琐碎的实现细节中跳出来，去审视大数据时的“算法在处理体质”差异。</strong> ⚖️</p>
 </section>
 </section>
@@ -132,88 +134,88 @@
 <h2>标记符号 (Asymptotic Notations) 🏷️<a class="headerlink" href="#asymptotic-notations" title="Link to this heading"></a></h2>
 <p>在正式定义符号之前，我们需要明确两个基本概念：</p>
 <ul class="simple">
-<li><p><strong>$f(n)$</strong>：通常代表算法的<strong>实际运行时间函数</strong>。它通过计算算法执行的每一步操作得出，通常包含复杂的常数和低阶项（如 $f(n) = 3n^2 + 10n + 5$）。</p></li>
-<li><p><strong>$g(n)$</strong>：代表我们要对比的<strong>标准函数形式</strong>（如 $n^2, n\log n$）。它去掉了繁琐的细节，只保留增长的量级，作为评估 $f(n)$ 的“尺子”。</p></li>
+<li><p><strong><span class="math notranslate nohighlight">\(f(n)\)</span></strong>：通常代表算法的<strong>实际运行时间函数</strong>。它通过计算算法执行的每一步操作得出，通常包含复杂的常数和低阶项（如 <span class="math notranslate nohighlight">\(f(n) = 3n^2 + 10n + 5\)</span>）。</p></li>
+<li><p><strong><span class="math notranslate nohighlight">\(g(n)\)</span></strong>：代表我们要对比的<strong>标准函数形式</strong>（如 <span class="math notranslate nohighlight">\(n^2, n\log n\)</span>）。它去掉了繁琐的细节，只保留增长的量级，作为评估 <span class="math notranslate nohighlight">\(f(n)\)</span> 的“尺子”。</p></li>
 </ul>
 <section id="o-big-o-o-g-n">
-<h3>1. <strong>大 $O$ 记号 (Big-O)</strong> —— $O(g(n))$ 👼<a class="headerlink" href="#o-big-o-o-g-n" title="Link to this heading"></a></h3>
+<h3>1. <strong>大 <span class="math notranslate nohighlight">\(O\)</span> 记号 (Big-O)</strong> —— <span class="math notranslate nohighlight">\(O(g(n))\)</span> 👼<a class="headerlink" href="#o-big-o-o-g-n" title="Link to this heading"></a></h3>
 <ul>
 <li><p><strong>定义</strong>：给出函数的<strong>渐进上界 (Asymptotic Upper Bound)</strong>。</p>
 <ul class="simple">
-<li><p><strong>含义</strong>：如果 $f(n) = O(g(n))$，则存在正常数 $c$ 和 $n_0$，使得对于所有 $n \ge n_0$，都有 $0 \le f(n) \le cg(n)$。</p></li>
-<li><p><strong>深度理解</strong>：大 $O$ 描述的是一种“天花板”。当输入规模 $n$ 足够大时，算法的运行时间<strong>绝不会超过</strong>这个量级。</p></li>
+<li><p><strong>含义</strong>：如果 <span class="math notranslate nohighlight">\(f(n) = O(g(n))\)</span>，则存在正常数 <span class="math notranslate nohighlight">\(c\)</span> 和 <span class="math notranslate nohighlight">\(n_0\)</span>，使得对于所有 <span class="math notranslate nohighlight">\(n \ge n_0\)</span>，都有 <span class="math notranslate nohighlight">\(0 \le f(n) \le cg(n)\)</span>。</p></li>
+<li><p><strong>深度理解</strong>：大 <span class="math notranslate nohighlight">\(O\)</span> 描述的是一种“天花板”。当输入规模 <span class="math notranslate nohighlight">\(n\)</span> 足够大时，算法的运行时间<strong>绝不会超过</strong>这个量级。</p></li>
 </ul>
 </li>
 <li><p>例子：<strong>插入排序的最坏情况</strong>。</p>
-<p>其运行时间函数 $f(n) = an^2 + bn + c$。我们可以说 $f(n) = O(n^2)$。即使我们说它也是 $O(n^3)$ 在数学上也是正确的，但通常我们寻求最贴切的上界。</p>
+<p>其运行时间函数 <span class="math notranslate nohighlight">\(f(n) = an^2 + bn + c\)</span>。我们可以说 <span class="math notranslate nohighlight">\(f(n) = O(n^2)\)</span>。即使我们说它也是 <span class="math notranslate nohighlight">\(O(n^3)\)</span> 在数学上也是正确的，但通常我们寻求最贴切的上界。</p>
 </li>
 <li><p><strong>白话</strong>：它是一个<strong>保证</strong>。无论输入数据多糟糕，我的耗时也就是这个水平，甚至可能更好。</p></li>
-<li><p>记忆技巧：实际的时间函数抬头一看，<strong>&quot;Oh my god, $g(n)$ is so high!&quot;</strong> $\to$ <strong>$O(n)$ my god!</strong></p></li>
+<li><p>记忆技巧：实际的时间函数抬头一看，<strong>“Oh my god, <span class="math notranslate nohighlight">\(g(n)\)</span> is so high!”</strong> <span class="math notranslate nohighlight">\(\to\)</span> <strong><span class="math notranslate nohighlight">\(O(n)\)</span> my god!</strong></p></li>
 </ul>
 </section>
 <section id="omega-big-omega-omega-g-n">
-<h3>2. <strong>大 $\Omega$ 记号 (Big-Omega)</strong> —— $\Omega(g(n))$ ⚓<a class="headerlink" href="#omega-big-omega-omega-g-n" title="Link to this heading"></a></h3>
+<h3>2. <strong>大 <span class="math notranslate nohighlight">\(\Omega\)</span> 记号 (Big-Omega)</strong> —— <span class="math notranslate nohighlight">\(\Omega(g(n))\)</span> ⚓<a class="headerlink" href="#omega-big-omega-omega-g-n" title="Link to this heading"></a></h3>
 <ul>
 <li><p><strong>定义</strong>：给出函数的<strong>渐进下界 (Asymptotic Lower Bound)</strong>。</p>
 <ul class="simple">
-<li><p><strong>含义</strong>：如果 $f(n) = \Omega(g(n))$，则存在正常数 $c$ 和 $n_0$，使得对于所有 $n \ge n_0$，都有 $0 \le cg(n) \le f(n)$。</p></li>
+<li><p><strong>含义</strong>：如果 <span class="math notranslate nohighlight">\(f(n) = \Omega(g(n))\)</span>，则存在正常数 <span class="math notranslate nohighlight">\(c\)</span> 和 <span class="math notranslate nohighlight">\(n_0\)</span>，使得对于所有 <span class="math notranslate nohighlight">\(n \ge n_0\)</span>，都有 <span class="math notranslate nohighlight">\(0 \le cg(n) \le f(n)\)</span>。</p></li>
 </ul>
 </li>
 <li><p>例子：<strong>任何需要遍历数组一遍的算法。</strong></p>
-<p>无论如何优化，只要算法必须检查 $n$ 个元素，其运行时间 $f(n)$ 至少是 $n$ 的常数倍，即 $f(n) = \Omega(n)$。</p>
+<p>无论如何优化，只要算法必须检查 <span class="math notranslate nohighlight">\(n\)</span> 个元素，其运行时间 <span class="math notranslate nohighlight">\(f(n)\)</span> 至少是 <span class="math notranslate nohighlight">\(n\)</span> 的常数倍，即 <span class="math notranslate nohighlight">\(f(n) = \Omega(n)\)</span>。</p>
 </li>
 <li><p><strong>白话</strong>：它是一个<strong>底线</strong>。它描述了算法“最快也就这样了”。</p></li>
-<li><p>记忆方法： $\Omega$ 看起来像个船锚，实际函数像小船，<strong>锚抛在下面</strong>。它是“保底”的底线（下界）。</p></li>
+<li><p>记忆方法： <span class="math notranslate nohighlight">\(\Omega\)</span> 看起来像个船锚，实际函数像小船，<strong>锚抛在下面</strong>。它是“保底”的底线（下界）。</p></li>
 </ul>
 </section>
 <section id="theta-big-theta-theta-g-n">
-<h3>3. <strong>大 $\Theta$ 记号 (Big-Theta)</strong> —— $\Theta(g(n))$ 🛥️<a class="headerlink" href="#theta-big-theta-theta-g-n" title="Link to this heading"></a></h3>
+<h3>3. <strong>大 <span class="math notranslate nohighlight">\(\Theta\)</span> 记号 (Big-Theta)</strong> —— <span class="math notranslate nohighlight">\(\Theta(g(n))\)</span> 🛥️<a class="headerlink" href="#theta-big-theta-theta-g-n" title="Link to this heading"></a></h3>
 <ul>
 <li><p><strong>定义</strong>：给出函数的<strong>渐进紧确界 (Asymptotically Tight Bound)</strong>。</p>
 <ul class="simple">
-<li><p><strong>含义</strong>：$f(n) = \Theta(g(n))$ 当且仅当 $f(n) = O(g(n))$ 且 $f(n) = \Omega(g(n))$。</p></li>
+<li><p><strong>含义</strong>：<span class="math notranslate nohighlight">\(f(n) = \Theta(g(n))\)</span> 当且仅当 <span class="math notranslate nohighlight">\(f(n) = O(g(n))\)</span> 且 <span class="math notranslate nohighlight">\(f(n) = \Omega(g(n))\)</span>。</p></li>
 </ul>
 </li>
 <li><p>例子：归并排序 (Merge Sort) 的运行时间。</p>
-<p>归并排序在最好、最坏和平均情况下的表现都是 $n \log n$ 级别的，因此其运行时间 $f(n) = \Theta(n \log n)$。</p>
+<p>归并排序在最好、最坏和平均情况下的表现都是 <span class="math notranslate nohighlight">\(n \log n\)</span> 级别的，因此其运行时间 <span class="math notranslate nohighlight">\(f(n) = \Theta(n \log n)\)</span>。</p>
 </li>
 <li><p><strong>关键纠正</strong>：</p>
 <ul class="simple">
-<li><p><strong>专业理解</strong>：只有当一个算法的运行时间在<strong>所有输入情况</strong>下都处于同一量级时，才使用 $\Theta$。如果插入排序最坏是 $O(n^2)$ 但最好是 $\Omega(n)$，我们不能笼统地说它是 $\Theta(n^2)$。</p></li>
+<li><p><strong>专业理解</strong>：只有当一个算法的运行时间在<strong>所有输入情况</strong>下都处于同一量级时，才使用 <span class="math notranslate nohighlight">\(\Theta\)</span>。如果插入排序最坏是 <span class="math notranslate nohighlight">\(O(n^2)\)</span> 但最好是 <span class="math notranslate nohighlight">\(\Omega(n)\)</span>，我们不能笼统地说它是 <span class="math notranslate nohighlight">\(\Theta(n^2)\)</span>。</p></li>
 </ul>
 </li>
 <li><p><strong>白话</strong>：它表示“我就在这个范围内跑，上下都锁死了”。</p></li>
-<li><p>记忆技巧：$\Theta$的形状像个小船，那么就代表实际运行函数本身波动的范围。</p></li>
+<li><p>记忆技巧：<span class="math notranslate nohighlight">\(\Theta\)</span>的形状像个小船，那么就代表实际运行函数本身波动的范围。</p></li>
 </ul>
 </section>
 <section id="o-little-o-o-g-n">
-<h3>4. <strong>小 $o$ 记号 (Little-o)</strong> —— $o(g(n))$ 🎈<a class="headerlink" href="#o-little-o-o-g-n" title="Link to this heading"></a></h3>
+<h3>4. <strong>小 <span class="math notranslate nohighlight">\(o\)</span> 记号 (Little-o)</strong> —— <span class="math notranslate nohighlight">\(o(g(n))\)</span> 🎈<a class="headerlink" href="#o-little-o-o-g-n" title="Link to this heading"></a></h3>
 <ul>
 <li><p><strong>定义</strong>：给出函数的<strong>非渐进紧确上界</strong>。</p>
 <ul class="simple">
-<li><p><strong>含义</strong>：对于<strong>任意</strong>正实数 $c &gt; 0$，都存在常数 $n_0 &gt; 0$，使得对于所有 $n \ge n_0$，都有 $0 \le f(n) &lt; cg(n)$。</p></li>
+<li><p><strong>含义</strong>：对于<strong>任意</strong>正实数 <span class="math notranslate nohighlight">\(c &gt; 0\)</span>，都存在常数 <span class="math notranslate nohighlight">\(n_0 &gt; 0\)</span>，使得对于所有 <span class="math notranslate nohighlight">\(n \ge n_0\)</span>，都有 <span class="math notranslate nohighlight">\(0 \le f(n) &lt; cg(n)\)</span>。</p></li>
 </ul>
 </li>
 <li><p>例子：<strong>线性函数与平方函数的关系</strong>。</p>
-<p>$f(n) = 2n$ 是 $o(n^2)$，因为随着 $n$ 变大，$2n$ 相比于 $n^2$ 会变得极其微小。</p>
+<p><span class="math notranslate nohighlight">\(f(n) = 2n\)</span> 是 <span class="math notranslate nohighlight">\(o(n^2)\)</span>，因为随着 <span class="math notranslate nohighlight">\(n\)</span> 变大，<span class="math notranslate nohighlight">\(2n\)</span> 相比于 <span class="math notranslate nohighlight">\(n^2\)</span> 会变得极其微小。</p>
 </li>
 <li><p><strong>白话</strong>：它表示算法的实际耗时增速<strong>严格低于</strong>这个量级，不存在相等的可能。</p></li>
 <li><p>记忆技巧：“o” 看起来像个圆圆的<strong>氢气球</strong>。它太轻了，永远飞在实际运行函数的头顶，且越飞越高，直到消失在视线尽头</p></li>
 </ul>
 </section>
 <section id="omega-little-omega-omega-g-n">
-<h3>5. <strong>小 $\omega$ 记号 (Little-omega)</strong> —— $\omega(g(n))$ 🌊<a class="headerlink" href="#omega-little-omega-omega-g-n" title="Link to this heading"></a></h3>
+<h3>5. <strong>小 <span class="math notranslate nohighlight">\(\omega\)</span> 记号 (Little-omega)</strong> —— <span class="math notranslate nohighlight">\(\omega(g(n))\)</span> 🌊<a class="headerlink" href="#omega-little-omega-omega-g-n" title="Link to this heading"></a></h3>
 <ul>
 <li><p><strong>定义</strong>：给出函数的<strong>非渐进紧确下界</strong>。</p>
 <ul class="simple">
-<li><p><strong>含义</strong>：对于<strong>任意</strong>正实数 $c &gt; 0$，都存在常数 $n_0 &gt; 0$，使得对于所有 $n \ge n_0$，都有 $0 \le cg(n) &lt; f(n)$。</p></li>
+<li><p><strong>含义</strong>：对于<strong>任意</strong>正实数 <span class="math notranslate nohighlight">\(c &gt; 0\)</span>，都存在常数 <span class="math notranslate nohighlight">\(n_0 &gt; 0\)</span>，使得对于所有 <span class="math notranslate nohighlight">\(n \ge n_0\)</span>，都有 <span class="math notranslate nohighlight">\(0 \le cg(n) &lt; f(n)\)</span>。</p></li>
 </ul>
 </li>
 <li><p>例子：平方函数与对数函数的关系。</p>
-<p>$f(n) = n^2$ 是 $\omega(\log n)$，因为 $n^2$ 的增长速度远超 $\log n$。</p>
+<p><span class="math notranslate nohighlight">\(f(n) = n^2\)</span> 是 <span class="math notranslate nohighlight">\(\omega(\log n)\)</span>，因为 <span class="math notranslate nohighlight">\(n^2\)</span> 的增长速度远超 <span class="math notranslate nohighlight">\(\log n\)</span>。</p>
 </li>
 <li><p><strong>白话</strong>：它表示算法的耗时增速<strong>严格超过</strong>了某个标准。</p></li>
-<li><p>记忆技巧：$\omega$ 是个深海火山口，常年在海底，代表极大的下层落差。</p></li>
+<li><p>记忆技巧：<span class="math notranslate nohighlight">\(\omega\)</span> 是个深海火山口，常年在海底，代表极大的下层落差。</p></li>
 </ul>
 </section>
 <section id="id4">
@@ -227,30 +229,30 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><strong>$f(n) = O(g(n))$</strong></p></td>
+<tr class="row-even"><td><p><strong><span class="math notranslate nohighlight">\(f(n) = O(g(n))\)</span></strong></p></td>
 <td><p>Big-Oh</p></td>
-<td><p>$a \le b$</p></td>
-<td><p>$f$ 的增长<strong>不快于</strong> $g$</p></td>
+<td><p><span class="math notranslate nohighlight">\(a \le b\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(f\)</span> 的增长<strong>不快于</strong> <span class="math notranslate nohighlight">\(g\)</span></p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>$f(n) = \Omega(g(n))$</strong></p></td>
+<tr class="row-odd"><td><p><strong><span class="math notranslate nohighlight">\(f(n) = \Omega(g(n))\)</span></strong></p></td>
 <td><p>Big-Omega</p></td>
-<td><p>$a \ge b$</p></td>
-<td><p>$f$ 的增长<strong>不慢于</strong> $g$</p></td>
+<td><p><span class="math notranslate nohighlight">\(a \ge b\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(f\)</span> 的增长<strong>不慢于</strong> <span class="math notranslate nohighlight">\(g\)</span></p></td>
 </tr>
-<tr class="row-even"><td><p><strong>$f(n) = \Theta(g(n))$</strong></p></td>
+<tr class="row-even"><td><p><strong><span class="math notranslate nohighlight">\(f(n) = \Theta(g(n))\)</span></strong></p></td>
 <td><p>Big-Theta</p></td>
-<td><p>$a = b$</p></td>
-<td><p>$f$ 与 $g$ <strong>同阶</strong> (增长率相同)</p></td>
+<td><p><span class="math notranslate nohighlight">\(a = b\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(f\)</span> 与 <span class="math notranslate nohighlight">\(g\)</span> <strong>同阶</strong> (增长率相同)</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>$f(n) = o(g(n))$</strong></p></td>
+<tr class="row-odd"><td><p><strong><span class="math notranslate nohighlight">\(f(n) = o(g(n))\)</span></strong></p></td>
 <td><p>Little-oh</p></td>
-<td><p>$a &lt; b$</p></td>
-<td><p>$f$ 增长<strong>严格慢于</strong> $g$</p></td>
+<td><p><span class="math notranslate nohighlight">\(a &lt; b\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(f\)</span> 增长<strong>严格慢于</strong> <span class="math notranslate nohighlight">\(g\)</span></p></td>
 </tr>
-<tr class="row-even"><td><p><strong>$f(n) = \omega(g(n))$</strong></p></td>
+<tr class="row-even"><td><p><strong><span class="math notranslate nohighlight">\(f(n) = \omega(g(n))\)</span></strong></p></td>
 <td><p>Little-omega</p></td>
-<td><p>$a &gt; b$</p></td>
-<td><p>$f$ 增长<strong>严格快于</strong> $g$</p></td>
+<td><p><span class="math notranslate nohighlight">\(a &gt; b\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(f\)</span> 增长<strong>严格快于</strong> <span class="math notranslate nohighlight">\(g\)</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -269,11 +271,11 @@
 <section id="id7">
 <h5>💖核心内容<a class="headerlink" href="#id7" title="Link to this heading"></a></h5>
 <ul class="simple">
-<li><p><strong>本质</strong>：操作次数与输入规模 $n$ 无关。</p></li>
+<li><p><strong>本质</strong>：操作次数与输入规模 <span class="math notranslate nohighlight">\(n\)</span> 无关。</p></li>
 <li><p><strong>效率</strong>：效率最高，具有最强的扩展性（Scalability）。</p></li>
 <li><p><strong>典型例子</strong>：</p>
 <ul>
-<li><p><strong>数组随机访问</strong>：给定下标 $i$，直接计算内存地址并访问，耗时固定。</p></li>
+<li><p><strong>数组随机访问</strong>：给定下标 <span class="math notranslate nohighlight">\(i\)</span>，直接计算内存地址并访问，耗时固定。</p></li>
 <li><p><strong>哈希表查询</strong>：在没有剧烈冲突的情况下，通过哈希函数定位元素。</p></li>
 <li><p><strong>基本运算</strong>：如 <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">+</span> <span class="pre">b</span></code>、位运算、赋值语句等。</p></li>
 </ul>
@@ -284,38 +286,38 @@
 <section id="traps-and-fallacies">
 <h5>⚠️ 陷阱与谬误 (Traps and Fallacies)<a class="headerlink" href="#traps-and-fallacies" title="Link to this heading"></a></h5>
 <ul class="simple">
-<li><p><strong>极大的常数也是 $O(1)$</strong>：</p>
+<li><p><strong>极大的常数也是 <span class="math notranslate nohighlight">\(O(1)\)</span></strong>：</p>
 <ul>
-<li><p><strong>反直觉事实</strong>：如果 $f(n) = 8888^{9999}$，尽管这个数值巨大，但只要它不随 $n$ 的增大而增大，它依然是 $O(1)$。</p></li>
+<li><p><strong>反直觉事实</strong>：如果 <span class="math notranslate nohighlight">\(f(n) = 8888^{9999}\)</span>，尽管这个数值巨大，但只要它不随 <span class="math notranslate nohighlight">\(n\)</span> 的增大而增大，它依然是 <span class="math notranslate nohighlight">\(O(1)\)</span>。</p></li>
 <li><p><strong>问题本质</strong>：渐进分析关注的是<strong>变化趋势</strong>，而非<strong>绝对耗时</strong>。</p></li>
 </ul>
 </li>
-<li><p><strong>循环体也可以是 $O(1)$</strong>：</p>
+<li><p><strong>循环体也可以是 <span class="math notranslate nohighlight">\(O(1)\)</span></strong>：</p>
 <ul>
 <li><p><strong>反直觉事实</strong>：</p>
 <ul>
 <li><p>简单的例子：<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">from</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">10000</span></code></p></li>
-<li><p>有难度的例子 ：<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">(i=1;</span> <span class="pre">i&lt;n;</span> <span class="pre">i=1&lt;&lt;1)</span></code>，这个复杂度T（n）=O($log^*n$), 是个常数级复杂度，在后续会深入讨论。</p></li>
+<li><p>有难度的例子 ：<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">(i=1;</span> <span class="pre">i&lt;n;</span> <span class="pre">i=1&lt;&lt;1)</span></code>，这个复杂度T（n）=O(<span class="math notranslate nohighlight">\(log^*n\)</span>), 是个常数级复杂度，在后续会深入讨论。</p></li>
 </ul>
 </li>
-<li><p><strong>问题本质</strong>：只要循环的次数是一个固定的常数，那么无论循环内做了什么，整体依然是 $O(1)$。</p></li>
+<li><p><strong>问题本质</strong>：只要循环的次数是一个固定的常数，那么无论循环内做了什么，整体依然是 <span class="math notranslate nohighlight">\(O(1)\)</span>。</p></li>
 </ul>
 </li>
 <li><p><strong>分支逻辑不影响量级</strong>：</p>
 <ul>
-<li><p>代码中包含 <code class="docutils literal notranslate"><span class="pre">if-else</span></code> 分支并不会改变其常数时间的本质。只要每个分支内的操作都是 $O(1)$，整体就是 $O(1)$。</p></li>
+<li><p>代码中包含 <code class="docutils literal notranslate"><span class="pre">if-else</span></code> 分支并不会改变其常数时间的本质。只要每个分支内的操作都是 <span class="math notranslate nohighlight">\(O(1)\)</span>，整体就是 <span class="math notranslate nohighlight">\(O(1)\)</span>。</p></li>
 </ul>
 </li>
 <li><p><strong>函数调用与底层优化</strong>：</p>
 <ul>
-<li><p>即便代码调用了多个函数，只要调用栈深度和每层函数的操作与 $n$ 无关，它就是 $O(1)$。</p></li>
+<li><p>即便代码调用了多个函数，只要调用栈深度和每层函数的操作与 <span class="math notranslate nohighlight">\(n\)</span> 无关，它就是 <span class="math notranslate nohighlight">\(O(1)\)</span>。</p></li>
 </ul>
 </li>
 </ul>
 </section>
 </section>
 <section id="o-log-n">
-<h4>O（$log^* n$）<a class="headerlink" href="#o-log-n" title="Link to this heading"></a></h4>
+<h4>O（<span class="math notranslate nohighlight">\(log^* n\)</span>）<a class="headerlink" href="#o-log-n" title="Link to this heading"></a></h4>
 </section>
 </section>
 </section>
