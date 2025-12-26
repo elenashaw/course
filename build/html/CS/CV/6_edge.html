@@ -1,0 +1,190 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>edge &mdash; Course Notes 0.2 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=65174f78"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Structure Element" href="7_math%20morphology.html" />
+    <link rel="prev" title="contrast enhancement" href="5_image%20enhancement%20in%20spatial%20domain.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Course Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">计算机视觉 (CV) 课程笔记</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html">Image Acquisition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-representation">Image Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-format">image format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-processing-operations">image processing operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3_pixel_neighborhood.html">pixel connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_color.html"></a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_color.html#color-image-processing">color image processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html">contrast enhancement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#noise-reduction">Noise reduction</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">edge</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">边缘检测</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">边缘的产生</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">边缘类型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">边缘检测</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html">Structure Element</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#distance-transform">distance transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#application">application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8_%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E6%93%8D%E4%BD%9C.html">膨胀与腐蚀</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html">texture introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html#structural-method">structural method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html#texture-synthesis">texture synthesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_image_segmentation.html">image segmentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html">review</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#harris">harris 角点检测</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#mops">MOPS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#sift">SIFT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#surf">SURF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12_representation_and_descriptions.html">representation and descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Algos/index.html">算法与数据结构</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Course Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">计算机视觉 (CV) 课程笔记</a></li>
+      <li class="breadcrumb-item active">edge</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/CS/CV/6_edge.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="edge">
+<h1>edge<a class="headerlink" href="#edge" title="Link to this heading"></a></h1>
+<blockquote>
+<div><p>:japanese_ogre:Overview</p>
+</div></blockquote>
+<section id="id1">
+<h2>边缘检测<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<section id="id2">
+<h3>边缘的产生<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>亮度不连续</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>边缘类型<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>step edge</p></li>
+<li><p>ramp edge</p></li>
+<li><p>peak edge</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>边缘检测<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<section id="differential-operator">
+<h4><a class="reference external" href="https://vincmazet.github.io/bip/detection/edges.html">differential operator</a><a class="headerlink" href="#differential-operator" title="Link to this heading"></a></h4>
+<ul>
+<li><p>算子类型</p>
+<ul>
+<li><p>1阶</p></li>
+<li><p>2阶</p>
+<ul>
+<li><p>常用的算子</p>
+<img src="../../../../Users/eleev/AppData/Roaming/Typora/typora-user-images/image-20240311172943767.png" alt="image-20240311172943767" style="zoom:67%;" />
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>阈值+edge</p>
+<ul class="simple">
+<li><p>在有噪声的样本中，需要处理阈值</p></li>
+<li><p>或者预先进行去噪处理</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="5_image%20enhancement%20in%20spatial%20domain.html" class="btn btn-neutral float-left" title="contrast enhancement" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="7_math%20morphology.html" class="btn btn-neutral float-right" title="Structure Element" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, Elena Shaw。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>渐进符号 &mdash; Course Notes 0.2 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=65174f78"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Course Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../CV/index.html">计算机视觉 (CV) 课程笔记</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">算法与数据结构</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Course Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">渐进符号</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/CS/Algos/MemoryOS/asymptotic_complextity.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>渐进符号<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>符号</strong></p></th>
+<th class="head"><p><strong>形象</strong></p></th>
+<th class="head"><p><strong>记忆技巧 (Mnemonics)</strong></p></th>
+<th class="head"><p><strong>逻辑关系 (n→∞)</strong></p></th>
+<th class="head"><p><strong>角色定义</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong><span class="math notranslate nohighlight">\(O\)</span></strong></p></td>
+<td><p><strong>天花板</strong> 👼</p></td>
+<td><p>抬头一看：<strong>“O(n) my god! <span class="math notranslate nohighlight">\(g(n)\)</span> 这么高！”</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(f(n) \le cg(n)\)</span></p></td>
+<td><p><strong>渐进上界</strong> (最坏打算)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong><span class="math notranslate nohighlight">\(\Omega\)</span></strong></p></td>
+<td><p><strong>船锚</strong> ⚓</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Omega\)</span> 像个沉在底部的<strong>船锚</strong>，实际函数像小船被锚勾住。</p></td>
+<td><p><span class="math notranslate nohighlight">\(f(n) \ge cg(n)\)</span></p></td>
+<td><p><strong>渐进下界</strong> (最好预期)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong><span class="math notranslate nohighlight">\(\Theta\)</span></strong></p></td>
+<td><p><strong>小船</strong> 🛥️</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta\)</span> 本身像个小船，代表实际函数<strong>波动的范围</strong>。</p></td>
+<td><p><span class="math notranslate nohighlight">\(f(n) \approx g(n)\)</span></p></td>
+<td><p><strong>紧确界</strong> (精准刻画)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong><span class="math notranslate nohighlight">\(o\)</span></strong></p></td>
+<td><p><strong>氢气球</strong> 🎈</p></td>
+<td><p><strong>“o”</strong> 像轻盈的氢气球，<strong>向上飘走</strong>，消失在视线尽头。</p></td>
+<td><p><span class="math notranslate nohighlight">\(f(n) \ll g(n)\)</span></p></td>
+<td><p><strong>严格小于</strong> (增速远慢)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong><span class="math notranslate nohighlight">\(\omega\)</span></strong></p></td>
+<td><p><strong>火山口</strong> 🌋</p></td>
+<td><p><strong><span class="math notranslate nohighlight">\(\omega\)</span></strong> 是<strong>深海火山口</strong>，常年沉在海底，落差极大。</p></td>
+<td><p><span class="math notranslate nohighlight">\(f(n) \gg g(n)\)</span></p></td>
+<td><p><strong>严格大于</strong> (增速远快)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, Elena Shaw。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

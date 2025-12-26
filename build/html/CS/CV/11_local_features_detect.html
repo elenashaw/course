@@ -1,0 +1,247 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>review &mdash; Course Notes 0.2 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=65174f78"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="representation and descriptions" href="12_representation_and_descriptions.html" />
+    <link rel="prev" title="image segmentation" href="10_image_segmentation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Course Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">计算机视觉 (CV) 课程笔记</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html">Image Acquisition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-representation">Image Representation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-format">image format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-processing-operations">image processing operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3_pixel_neighborhood.html">pixel connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_color.html"></a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_color.html#color-image-processing">color image processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html">contrast enhancement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#noise-reduction">Noise reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6_edge.html">edge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html">Structure Element</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#distance-transform">distance transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#application">application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8_%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E6%93%8D%E4%BD%9C.html">膨胀与腐蚀</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html">texture introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html#structural-method">structural method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9_texture.html#texture-synthesis">texture synthesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_image_segmentation.html">image segmentation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">review</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#harris">harris 角点检测</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">基本处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">算法特性</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mops">MOPS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sift">SIFT</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">步骤</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">细节</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">缺陷：</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#surf">SURF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12_representation_and_descriptions.html">representation and descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Algos/index.html">算法与数据结构</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Course Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">计算机视觉 (CV) 课程笔记</a></li>
+      <li class="breadcrumb-item active">review</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/CS/CV/11_local_features_detect.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="review">
+<h1>review<a class="headerlink" href="#review" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p>角点的检测
+*</p></li>
+<li><p>描述子：descriptor</p></li>
+<li><p>检测的特点</p>
+<ul>
+<li><p>不变性：仿射变换后依然能检测</p></li>
+<li><p>SIFT:scale invariant feature tranform</p>
+<ul>
+<li><p>尺度不变性</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>找兴趣点-&gt;找描述子</p>
+<ul>
+<li><p>描述子：特征点周围像素的信息</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="harris">
+<h1>harris 角点检测<a class="headerlink" href="#harris" title="Link to this heading"></a></h1>
+<section id="id1">
+<h2>基本处理<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>窗口检测</p>
+<ul>
+<li><p>flat</p></li>
+<li><p>edge（两条线的交点）</p></li>
+<li><p>corner</p></li>
+</ul>
+</li>
+<li><p>高斯平滑去除噪点</p></li>
+<li><p>非极大值抑制</p></li>
+<li><p>阈值选择</p></li>
+<li></li>
+</ul>
+</section>
+<section id="id2">
+<h2>算法特性<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>不变性：平移，旋转不变性（特征值不变）</p></li>
+<li><p>尺度会影响角点的检测</p></li>
+</ul>
+</section>
+</section>
+<section id="mops">
+<h1>MOPS<a class="headerlink" href="#mops" title="Link to this heading"></a></h1>
+</section>
+<section id="sift">
+<h1>SIFT<a class="headerlink" href="#sift" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p>local features</p></li>
+<li><p>特点</p>
+<ul>
+<li><p>对遮挡具有鲁棒性</p></li>
+</ul>
+</li>
+</ul>
+<section id="id3">
+<h2>步骤<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Scale-space peak selection:</strong> Potential location for finding features.
+尺度空间峰值选择：寻找特征的潜在位置。</p></li>
+<li><p><strong>Keypoint Localization:</strong> Accurately locating the feature keypoints.
+关键点定位：准确定位特征关键点。</p></li>
+<li><p><strong>Orientation Assignment:</strong> Assigning orientation to keypoints.
+方向分配：为关键点分配方向。</p></li>
+<li><p><strong>Keypoint descriptor:</strong> Describing the keypoints as a high dimensional vector.
+关键点描述符：将关键点描述为高维向量。</p></li>
+<li><p><strong>Keypoint Matching 关键点匹配</strong></p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>细节<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>LoG: 稳定性</p></li>
+<li><p>高斯金字塔：</p>
+<ul>
+<li><p>降采样的多个金子塔</p></li>
+<li><p>每一层有不同的方差高斯模糊图片</p></li>
+<li><p>DOG：进行差分</p></li>
+<li><p><img alt="img" src="https://miro.medium.com/v2/resize:fit:607/0*DlULvyAuyXb1mSWb.jpg" /></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id5">
+<h2>缺陷：<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>光滑边缘难以提取特征点</p></li>
+<li><p>实时性差</p></li>
+</ul>
+</section>
+</section>
+<section id="surf">
+<h1>SURF<a class="headerlink" href="#surf" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p>speeded up robust features</p></li>
+<li></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="10_image_segmentation.html" class="btn btn-neutral float-left" title="image segmentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="12_representation_and_descriptions.html" class="btn btn-neutral float-right" title="representation and descriptions" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, Elena Shaw。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
