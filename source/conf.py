@@ -9,12 +9,12 @@ import sys
 
 # -- Project information -----------------------------------------------------
 
-project = 'Course Base'
+project = 'Course Notes'
 copyright = '2025, Elena Shaw'
 author = 'Elena Shaw'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1'
+release = '0.2'
 
 
 # -- General configuration ---------------------------------------------------
