@@ -11,10 +11,14 @@
             "id": "dfc7b7558922a2c2",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "basic_theories/asymptotic_complexity.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "asymptotic_complexity"
             }
           }
         ]
@@ -90,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "basic_theories/asymptotic_complexity.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "反向链接"
+              "title": "asymptotic_complexity 的反向链接列表"
             }
           },
           {
@@ -108,11 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "basic_theories/asymptotic_complexity.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "出链"
+              "title": "asymptotic_complexity 的出链列表"
             }
           },
           {
@@ -150,12 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "basic_theories/asymptotic_complexity.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "大纲"
+              "title": "asymptotic_complexity 的大纲"
             }
           }
         ]
@@ -178,6 +185,9 @@
   },
   "active": "dfc7b7558922a2c2",
   "lastOpenFiles": [
+    "basic_theories/index.md",
+    "basic_theories/新建 文本文档.txt",
+    "basic_theories/新建文件夹",
     "basic_theories/asymptotic_complexity.md",
     "basic_theories/computation_models.md",
     "basic_theories",
