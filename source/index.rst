@@ -5,7 +5,8 @@ Elena's Space
    :maxdepth: 2
    :hidden:
 
-   CS/CV/index
    CS/Algos/index
+   CS/OS/index
+   CS/CV/index
    MATH/calculus
-   ME/calculus
+  
