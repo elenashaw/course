@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第四题：Cache 行（Cache Line）的设计优势 &mdash; Course Notes 0.2 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=65174f78"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Course Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../CV/index.html">计算机视觉 (CV) 课程笔记</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Algos/index.html">算法与数据结构</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Course Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">第四题：Cache 行（Cache Line）的设计优势</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/CS/OS/习题/引论习题.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <blockquote>
+<div><p>选自Modern Operating Systems, Fourth Edition, by Andrew S. Tanenbaum</p>
+</div></blockquote>
+<section id="cache-cache-line">
+<span id="mos-ch1-q4"></span><h1>第四题：Cache 行（Cache Line）的设计优势<a class="headerlink" href="#cache-cache-line" title="Link to this heading"></a></h1>
+<p>为了使用高速缓存，主存被划分为若干cache行，通常每行长32或64字节。每次缓存一整个cache行。每次缓存一整行而不是一个字节或一个字，这样做的优点是什么？</p>
+<ul class="simple">
+<li><p><em><strong>利用空间局部性：</strong> 程序通常会访问相邻的内存地址，将一整行载入 Cache 可以显著提高后续访问的</em><em>命中率</em>*。</p></li>
+<li><p><strong>提高总线传输效率：</strong> 主存与 Cache 之间的块交换能充分利用<strong>突发传输模式</strong>，提高带宽利用率，减少多次请求带来的握手开</p></li>
+<li><p><strong>降低硬件维护成本：</strong> 以行为单位存储可以减少 Cache 标签（Tag）的数量，简化地址映射逻辑。</p></li>
+</ul>
+</section>
+<section id="i-o">
+<span id="mos-ch1-q6"></span><h1>第六题：特权指令与 I/O 访问<a class="headerlink" href="#i-o" title="Link to this heading"></a></h1>
+<p>与访问I/O设备相关的指令通常是特权指令，也就是说，它们能在内核态执行而在用户态则不行。说明为什么这些指令是特权指令。</p>
+<ul class="simple">
+<li><p><strong>保护系统安全与隐私：</strong> I/O 设备（如磁盘、键盘、网卡）属于全局共享资源。如果允许用户程序直接执行 I/O 指令，恶意程序就能绕过权限直接读取他人的文件或监听键盘输入。通过设为特权指令，所有 I/O 操作必须由<strong>内核</strong>代为执行，内核会在操作前检查进程是否有相应权限。</p></li>
+<li><p><strong>防止硬件冲突与资源争用：</strong> 许多 I/O 设备在同一时刻只能由一个进程使用（如打印机）。如果多个用户程序同时直接向硬件发送指令，会导致数据混乱甚至硬件损坏。内核作为“管家”，通过特权指令统一接收请求并进行排队管理，确保了设备访问的有序性。</p></li>
+<li><p><strong>提高系统调度效率（回应学生的阻塞点）：</strong> I/O 操作通常比 CPU 慢得多。通过将 I/O 限制在内核态，当阻塞发生时，内核能<strong>立即感知</strong>并主动将当前进程挂起（切入等待态），将 CPU 资源分配给其他就绪进程，从而防止 CPU 因为等待某个用户程序的 I/O 响应而处于“盲等”状态。</p></li>
+</ul>
+<p>举个手机使用例子</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>手机操作</strong></p></th>
+<th class="head"><p><strong>计算机底层术语</strong></p></th>
+<th class="head"><p><strong>严谨的物理/逻辑发生过程</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>APP 正在滤镜处理</p></td>
+<td><p><strong>用户态 (User Mode)</strong></p></td>
+<td><p>CPU 仅执行算术逻辑指令。如果此时 APP 试图强行读闪存，硬件会触发“非法指令”异常直接关闭 APP。</p></td>
+</tr>
+<tr class="row-odd"><td><p>APP 点击“打开相册”</p></td>
+<td><p><strong>系统调用 (System Call)</strong></p></td>
+<td><p>APP 执行 <code class="docutils literal notranslate"><span class="pre">SVC</span></code> (iOS) 或 <code class="docutils literal notranslate"><span class="pre">INT</span></code> 指令触发 <strong>Trap</strong>，CPU 状态位由用户态切换为内核态。</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>系统核对权限</strong></p></td>
+<td><p><strong>内核态下的权限检查</strong></p></td>
+<td><p>内核查询权限数据库。<strong>若无授权且是首次申请</strong>，内核挂起该 APP，切换到 UI 进程弹出确认框。</p></td>
+</tr>
+<tr class="row-odd"><td><p>用户点击“允许”</p></td>
+<td><p><strong>状态恢复与调度</strong></p></td>
+<td><p>内核记录授权，将 APP 从“阻塞态”恢复。</p></td>
+</tr>
+<tr class="row-even"><td><p>读取照片数据流</p></td>
+<td><p><strong>特权模式执行 (Ring 0)</strong></p></td>
+<td><p>CPU 在内核态下，由驱动程序发出 <strong>I/O 特权指令</strong>（如读写 I/O 端口/寄存器），真正从闪存拉取数据。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="vs">
+<span id="mos-ch1-q10"></span><h1>第十题：内核态 vs 用户态<a class="headerlink" href="#vs" title="Link to this heading"></a></h1>
+<p>内核态和用户态有哪些区别？解释在设计操作系统时存在两种不同的模式有什么帮助。</p>
+<p><strong>区别：</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>维度</strong></p></th>
+<th class="head"><p><strong>用户态 (User Mode)</strong></p></th>
+<th class="head"><p><strong>内核态 (Kernel Mode)</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>指令权限</strong></p></td>
+<td><p><strong>受限</strong>。只能执行非特权指令。如果尝试执行特权指令，会触发硬件异常。</p></td>
+<td><p><strong>完全权限</strong>。可以执行所有指令，包括特权指令（如 I/O 控制、中断处理）。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>内存访问</strong></p></td>
+<td><p>只能访问分配给该进程的<strong>用户空间地址</strong>，受硬件保护。</p></td>
+<td><p>可以访问系统的<strong>所有内存空间</strong>（包括内核代码、数据及所有进程空间）。</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>运行角色</strong></p></td>
+<td><p>运行应用程序（如浏览器、办公软件、手机 APP）。</p></td>
+<td><p>运行操作系统的核心（内核），直接管理硬件资源。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>CPU 状态位</strong></p></td>
+<td><p>CPU 中的模式位（Mode Bit）通常为 1（代表低特权级）。</p></td>
+<td><p>CPU 中的模式位（Mode Bit）通常为 0（代表最高特权级）。</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>设计两种不同模式对操作系统的帮助</strong></p>
+<ol class="arabic">
+<li><p>保护系统<strong>安全</strong>（防范恶意与错误）</p>
+<p>通过限制特权指令，防止普通程序直接控制硬件或读取其他进程的数据。</p>
+</li>
+<li><p>提升系统<strong>稳定性</strong>（故障隔离）</p>
+<p>在用户态运行的程序即使发生崩溃（如死循环或内存越界），只会导致该进程被关闭，而不会导致整个操作系统宕机。</p>
+</li>
+<li><p>实现资源公平<strong>调度</strong>（防止独占）</p>
+<p>内核态下的特权指令可以控制<strong>时钟中断</strong>。即使一个用户程序卡死了，内核也能通过时钟中断强制夺回 CPU 控制权（切换到内核态），然后调度其他进程运行。</p>
+</li>
+<li><p>屏蔽底层细节（<strong>硬件抽象</strong>）</p>
+<p>用户态程序无需关心具体的硬件寄存器和握手协议。开发者只需调用简单的系统接口（系统调用），复杂的硬件控制由内核在内核态下安全、高效地完成。</p>
+</li>
+</ol>
+</section>
+<section id="amat">
+<span id="id1"></span><h1>第十五题: 平均存储访问时间 (AMAT) 计算<a class="headerlink" href="#amat" title="Link to this heading"></a></h1>
+<p>假设一个计算机系统有高速缓存、内存 (RAM) 以及磁盘，操作系统用虚拟内存。读取缓存中的一个词需要 1ns，RAM 需要 10ns，磁盘需要 10ms。如果缓存的命中率是 95%，内存的是 99% (缓存失效时)，读取一个词的平均时间是多少？</p>
+<ul>
+<li><p><strong>已知条件：</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(T_{cache} = 1\text{ ns}\)</span>，命中率 <span class="math notranslate nohighlight">\(H_1 = 95\%\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(T_{ram} = 10\text{ ns}\)</span>，命中率 <span class="math notranslate nohighlight">\(H_2 = 99\%\)</span> (在缓存未命中前提下)</p></li>
+<li><p><span class="math notranslate nohighlight">\(T_{disk} = 10\text{ ms} = 10,000,000\text{ ns}\)</span></p></li>
+</ul>
+</li>
+<li><p><strong>计算公式：</strong></p>
+<div class="math notranslate nohighlight">
+\[
+    AMAT=t1+m1×t2+(m1×m2)×t3​
+    \]</div>
+</li>
+<li><p><strong>计算过程：</strong></p>
+<ul>
+<li><p>直接命中缓存：<span class="math notranslate nohighlight">\(0.95 \times 1\text{ ns}\)</span></p></li>
+<li><p>缓存未命中 (<span class="math notranslate nohighlight">\(1 - 0.95 = 0.05\)</span>)，但内存命中：<span class="math notranslate nohighlight">\(0.05 \times 0.99 \times 10\text{ ns}\)</span></p></li>
+<li><p>缓存与内存皆未命中 (<span class="math notranslate nohighlight">\(0.05 \times 0.01\)</span>)，需读取磁盘：<span class="math notranslate nohighlight">\(0.05 \times 0.01 \times 10,000,000\text{ ns}\)</span>
+<div class="math notranslate nohighlight">
+\[T_{avg} = (0.95 \times 1) + (0.05 \times 0.99 \times 10) + (0.05 \times 0.01 \times 10,000,000)\]</div>
+
+<div class="math notranslate nohighlight">
+\[T_{avg} = 0.95 + 0.495 + 5000 = 5001.445\text{ ns}\]</div>
+​</p>
+<blockquote>
+<div><p>[!note]</p>
+<p>AMAT是个简化模型，具体请参考COA-&gt;层次化存储-&gt;AMAT</p>
+</div></blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="trap-instruction">
+<span id="mos-ch1-q17"></span><h1>第十七题: 陷阱指令 (Trap Instruction)<a class="headerlink" href="#trap-instruction" title="Link to this heading"></a></h1>
+<p>什么是陷阱指令？在操作系统中解释它的用途</p>
+<ul>
+<li><p class="rubric" id="definition">1. 陷阱指令的定义 (Definition)</p>
+<p><strong>陷阱指令</strong>（又称<strong>访管指令</strong>或<strong>自愿中断指令</strong>）是一种特殊的处理器指令，它通过触发一个<strong>同步异常</strong>（Synchronous Exception），使处理器主动从<strong>用户态</strong>（User Mode）切换到<strong>内核态</strong>（Kernel Mode）。</p>
+<ul class="simple">
+<li><p><strong>执行本质</strong>：它不是一种出错导致的意外，而是程序员在代码中显式编写的指令，旨在**“自愿**”进入内核空间。</p></li>
+<li><p><strong>硬件行为</strong>：执行该指令时，CPU 会自动完成以下操作：<strong>保存</strong>当前的程序状态（如 PC 指针、寄存器），提升特权等级，并根据<strong>中断向量表</strong>跳转到预设的<strong>内核处理程序入口</strong>。</p></li>
+</ul>
+<p class="rubric" id="purposes">2. 在操作系统中的用途 (Purposes)</p>
+<p class="rubric" id="a-system-call-interface">A. 实现系统调用 (System Call Interface) —— <strong>最主要用途</strong></p>
+<p>由于硬件保护机制，用户程序无法直接执行特权指令（如操作硬盘、分配物理内存）。陷阱指令充当了用户程序与内核之间的<strong>唯一合法接口</strong>。</p>
+<ul class="simple">
+<li><p><strong>例子</strong>：当程序需要打印文字到屏幕时，会调用 <code class="docutils literal notranslate"><span class="pre">printf()</span></code>，其底层最终执行一条陷阱指令，请求内核代为操作显示器。</p></li>
+</ul>
+<p class="rubric" id="b-privilege-transition-security">B. 权限切换与安全保护 (Privilege Transition &amp; Security)</p>
+<p>陷阱指令提供了一种<strong>受控的</strong>特权提升方式。</p>
+<ul class="simple">
+<li><p>它确保用户<strong>不能随意跳转到内核</strong>的任意位置执行代码，而只能跳转到内核<strong>指定的“门”或“服务例程”</strong>。这防止了恶意软件通过直接访问内存或硬件来破坏系统。</p></li>
+</ul>
+<p class="rubric" id="c-debugging-error-handling">C. 软件调试与错误处理 (Debugging &amp; Error Handling)</p>
+<ul class="simple">
+<li><p><strong>断点设置</strong>：调试器（如 GDB）通过在目标代码中<strong>插入陷阱指令</strong>来<strong>实现“断点”</strong>。当程序运行到此处，会产生陷阱并把控制权交给调试器，允许查看变量状态。</p></li>
+<li><p><strong>程序监控</strong>：当程序执行了某些<strong>非法操作</strong>（如除零）时，硬件也会触发类似陷阱的机制（有时统称为异常），让操作系统接管并优雅地处理。</p></li>
+</ul>
+<blockquote>
+<div><p>[!note]</p>
+<p id="os-exception"><strong>异常（exception）</strong></p>
+<ul class="simple">
+<li><p><strong>异常</strong>是指 CPU 在执行指令过程中检测到的、由于指令执行本身引起的“不寻常”事件。</p></li>
+</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>类别</strong></p></th>
+<th class="head"><p><strong>产生原因</strong></p></th>
+<th class="head"><p><strong>例子</strong></p></th>
+<th class="head"><p><strong>恢复行为 (返回地址)</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Trap (陷阱)</strong></p></td>
+<td><p><strong>指令有意触发</strong></p></td>
+<td><p>系统调用、程序断点</p></td>
+<td><p><strong>返回下一条指令</strong>：处理完后，CPU 执行 Trap 之后的指令。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Fault (故障)</strong></p></td>
+<td><p><strong>指令潜在错误</strong></p></td>
+<td><p>缺页异常、分段错误</p></td>
+<td><p><strong>重新执行当前指令</strong>：修复环境后（如把页调入内存），CPU 会尝试再次运行报错的那条指令。</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Abort (终止)</strong></p></td>
+<td><p><strong>不可恢复硬件错误</strong></p></td>
+<td><p>RAM 奇偶校验错、总线错误</p></td>
+<td><p><strong>无法返回</strong>：程序状态已损坏，操作系统通常直接终止该进程。</p></td>
+</tr>
+</tbody>
+</table>
+<p>**中断（Interrupt）**与异常的对比</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>特性</strong></p></th>
+<th class="head"><p><strong>异常 (Exception / Internal Interrupt)</strong></p></th>
+<th class="head"><p><strong>中断 (Interrupt / External Interrupt)</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>来源</strong></p></td>
+<td><p><strong>CPU 内部</strong>（当前执行的指令）。</p></td>
+<td><p><strong>CPU 外部</strong>（外部设备，如键盘、磁盘、时钟）。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>同步性</strong></p></td>
+<td><p><strong>同步</strong>。与指令执行节奏一致。</p></td>
+<td><p><strong>异步</strong>。随时可能发生，与当前指令无关。</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>典型例子</strong></p></td>
+<td><p>陷阱 (Trap)、故障 (Fault)、终止 (Abort)。</p></td>
+<td><p>键盘输入、磁盘 I/O 完成、时钟脉冲。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>处理逻辑</strong></p></td>
+<td><p>必须由当前指令的处理流程来响应。</p></td>
+<td><p>CPU 在执行完当前指令后，检查中断引脚。</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, Elena Shaw。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
