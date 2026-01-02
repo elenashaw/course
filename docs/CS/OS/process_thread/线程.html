@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1.1. 1. 用户线程 (User-Level Thread, ULT) &mdash; Course Notes 0.2 文档</title>
+  <title>1.1. 线程 &mdash; Course Notes 0.2 文档</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
@@ -46,11 +46,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../Algos/index.html">数据结构与算法</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">操作系统</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 进程和线程</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">1.1. 1. 用户线程 (User-Level Thread, ULT)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#kernel-level-thread-klt">1.2. 2. 内核线程 (Kernel-Level Thread, KLT)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#hybrid-threading">1.3. 3. 混合线程 (Hybrid Threading)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id1">1.4. 核心区别总结表</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">1.5. </a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.1. 线程</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">用户态线程和内核态线程模型</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../%E4%B9%A0%E9%A2%98/index.html">2. 习题</a></li>
@@ -75,7 +74,7 @@
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html">操作系统</a></li>
           <li class="breadcrumb-item"><a href="index.html"><span class="section-number">1. </span>进程和线程</a></li>
-      <li class="breadcrumb-item active"><span class="section-number">1.1. </span>1. 用户线程 (User-Level Thread, ULT)</li>
+      <li class="breadcrumb-item active"><span class="section-number">1.1. </span>线程</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../_sources/CS/OS/process_thread/线程.md.txt" rel="nofollow"> 查看页面源码</a>
       </li>
@@ -85,8 +84,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="user-level-thread-ult">
-<h1><span class="section-number">1.1. </span>1. 用户线程 (User-Level Thread, ULT)<a class="headerlink" href="#user-level-thread-ult" title="Link to this heading"></a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">1.1. </span>线程<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<section id="id2">
+<h2>用户态线程和内核态线程模型<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<section id="user-level-thread-ult">
+<h3>1. 用户线程 (User-Level Thread, ULT)<a class="headerlink" href="#user-level-thread-ult" title="Link to this heading"></a></h3>
 <p>用户线程完全在<strong>用户空间</strong>中创建和管理。操作系统内核完全不知道这些线程的存在，它只看到一个“进程”。</p>
 <ul class="simple">
 <li><p><strong>模型</strong>：<strong>多对一 (Many-to-One)</strong>。多个用户线程映射到一个内核线程（或进程）。</p></li>
@@ -103,10 +106,10 @@
 </ul>
 </li>
 </ul>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
 <section id="kernel-level-thread-klt">
-<h1><span class="section-number">1.2. </span>2. 内核线程 (Kernel-Level Thread, KLT)<a class="headerlink" href="#kernel-level-thread-klt" title="Link to this heading"></a></h1>
+<h3>2. 内核线程 (Kernel-Level Thread, KLT)<a class="headerlink" href="#kernel-level-thread-klt" title="Link to this heading"></a></h3>
 <p>内核线程由<strong>操作系统内核</strong>直接管理。内核为每个线程维护上下文信息，并负责调度。</p>
 <ul class="simple">
 <li><p><strong>模型</strong>：<strong>一对一 (One-to-One)</strong>。每个用户线程对应一个独立的内核实体（Linux 的 NPTL 库就是这种模式）。</p></li>
@@ -122,10 +125,10 @@
 </ul>
 </li>
 </ul>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
 <section id="hybrid-threading">
-<h1><span class="section-number">1.3. </span>3. 混合线程 (Hybrid Threading)<a class="headerlink" href="#hybrid-threading" title="Link to this heading"></a></h1>
+<h3>3. 混合线程 (Hybrid Threading)<a class="headerlink" href="#hybrid-threading" title="Link to this heading"></a></h3>
 <p>结合了上述两者的优点。用户空间有一套线程库，内核空间也有内核线程支持，两者通过多对多的方式映射。</p>
 <ul class="simple">
 <li><p><strong>模型</strong>：<strong>多对多 (Many-to-Many)</strong>。</p></li>
@@ -137,10 +140,10 @@
 </li>
 <li><p><strong>典型案例</strong>：早期的一些 UNIX 系统（如 Solaris）和现代的 Go 语言（其 <strong>Goroutine</strong> 实际上就是一种在用户态实现的、高度优化的混合调度模型）。</p></li>
 </ul>
-<hr class="docutils" />
 </section>
-<section id="id1">
-<h1><span class="section-number">1.4. </span>核心区别总结表<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+<section id="id3">
+<h3>核心区别总结表<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p><strong>特性</strong></p></th>
@@ -178,8 +181,10 @@
 </tbody>
 </table>
 </section>
-<section id="id2">
-<h1><span class="section-number">1.5. </span><a class="headerlink" href="#id2" title="Link to this heading"></a></h1>
+<section id="id4">
+<h3><a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+</section>
+</section>
 </section>
 
 

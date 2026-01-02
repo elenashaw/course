@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1. 进程和线程 &mdash; Course Notes 0.2 文档</title>
+  <title>进程和线程 &mdash; Course Notes 0.2 文档</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
@@ -18,9 +18,7 @@
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="索引" href="../../../genindex.html" />
-    <link rel="search" title="搜索" href="../../../search.html" />
-    <link rel="next" title="1.1. 线程" href="%E7%BA%BF%E7%A8%8B.html" />
-    <link rel="prev" title="操作系统" href="../index.html" /> 
+    <link rel="search" title="搜索" href="../../../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -42,16 +40,9 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../Algos/index.html">数据结构与算法</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">操作系统</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">1. 进程和线程</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="%E7%BA%BF%E7%A8%8B.html">1.1. 线程</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../%E4%B9%A0%E9%A2%98/index.html">2. 习题</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">操作系统</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../CV/index.html">计算机视觉 (CV) 课程笔记</a></li>
 </ul>
 
@@ -69,10 +60,9 @@
           <div role="navigation" aria-label="页面导航">
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../index.html">操作系统</a></li>
-      <li class="breadcrumb-item active"><span class="section-number">1. </span>进程和线程</li>
+      <li class="breadcrumb-item active">进程和线程</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../../_sources/CS/OS/process_thread/index.md.txt" rel="nofollow"> 查看页面源码</a>
+            <a href="../../../_sources/CS/OS/MemoryOS/进程和线程.md.txt" rel="nofollow"> 查看页面源码</a>
       </li>
   </ul>
   <hr/>
@@ -81,22 +71,38 @@
            <div itemprop="articleBody">
              
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">1. </span>进程和线程<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
-<p>这里是关于进程、线程以及调度的基础知识。</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="%E7%BA%BF%E7%A8%8B.html">1.1. 线程</a></li>
+<h1>进程和线程<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<section id="id2">
+<h2>进程间通信<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<section id="id3">
+<h3>三种原始且错误的方法<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>由于这三种方法原始（call of nature）错误(notorious)，所以使用厕所来记忆。🚽</p>
+<ol class="arabic simple">
+<li><p>屏蔽中断法</p>
+<ul class="simple">
+<li><p>上厕所的人把厕所管理员钥匙拿走，把所有人锁在外面，自己在里面想待多久待多久</p></li>
 </ul>
-</div>
+</li>
+<li><p>锁变量</p>
+<ul class="simple">
+<li><p>厕所工会觉得上面的方法让管理员的工作受到打击，而且大家都得排队上厕所。于是买了带有红绿色门显示器放在厕所门口，看到绿色就是没人，你就自己进厕所吧。看到红色你就别进去了</p></li>
+<li><p>但是意外发生了，一个人看到绿色的灯，正准备去进去锁门呢。就被管理员叫走了，又叫了一个人进来。后面这个人一看，灯是绿色的，直接进去，把灯换成红色。后来那个人回来了，他尿意紧张，以为灯还是绿色，直接冲进去了</p></li>
+</ul>
+</li>
+<li><p>严格轮换法</p>
+<ul class="simple">
+<li><p>厕所社区的人常常遇到上面的尴尬情况，上着厕所的时候就有一个人冲进来。他们起诉了管理员。管理员无奈，就在厕所大门写了一张时间表，写了每个人什么时候来上厕所。大家必须在指定时间自己去上厕所。</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
 </section>
 
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
-        <a href="../index.html" class="btn btn-neutral float-left" title="操作系统" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
-        <a href="%E7%BA%BF%E7%A8%8B.html" class="btn btn-neutral float-right" title="1.1. 线程" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 
