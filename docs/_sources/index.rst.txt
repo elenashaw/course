@@ -8,6 +8,7 @@ Elena's Space
    CS/Algos/index
    CS/OS/index
    CS/CV/index
+   CS/DL/index
    CS/Mainfold/index
    MATH/calculus
   
