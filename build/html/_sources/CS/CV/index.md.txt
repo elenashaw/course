@@ -3,13 +3,8 @@
 这里是我关于计算机视觉课程的详细笔记。
 
 ```{toctree}
-# 计算机视觉 (CV) 课程笔记
-
-```{toctree}
----
-maxdepth: 1
-titlesonly: true
----
+:maxdepth: 1
+:titlesonly: true
 
 1_intro
 2_Image representation

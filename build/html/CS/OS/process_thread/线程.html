@@ -1,0 +1,222 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.1. 线程 &mdash; Course Notes 0.2 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=65174f78"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="2. 习题" href="../%E4%B9%A0%E9%A2%98/index.html" />
+    <link rel="prev" title="1. 进程和线程" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Course Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Algos/index.html">数据结构与算法</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">操作系统</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 进程和线程</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.1. 线程</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">用户态线程和内核态线程模型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../%E4%B9%A0%E9%A2%98/index.html">2. 习题</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../CV/index.html">计算机视觉 (CV) 课程笔记</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DL/index.html">深度学习</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Course Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">操作系统</a></li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">1. </span>进程和线程</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">1.1. </span>线程</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/CS/OS/process_thread/线程.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">1.1. </span>线程<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<section id="id2">
+<h2>用户态线程和内核态线程模型<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<section id="user-level-thread-ult">
+<h3>1. 用户线程 (User-Level Thread, ULT)<a class="headerlink" href="#user-level-thread-ult" title="Link to this heading"></a></h3>
+<p>用户线程完全在<strong>用户空间</strong>中创建和管理。操作系统内核完全不知道这些线程的存在，它只看到一个“进程”。</p>
+<ul class="simple">
+<li><p><strong>模型</strong>：<strong>多对一 (Many-to-One)</strong>。多个用户线程映射到一个内核线程（或进程）。</p></li>
+<li><p><strong>优点</strong>：</p>
+<ul>
+<li><p><strong>极速切换</strong>：线程切换不需要进入内核态，没有系统调用开销。</p></li>
+<li><p><strong>灵活性高</strong>：可以在不支持线程的旧系统中实现，调度算法由程序员自定义。</p></li>
+</ul>
+</li>
+<li><p><strong>缺点</strong>：</p>
+<ul>
+<li><p><strong>一堵全堵</strong>：如果一个线程发起了阻塞式系统调用（如磁盘读取），内核会挂起整个进程，导致所有线程都停止运行。</p></li>
+<li><p><strong>无法并行</strong>：因为内核只分配一个 CPU 给进程，所以无法在多核 CPU 上同时运行多个用户线程。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="kernel-level-thread-klt">
+<h3>2. 内核线程 (Kernel-Level Thread, KLT)<a class="headerlink" href="#kernel-level-thread-klt" title="Link to this heading"></a></h3>
+<p>内核线程由<strong>操作系统内核</strong>直接管理。内核为每个线程维护上下文信息，并负责调度。</p>
+<ul class="simple">
+<li><p><strong>模型</strong>：<strong>一对一 (One-to-One)</strong>。每个用户线程对应一个独立的内核实体（Linux 的 NPTL 库就是这种模式）。</p></li>
+<li><p><strong>优点</strong>：</p>
+<ul>
+<li><p><strong>真并发</strong>：多个线程可以被调度到不同的 CPU 核心上，实现真正的并行计算。</p></li>
+<li><p><strong>互不干扰</strong>：一个线程阻塞不会影响同一进程中的其他线程。</p></li>
+</ul>
+</li>
+<li><p><strong>缺点</strong>：</p>
+<ul>
+<li><p><strong>开销较大</strong>：每次创建、销毁或切换线程都需要进行用户态和内核态的切换（系统调用），消耗资源较多。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="hybrid-threading">
+<h3>3. 混合线程 (Hybrid Threading)<a class="headerlink" href="#hybrid-threading" title="Link to this heading"></a></h3>
+<p>结合了上述两者的优点。用户空间有一套线程库，内核空间也有内核线程支持，两者通过多对多的方式映射。</p>
+<ul class="simple">
+<li><p><strong>模型</strong>：<strong>多对多 (Many-to-Many)</strong>。</p></li>
+<li><p><strong>优点</strong>：</p>
+<ul>
+<li><p><strong>效率与并发兼得</strong>：开发者可以创建大量用户线程，而内核只调度适量的内核线程来承载它们。</p></li>
+<li><p><strong>避免阻塞</strong>：如果某个用户线程被阻塞，内核可以将其映射到的内核线程暂时挂起，并调度另一个内核线程来执行其他用户线程。</p></li>
+</ul>
+</li>
+<li><p><strong>典型案例</strong>：早期的一些 UNIX 系统（如 Solaris）和现代的 Go 语言（其 <strong>Goroutine</strong> 实际上就是一种在用户态实现的、高度优化的混合调度模型）。</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="id3">
+<h3>核心区别总结表<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>特性</strong></p></th>
+<th class="head"><p><strong>用户线程 (ULT)</strong></p></th>
+<th class="head"><p><strong>内核线程 (KLT)</strong></p></th>
+<th class="head"><p><strong>混合线程 (Hybrid)</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>映射关系</strong></p></td>
+<td><p>多对一 (N:1)</p></td>
+<td><p>一对一 (1:1)</p></td>
+<td><p>多对多 (M:N)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>管理位置</strong></p></td>
+<td><p>用户空间 (线程库)</p></td>
+<td><p>内核空间 (OS)</p></td>
+<td><p>两者共同协作</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>切换速度</strong></p></td>
+<td><p>极快 (无需陷入内核)</p></td>
+<td><p>较慢 (涉及上下文切换)</p></td>
+<td><p>介于两者之间</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>阻塞影响</strong></p></td>
+<td><p>一个阻塞，全进程阻塞</p></td>
+<td><p>互不影响</p></td>
+<td><p>部分影响/可动态调整</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>多核利用</strong></p></td>
+<td><p>无法利用多核</p></td>
+<td><p>完美利用多核</p></td>
+<td><p>完美利用多核</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h3><a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="index.html" class="btn btn-neutral float-left" title="1. 进程和线程" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../%E4%B9%A0%E9%A2%98/index.html" class="btn btn-neutral float-right" title="2. 习题" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, Elena Shaw。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

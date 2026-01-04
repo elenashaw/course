@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1.2. 🚀 渐进复杂度 (Asymptotic Complexity) &mdash; Course Notes 0.2 文档</title>
+  <title>1.2. 渐进复杂度 (Asymptotic Complexity) &mdash; Course Notes 0.2 文档</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
@@ -21,6 +21,7 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="索引" href="../../../genindex.html" />
     <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="操作系统" href="../../OS/index.html" />
     <link rel="prev" title="1.1. 计算" href="computation_models.html" /> 
 </head>
 
@@ -44,21 +45,23 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../CV/index.html">计算机视觉 (CV) 课程笔记</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">算法与数据结构</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. Ⅰ 基础理论</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">数据结构与算法</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 基础理论</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="computation_models.html">1.1. 计算模型</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">1.2. 渐进复杂度</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id1">📝 核心命题</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#asymptotic-analysis">📈 渐进分析 (Asymptotic Analysis)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#asymptotic-notations">标记符号 (Asymptotic Notations) 🏷️</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">💡 复杂度的“食物链”</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">核心命题</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#asymptotic-analysis">渐进分析 (Asymptotic Analysis)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#asymptotic-notations">渐进记号 (Asymptotic Notations)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">复杂度的增长顺序</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../OS/index.html">操作系统</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CV/index.html">计算机视觉 (CV) 课程笔记</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DL/index.html">深度学习</a></li>
 </ul>
 
         </div>
@@ -75,9 +78,9 @@
           <div role="navigation" aria-label="页面导航">
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../index.html">算法与数据结构</a></li>
-          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">1. </span>Ⅰ 基础理论</a></li>
-      <li class="breadcrumb-item active"><span class="section-number">1.2. </span>🚀 渐进复杂度 (Asymptotic Complexity)</li>
+          <li class="breadcrumb-item"><a href="../index.html">数据结构与算法</a></li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">1. </span>基础理论</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">1.2. </span>渐进复杂度 (Asymptotic Complexity)</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../_sources/CS/Algos/basic_theories/asymptotic_complexity.md.txt" rel="nofollow"> 查看页面源码</a>
       </li>
@@ -88,34 +91,34 @@
            <div itemprop="articleBody">
              
   <section class="tex2jax_ignore mathjax_ignore" id="asymptotic-complexity">
-<h1><span class="section-number">1.2. </span>🚀 渐进复杂度 (Asymptotic Complexity)<a class="headerlink" href="#asymptotic-complexity" title="Link to this heading"></a></h1>
-<p>在算法的丛林中，我们不关注特定机器上的绝对运行秒数（因为 CPU 会变），我们关注的是<strong>趋势</strong>。</p>
+<h1><span class="section-number">1.2. </span>渐进复杂度 (Asymptotic Complexity)<a class="headerlink" href="#asymptotic-complexity" title="Link to this heading"></a></h1>
+<p>在算法分析中，我们不关注特定硬件环境下的<strong>绝对运行时间</strong>（因为计算资源会随技术演进而变化），而是关注算法性能的<strong>增长趋势</strong></p>
 <section id="id1">
-<h2>📝 核心命题<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
-<p>评价一个算法的优劣，需要回答两个问题：</p>
+<h2>核心命题<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>评价一个算法的优劣，需要从两个维度进行分析：</p>
 <ol class="arabic">
 <li><p><strong>时间维度</strong> ⏳：一个算法需要多少时间才能完成？（Time Complexity）</p></li>
-<li><p><strong>空间维度</strong> 🧠：为了计算，算法需要额外霸占多少内存？（Space Complexity）</p>
+<li><p><strong>空间维度</strong> 🧠：为了计算，算法需要额外占用多少内存量？（Space Complexity）</p>
 <blockquote>
-<div><p><strong>注意</strong>：空间复杂度通常指<strong>额外空间</strong>（Auxiliary Space），即除去存储原始数据所需的空间外，算法运行过程中临时开辟的内存。</p>
+<div><p><strong>说明</strong>：空间复杂度通常指辅助空间（Auxiliary Space），即除输入数据存储空间外，算法临时分配的内存</p>
 </div></blockquote>
 </li>
 </ol>
 </section>
 <hr class="docutils" />
 <section id="asymptotic-analysis">
-<h2>📈 渐进分析 (Asymptotic Analysis)<a class="headerlink" href="#asymptotic-analysis" title="Link to this heading"></a></h2>
-<p>在评价算法时，由于 <strong>CPU 频率、内存带宽及编译器优化</strong> 等外部环境千差万别，测量<strong>绝对运行时间</strong>（Absolute Running Time）往往会陷入“因机而异”的泥潭。因此，我们需要一套脱离具体硬件的抽象评价体系——<strong>渐进分析</strong>。</p>
+<h2>渐进分析 (Asymptotic Analysis)<a class="headerlink" href="#asymptotic-analysis" title="Link to this heading"></a></h2>
+<p>由于<strong>处理器速度、内存访问延迟以及编译器优化</strong>等因素在不同系统间差异显著，直接测量<strong>绝对运行时间</strong>（Absolute Running Time）往往缺乏可比性和普适性。因此，我们采用一种抽象的评估框架——<strong>渐进分析</strong>，以输入规模 <span class="math notranslate nohighlight">\(n\)</span> 为变量，量化算法的资源消耗。</p>
 <section id="id2">
-<h3>核心逻辑：从“耗时”到“函数” 🛠️<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
-<p>我们将算法运行所需的时间资源抽象为一个关于输入规模 <span class="math notranslate nohighlight">\(n\)</span> 的函数 <span class="math notranslate nohighlight">\(T(n)\)</span>。</p>
+<h3>核心逻辑：从具体耗时到函数模型<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>以时间复杂度为例，我们将算法运行所需的时间资源抽象为一个关于输入规模 <span class="math notranslate nohighlight">\(n\)</span> 的函数 <span class="math notranslate nohighlight">\(T(n)\)</span>。</p>
 <ul>
-<li><p><strong>渐进效率 (Asymptotic Efficiency)</strong>：我们不仅关注 <span class="math notranslate nohighlight">\(n\)</span> 在较小范围内的具体取值，<strong>更</strong>关注当 <span class="math notranslate nohighlight">\(n\)</span> 趋向于无穷大（<span class="math notranslate nohighlight">\(n \to \infty\)</span>）时，算法运行时间的增长趋势。这衡量的是算法在处理<strong>大规模数据</strong>时的<strong>扩展能力</strong>（Scalability）。</p></li>
+<li><p><strong>渐进效率 (Asymptotic Efficiency)</strong>：重点考察当 <span class="math notranslate nohighlight">\(n\)</span> 趋向于无穷大（<span class="math notranslate nohighlight">\(n \to \infty\)</span>）时， <span class="math notranslate nohighlight">\(T(n)\)</span>的增长趋势。这反映了算法处理大规模输入时的可扩展性（Scalability）。</p></li>
 <li><p>忽略次要矛盾，抓住增长本质：</p>
-<p>在数学视角下，随着 <span class="math notranslate nohighlight">\(n\)</span> 的增长，函数中的各项贡献度会发生剧变。</p>
+<p>在数学视角下，随着 <span class="math notranslate nohighlight">\(n\)</span> 的增长，函数中高阶项的贡献将主导整体行为。</p>
 <ul class="simple">
 <li><p><strong>忽略低阶项与常数因子</strong>：当 <span class="math notranslate nohighlight">\(n\)</span> 足够大时，常数系数（Constant Factor）和低阶项（Low-order Terms）对函数整体数值的影响将迅速衰减，直至忽略不计。</p></li>
-<li><p><strong>锁定主导项 (Dominating Term)</strong>：我们只关注运行时间增长的<strong>量级（Order of Growth）</strong>。</p></li>
+<li><p><strong>关注主导项 (Dominating Term)</strong>：鉴于上述事实，我们只关注运行时间增长的<strong>量级（Order of Growth）</strong>。</p></li>
 </ul>
 <blockquote>
 <div><p><strong>示例</strong>：对于 <span class="math notranslate nohighlight">\(T(n) = 0.5n^2 + 100n + 5000\)</span>，当 <span class="math notranslate nohighlight">\(n\)</span> 达到百万级别时，<span class="math notranslate nohighlight">\(0.5n^2\)</span> 将占据数值的绝大部分权重。因此，我们说该算法的渐进复杂度是 <span class="math notranslate nohighlight">\(O(n^2)\)</span>。</p>
@@ -124,23 +127,22 @@
 </ul>
 </section>
 <section id="id3">
-<h3>💡 为什么对于低阶项“忽略”是合理的？<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
-<p>在算法的世界里存在“量级压制”：一个低阶算法（比如 <span class="math notranslate nohighlight">\(O(n \log n)\)</span>）在处理海量数据时，即便其常数项系数很大，最终表现也一定会优于一个系数很小的高阶算法（如 <span class="math notranslate nohighlight">\(O(n^2)\)</span>）。</p>
-<p><strong>渐进分析的本质，就是为了让我们从琐碎的实现细节中跳出来，去审视大数据时的“算法在处理体质”差异。</strong> ⚖️</p>
+<h3>为什么“忽略”低阶项是合理的？<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>一个低阶算法（比如 <span class="math notranslate nohighlight">\(O(n \log n)\)</span>）在处理海量数据时，即便其常数项系数很大，最终表现也一定会优于一个系数很小的高阶算法（如 <span class="math notranslate nohighlight">\(O(n^2)\)</span>）。</p>
 </section>
 </section>
 <hr class="docutils" />
 <section id="asymptotic-notations">
-<h2>标记符号 (Asymptotic Notations) 🏷️<a class="headerlink" href="#asymptotic-notations" title="Link to this heading"></a></h2>
-<p>在正式定义符号之前，我们需要明确两个基本概念：</p>
+<h2>渐进记号 (Asymptotic Notations)<a class="headerlink" href="#asymptotic-notations" title="Link to this heading"></a></h2>
+<p>在正式介绍定义符号之前，我们需要介绍两个基本概念：</p>
 <ul class="simple">
-<li><p><strong><span class="math notranslate nohighlight">\(f(n)\)</span></strong>：通常代表算法的<strong>实际运行时间函数</strong>。它通过计算算法执行的每一步操作得出，通常包含复杂的常数和低阶项（如 <span class="math notranslate nohighlight">\(f(n) = 3n^2 + 10n + 5\)</span>）。</p></li>
-<li><p><strong><span class="math notranslate nohighlight">\(g(n)\)</span></strong>：代表我们要对比的<strong>标准函数形式</strong>（如 <span class="math notranslate nohighlight">\(n^2, n\log n\)</span>）。它去掉了繁琐的细节，只保留增长的量级，作为评估 <span class="math notranslate nohighlight">\(f(n)\)</span> 的“尺子”。</p></li>
+<li><p><strong><span class="math notranslate nohighlight">\(f(n)\)</span></strong>：代表算法的<strong>实际运行时间函数</strong>。它通过计算算法执行的每一步操作得出，通常包含复杂的常数和低阶项（如 <span class="math notranslate nohighlight">\(f(n) = 3n^2 + 10n + 5\)</span>）。</p></li>
+<li><p><strong><span class="math notranslate nohighlight">\(g(n)\)</span></strong>：代表我们要对比的参考函数形式（如 <span class="math notranslate nohighlight">\(n^2, n\log n\)</span>）。它去掉了繁琐的细节，只保留增长的量级，作为评估 <span class="math notranslate nohighlight">\(f(n)\)</span> 的“尺子”。</p></li>
 </ul>
 <section id="o-big-o-o-g-n">
-<h3>1. <strong>大 <span class="math notranslate nohighlight">\(O\)</span> 记号 (Big-O)</strong> —— <span class="math notranslate nohighlight">\(O(g(n))\)</span> 👼<a class="headerlink" href="#o-big-o-o-g-n" title="Link to this heading"></a></h3>
+<h3>1. <strong>大 <span class="math notranslate nohighlight">\(O\)</span> 记号 (Big-O)</strong> —— <span class="math notranslate nohighlight">\(O(g(n))\)</span><a class="headerlink" href="#o-big-o-o-g-n" title="Link to this heading"></a></h3>
 <ul>
-<li><p><strong>定义</strong>：给出函数的<strong>渐进上界 (Asymptotic Upper Bound)</strong>。</p>
+<li><p><strong>定义</strong>：给出函数f(n)的<strong>渐进上界 (Asymptotic Upper Bound)</strong>。</p>
 <ul class="simple">
 <li><p><strong>含义</strong>：如果 <span class="math notranslate nohighlight">\(f(n) = O(g(n))\)</span>，则存在正常数 <span class="math notranslate nohighlight">\(c\)</span> 和 <span class="math notranslate nohighlight">\(n_0\)</span>，使得对于所有 <span class="math notranslate nohighlight">\(n \ge n_0\)</span>，都有 <span class="math notranslate nohighlight">\(0 \le f(n) \le cg(n)\)</span>。</p></li>
 <li><p><strong>深度理解</strong>：大 <span class="math notranslate nohighlight">\(O\)</span> 描述的是一种“天花板”。当输入规模 <span class="math notranslate nohighlight">\(n\)</span> 足够大时，算法的运行时间<strong>绝不会超过</strong>这个量级。</p></li>
@@ -149,14 +151,13 @@
 <li><p>例子：<strong>插入排序的最坏情况</strong>。</p>
 <p>其运行时间函数 <span class="math notranslate nohighlight">\(f(n) = an^2 + bn + c\)</span>。我们可以说 <span class="math notranslate nohighlight">\(f(n) = O(n^2)\)</span>。即使我们说它也是 <span class="math notranslate nohighlight">\(O(n^3)\)</span> 在数学上也是正确的，但通常我们寻求最贴切的上界。</p>
 </li>
-<li><p><strong>白话</strong>：它是一个<strong>保证</strong>。无论输入数据多糟糕，我的耗时也就是这个水平，甚至可能更好。</p></li>
-<li><p>记忆技巧：实际的时间函数抬头一看，<strong>“Oh my god, <span class="math notranslate nohighlight">\(g(n)\)</span> is so high!”</strong> <span class="math notranslate nohighlight">\(\to\)</span> <strong><span class="math notranslate nohighlight">\(O(n)\)</span> my god!</strong></p></li>
+<li><p>解释：提供性能的<strong>最坏情况保证</strong>，确保算法在极端输入下<strong>不会超过</strong>该量级。</p></li>
 </ul>
 </section>
 <section id="omega-big-omega-omega-g-n">
-<h3>2. <strong>大 <span class="math notranslate nohighlight">\(\Omega\)</span> 记号 (Big-Omega)</strong> —— <span class="math notranslate nohighlight">\(\Omega(g(n))\)</span> ⚓<a class="headerlink" href="#omega-big-omega-omega-g-n" title="Link to this heading"></a></h3>
+<h3>2. <strong>大 <span class="math notranslate nohighlight">\(\Omega\)</span> 记号 (Big-Omega)</strong> —— <span class="math notranslate nohighlight">\(\Omega(g(n))\)</span><a class="headerlink" href="#omega-big-omega-omega-g-n" title="Link to this heading"></a></h3>
 <ul>
-<li><p><strong>定义</strong>：给出函数的<strong>渐进下界 (Asymptotic Lower Bound)</strong>。</p>
+<li><p><strong>定义</strong>：给出函数f(n)的<strong>渐进下界 (Asymptotic Lower Bound)</strong>。</p>
 <ul class="simple">
 <li><p><strong>含义</strong>：如果 <span class="math notranslate nohighlight">\(f(n) = \Omega(g(n))\)</span>，则存在正常数 <span class="math notranslate nohighlight">\(c\)</span> 和 <span class="math notranslate nohighlight">\(n_0\)</span>，使得对于所有 <span class="math notranslate nohighlight">\(n \ge n_0\)</span>，都有 <span class="math notranslate nohighlight">\(0 \le cg(n) \le f(n)\)</span>。</p></li>
 </ul>
@@ -164,14 +165,13 @@
 <li><p>例子：<strong>任何需要遍历数组一遍的算法。</strong></p>
 <p>无论如何优化，只要算法必须检查 <span class="math notranslate nohighlight">\(n\)</span> 个元素，其运行时间 <span class="math notranslate nohighlight">\(f(n)\)</span> 至少是 <span class="math notranslate nohighlight">\(n\)</span> 的常数倍，即 <span class="math notranslate nohighlight">\(f(n) = \Omega(n)\)</span>。</p>
 </li>
-<li><p><strong>白话</strong>：它是一个<strong>底线</strong>。它描述了算法“最快也就这样了”。</p></li>
-<li><p>记忆方法： <span class="math notranslate nohighlight">\(\Omega\)</span> 看起来像个船锚，实际函数像小船，<strong>锚抛在下面</strong>。它是“保底”的底线（下界）。</p></li>
+<li><p>解释：界定算法的下限，反映任务固有的<strong>最小资源需求</strong>。</p></li>
 </ul>
 </section>
 <section id="theta-big-theta-theta-g-n">
-<h3>3. <strong>大 <span class="math notranslate nohighlight">\(\Theta\)</span> 记号 (Big-Theta)</strong> —— <span class="math notranslate nohighlight">\(\Theta(g(n))\)</span> 🛥️<a class="headerlink" href="#theta-big-theta-theta-g-n" title="Link to this heading"></a></h3>
+<h3>3. <strong>大 <span class="math notranslate nohighlight">\(\Theta\)</span> 记号 (Big-Theta)</strong> —— <span class="math notranslate nohighlight">\(\Theta(g(n))\)</span><a class="headerlink" href="#theta-big-theta-theta-g-n" title="Link to this heading"></a></h3>
 <ul>
-<li><p><strong>定义</strong>：给出函数的<strong>渐进紧确界 (Asymptotically Tight Bound)</strong>。</p>
+<li><p><strong>定义</strong>：给出函数f(n)的<strong>渐进紧确界 (Asymptotically Tight Bound)</strong>。</p>
 <ul class="simple">
 <li><p><strong>含义</strong>：<span class="math notranslate nohighlight">\(f(n) = \Theta(g(n))\)</span> 当且仅当 <span class="math notranslate nohighlight">\(f(n) = O(g(n))\)</span> 且 <span class="math notranslate nohighlight">\(f(n) = \Omega(g(n))\)</span>。</p></li>
 </ul>
@@ -179,19 +179,14 @@
 <li><p>例子：归并排序 (Merge Sort) 的运行时间。</p>
 <p>归并排序在最好、最坏和平均情况下的表现都是 <span class="math notranslate nohighlight">\(n \log n\)</span> 级别的，因此其运行时间 <span class="math notranslate nohighlight">\(f(n) = \Theta(n \log n)\)</span>。</p>
 </li>
-<li><p><strong>关键纠正</strong>：</p>
-<ul class="simple">
-<li><p><strong>专业理解</strong>：只有当一个算法的运行时间在<strong>所有输入情况</strong>下都处于同一量级时，才使用 <span class="math notranslate nohighlight">\(\Theta\)</span>。如果插入排序最坏是 <span class="math notranslate nohighlight">\(O(n^2)\)</span> 但最好是 <span class="math notranslate nohighlight">\(\Omega(n)\)</span>，我们不能笼统地说它是 <span class="math notranslate nohighlight">\(\Theta(n^2)\)</span>。</p></li>
-</ul>
-</li>
-<li><p><strong>白话</strong>：它表示“我就在这个范围内跑，上下都锁死了”。</p></li>
-<li><p>记忆技巧：<span class="math notranslate nohighlight">\(\Theta\)</span>的形状像个小船，那么就代表实际运行函数本身波动的范围。</p></li>
+<li><p>解释：精确刻画算法的典型行为，<strong>上下界一致</strong>。</p></li>
+<li><p><strong>说明</strong>：：只有当一个算法的运行时间在<strong>所有输入情况</strong>下都处于同一量级时，才使用 <span class="math notranslate nohighlight">\(\Theta\)</span>。如果插入排序最坏是 <span class="math notranslate nohighlight">\(O(n^2)\)</span> 但最好是 <span class="math notranslate nohighlight">\(\Omega(n)\)</span>，我们不能笼统地说它是 <span class="math notranslate nohighlight">\(\Theta(n^2)\)</span>。</p></li>
 </ul>
 </section>
 <section id="o-little-o-o-g-n">
-<h3>4. <strong>小 <span class="math notranslate nohighlight">\(o\)</span> 记号 (Little-o)</strong> —— <span class="math notranslate nohighlight">\(o(g(n))\)</span> 🎈<a class="headerlink" href="#o-little-o-o-g-n" title="Link to this heading"></a></h3>
+<h3>4. <strong>小 <span class="math notranslate nohighlight">\(o\)</span> 记号 (Little-o)</strong> —— <span class="math notranslate nohighlight">\(o(g(n))\)</span><a class="headerlink" href="#o-little-o-o-g-n" title="Link to this heading"></a></h3>
 <ul>
-<li><p><strong>定义</strong>：给出函数的<strong>非渐进紧确上界</strong>。</p>
+<li><p><strong>定义</strong>：给出函数f(n)的<strong>非渐进紧确上界</strong>。</p>
 <ul class="simple">
 <li><p><strong>含义</strong>：对于<strong>任意</strong>正实数 <span class="math notranslate nohighlight">\(c &gt; 0\)</span>，都存在常数 <span class="math notranslate nohighlight">\(n_0 &gt; 0\)</span>，使得对于所有 <span class="math notranslate nohighlight">\(n \ge n_0\)</span>，都有 <span class="math notranslate nohighlight">\(0 \le f(n) &lt; cg(n)\)</span>。</p></li>
 </ul>
@@ -199,12 +194,11 @@
 <li><p>例子：<strong>线性函数与平方函数的关系</strong>。</p>
 <p><span class="math notranslate nohighlight">\(f(n) = 2n\)</span> 是 <span class="math notranslate nohighlight">\(o(n^2)\)</span>，因为随着 <span class="math notranslate nohighlight">\(n\)</span> 变大，<span class="math notranslate nohighlight">\(2n\)</span> 相比于 <span class="math notranslate nohighlight">\(n^2\)</span> 会变得极其微小。</p>
 </li>
-<li><p><strong>白话</strong>：它表示算法的实际耗时增速<strong>严格低于</strong>这个量级，不存在相等的可能。</p></li>
-<li><p>记忆技巧：“o” 看起来像个圆圆的<strong>氢气球</strong>。它太轻了，永远飞在实际运行函数的头顶，且越飞越高，直到消失在视线尽头</p></li>
+<li><p>解释：它表示算法的实际耗时增速<strong>严格低于</strong>这个量级，不存在相等的可能。</p></li>
 </ul>
 </section>
 <section id="omega-little-omega-omega-g-n">
-<h3>5. <strong>小 <span class="math notranslate nohighlight">\(\omega\)</span> 记号 (Little-omega)</strong> —— <span class="math notranslate nohighlight">\(\omega(g(n))\)</span> 🌊<a class="headerlink" href="#omega-little-omega-omega-g-n" title="Link to this heading"></a></h3>
+<h3>5. <strong>小 <span class="math notranslate nohighlight">\(\omega\)</span> 记号 (Little-omega)</strong> —— <span class="math notranslate nohighlight">\(\omega(g(n))\)</span><a class="headerlink" href="#omega-little-omega-omega-g-n" title="Link to this heading"></a></h3>
 <ul>
 <li><p><strong>定义</strong>：给出函数的<strong>非渐进紧确下界</strong>。</p>
 <ul class="simple">
@@ -214,43 +208,36 @@
 <li><p>例子：平方函数与对数函数的关系。</p>
 <p><span class="math notranslate nohighlight">\(f(n) = n^2\)</span> 是 <span class="math notranslate nohighlight">\(\omega(\log n)\)</span>，因为 <span class="math notranslate nohighlight">\(n^2\)</span> 的增长速度远超 <span class="math notranslate nohighlight">\(\log n\)</span>。</p>
 </li>
-<li><p><strong>白话</strong>：它表示算法的耗时增速<strong>严格超过</strong>了某个标准。</p></li>
-<li><p>记忆技巧：<span class="math notranslate nohighlight">\(\omega\)</span> 是个深海火山口，常年在海底，代表极大的下层落差。</p></li>
+<li><p>解释：它表示算法的耗时增速<strong>严格超过</strong>了某个标准。</p></li>
 </ul>
 </section>
 <section id="id4">
-<h3>📊 渐进符号综合对比表<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<h3>渐进符号综合对比表<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p><strong>符号</strong></p></th>
-<th class="head"><p><strong>读作</strong></p></th>
 <th class="head"><p><strong>类比实数关系</strong></p></th>
 <th class="head"><p><strong>含义 (当 n→∞)</strong></p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><strong><span class="math notranslate nohighlight">\(f(n) = O(g(n))\)</span></strong></p></td>
-<td><p>Big-Oh</p></td>
 <td><p><span class="math notranslate nohighlight">\(a \le b\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(f\)</span> 的增长<strong>不快于</strong> <span class="math notranslate nohighlight">\(g\)</span></p></td>
 </tr>
 <tr class="row-odd"><td><p><strong><span class="math notranslate nohighlight">\(f(n) = \Omega(g(n))\)</span></strong></p></td>
-<td><p>Big-Omega</p></td>
 <td><p><span class="math notranslate nohighlight">\(a \ge b\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(f\)</span> 的增长<strong>不慢于</strong> <span class="math notranslate nohighlight">\(g\)</span></p></td>
 </tr>
 <tr class="row-even"><td><p><strong><span class="math notranslate nohighlight">\(f(n) = \Theta(g(n))\)</span></strong></p></td>
-<td><p>Big-Theta</p></td>
 <td><p><span class="math notranslate nohighlight">\(a = b\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(f\)</span> 与 <span class="math notranslate nohighlight">\(g\)</span> <strong>同阶</strong> (增长率相同)</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong><span class="math notranslate nohighlight">\(f(n) = o(g(n))\)</span></strong></p></td>
-<td><p>Little-oh</p></td>
 <td><p><span class="math notranslate nohighlight">\(a &lt; b\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(f\)</span> 增长<strong>严格慢于</strong> <span class="math notranslate nohighlight">\(g\)</span></p></td>
 </tr>
 <tr class="row-even"><td><p><strong><span class="math notranslate nohighlight">\(f(n) = \omega(g(n))\)</span></strong></p></td>
-<td><p>Little-omega</p></td>
 <td><p><span class="math notranslate nohighlight">\(a &gt; b\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(f\)</span> 增长<strong>严格快于</strong> <span class="math notranslate nohighlight">\(g\)</span></p></td>
 </tr>
@@ -260,7 +247,7 @@
 </section>
 <hr class="docutils" />
 <section id="id5">
-<h2>💡 复杂度的“食物链”<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<h2>复杂度的增长顺序<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
 <p>以下复杂度按增长速度从小到大排序：
 ![[Pasted image 20251226114051.png]]</p>
 <p align="right">—— <i>图表引用自 [邓俊辉] 的老师《数据结构(C++语言版)》课件</i></p>
@@ -271,8 +258,8 @@
 <section id="id7">
 <h5>💖核心内容<a class="headerlink" href="#id7" title="Link to this heading"></a></h5>
 <ul class="simple">
-<li><p><strong>本质</strong>：操作次数与输入规模 <span class="math notranslate nohighlight">\(n\)</span> 无关。</p></li>
-<li><p><strong>效率</strong>：效率最高，具有最强的扩展性（Scalability）。</p></li>
+<li><p><strong>本质</strong>：操作次数与输入规模 <span class="math notranslate nohighlight">\(n\)</span> 无关，始终为常数。</p></li>
+<li><p><strong>特性</strong>：效率最高，具有最强的扩展性（Scalability）。</p></li>
 <li><p><strong>典型例子</strong>：</p>
 <ul>
 <li><p><strong>数组随机访问</strong>：给定下标 <span class="math notranslate nohighlight">\(i\)</span>，直接计算内存地址并访问，耗时固定。</p></li>
@@ -296,19 +283,19 @@
 <ul>
 <li><p><strong>反直觉事实</strong>：</p>
 <ul>
-<li><p>简单的例子：<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">from</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">10000</span></code></p></li>
-<li><p>有难度的例子 ：<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">(i=1;</span> <span class="pre">i&lt;n;</span> <span class="pre">i=1&lt;&lt;1)</span></code>，这个复杂度T（n）=O(<span class="math notranslate nohighlight">\(log^*n\)</span>), 是个常数级复杂度，在后续会深入讨论。</p></li>
+<li><p>一个简单的例子：<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">from</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">10000</span></code></p></li>
+<li><p>其他例子 ：<code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">(i=1;</span> <span class="pre">i&lt;n;</span> <span class="pre">i=1&lt;&lt;1)</span></code>，这个复杂度T（n）=O(<span class="math notranslate nohighlight">\(log^*n\)</span>), 是个常数级复杂度，在后续会深入讨论。</p></li>
 </ul>
 </li>
 <li><p><strong>问题本质</strong>：只要循环的次数是一个固定的常数，那么无论循环内做了什么，整体依然是 <span class="math notranslate nohighlight">\(O(1)\)</span>。</p></li>
 </ul>
 </li>
-<li><p><strong>分支逻辑不影响量级</strong>：</p>
+<li><p><strong>条件分支不影响量级</strong>：</p>
 <ul>
-<li><p>代码中包含 <code class="docutils literal notranslate"><span class="pre">if-else</span></code> 分支并不会改变其常数时间的本质。只要每个分支内的操作都是 <span class="math notranslate nohighlight">\(O(1)\)</span>，整体就是 <span class="math notranslate nohighlight">\(O(1)\)</span>。</p></li>
+<li><p>代码中包含 <code class="docutils literal notranslate"><span class="pre">if-else</span></code> 分支并不会改变其常数时间的本质。<strong>只要</strong>每个分支内的操作都是 <span class="math notranslate nohighlight">\(O(1)\)</span>，整体就是 <span class="math notranslate nohighlight">\(O(1)\)</span>。</p></li>
 </ul>
 </li>
-<li><p><strong>函数调用与底层优化</strong>：</p>
+<li><p><strong>有函数调用的代码，也可以是<span class="math notranslate nohighlight">\(O(1)\)</span></strong>：</p>
 <ul>
 <li><p>即便代码调用了多个函数，只要调用栈深度和每层函数的操作与 <span class="math notranslate nohighlight">\(n\)</span> 无关，它就是 <span class="math notranslate nohighlight">\(O(1)\)</span>。</p></li>
 </ul>
@@ -316,8 +303,98 @@
 </ul>
 </section>
 </section>
-<section id="o-log-n">
-<h4>O（<span class="math notranslate nohighlight">\(log^* n\)</span>）<a class="headerlink" href="#o-log-n" title="Link to this heading"></a></h4>
+<section id="o-log-n-iterated-logarithm">
+<h4><span class="math notranslate nohighlight">\(O(\log^* n)\)</span> —— 迭代对数复杂度 (Iterated Logarithm)<a class="headerlink" href="#o-log-n-iterated-logarithm" title="Link to this heading"></a></h4>
+<section id="id8">
+<h5>💖 核心内容<a class="headerlink" href="#id8" title="Link to this heading"></a></h5>
+<ul class="simple">
+<li><p><strong>本质</strong>：表示在结果小于或等于 1 之前，对一个数<strong>连续进行对数运算</strong>（<span class="math notranslate nohighlight">\(\log\)</span>）的<strong>次数</strong>。</p></li>
+<li><p><strong>数学定义</strong>：
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  		\log^* n = 
+  		\begin{cases} 
+  		0 &amp; \text{if } n \le 1 \\
+  		1 + \log^*(\log n) &amp; \text{if } n &gt; 1 
+  		\end{cases}
+  	 \end{split}\]</div>
+</p>
+<ul>
+<li><p>递归逻辑</p></li>
+<li><p>计算过程演示：</p></li>
+</ul>
+</li>
+</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><span class="math notranslate nohighlight">\(n\)</span></p></th>
+<th class="head text-left"><p><span class="math notranslate nohighlight">\(\log_2 n\)</span></p></th>
+<th class="head text-left"><p><span class="math notranslate nohighlight">\(\log_2(\log_2 n)\)</span></p></th>
+<th class="head text-left"><p><span class="math notranslate nohighlight">\(\log_2(\log_2(\log_2 n))\)</span></p></th>
+<th class="head text-left"><p><span class="math notranslate nohighlight">\(\log^* n\)</span> (迭代次数)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(2\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+<td class="text-left"><p><strong>1</strong></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><span class="math notranslate nohighlight">\(4\)</span> (<span class="math notranslate nohighlight">\(2^2\)</span>)</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(2\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(-\)</span></p></td>
+<td class="text-left"><p><strong>2</strong></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(16\)</span> (<span class="math notranslate nohighlight">\(2^4\)</span>)</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(4\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(2\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
+<td class="text-left"><p><strong>3</strong></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><span class="math notranslate nohighlight">\(65536\)</span> (<span class="math notranslate nohighlight">\(2^{16}\)</span>)</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(16\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(4\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(2\)</span></p></td>
+<td class="text-left"><p><strong>4</strong></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(2^{65536}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(65536\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(16\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(4\)</span></p></td>
+<td class="text-left"><p><strong>5</strong></p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p><strong>特性</strong>：增长速度<strong>极其缓慢</strong>。在现实宇宙的计算规模内，它几乎可以被看作是一个常数（对于目前已知的所有物理限制内的 <span class="math notranslate nohighlight">\(n\)</span>，<span class="math notranslate nohighlight">\(O(\log^* n) \le 5\)</span>）。</p></li>
+<li><p><strong>典型例子</strong>：</p>
+<ul>
+<li><p><strong>并查集（Union-Find）</strong>：在使用“路径压缩”和“按秩合并”优化后，其单次操作的平摊时间复杂度为 <span class="math notranslate nohighlight">\(O(\alpha(n))\)</span>，其中 <span class="math notranslate nohighlight">\(\alpha\)</span> 是反阿克曼函数。在绝大多数情况下，它的表现非常接近 <span class="math notranslate nohighlight">\(O(\log^* n)\)</span>。</p></li>
+<li><p><strong>分布式着色问题</strong>：在某些分布式算法中，将循环图的 <span class="math notranslate nohighlight">\(n\)</span> 着色缩减为 3 着色需要 <span class="math notranslate nohighlight">\(O(\log^* n)\)</span> 轮通信。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="id9">
+<h5>⚠️ 陷阱与谬误 (Traps and Fallacies)<a class="headerlink" href="#id9" title="Link to this heading"></a></h5>
+<ul class="simple">
+<li><p><strong>它不是 <span class="math notranslate nohighlight">\(O(\log n)\)</span> 的变体</strong>：</p>
+<ul>
+<li><p><strong>直觉对比</strong>：<span class="math notranslate nohighlight">\(\log n\)</span> 随 <span class="math notranslate nohighlight">\(n\)</span> 增加而增长（虽然慢），但 <span class="math notranslate nohighlight">\(\log^* n\)</span> 几乎是“静止”的。</p></li>
+<li><p><strong>数据规模</strong>：</p>
+<ul>
+<li><p>如果 <span class="math notranslate nohighlight">\(n = 2^{65536}\)</span>（这是一个天文数字），<span class="math notranslate nohighlight">\(\log n = 65536\)</span>。</p></li>
+<li><p>而 <span class="math notranslate nohighlight">\(\log^* n\)</span> 仅仅等于 <strong>5</strong>。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>并非真常数</strong>：虽然在工程中常被视为常数，但理论上当 <span class="math notranslate nohighlight">\(n \to \infty\)</span> 时，<span class="math notranslate nohighlight">\(\log^* n\)</span> 也会趋于无穷</p></li>
+</ul>
+</section>
 </section>
 </section>
 </section>
@@ -328,6 +405,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
         <a href="computation_models.html" class="btn btn-neutral float-left" title="1.1. 计算" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../../OS/index.html" class="btn btn-neutral float-right" title="操作系统" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

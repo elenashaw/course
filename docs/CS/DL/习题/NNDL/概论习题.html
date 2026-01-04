@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ch1 神经网络概论 &mdash; Course Notes 0.2 文档</title>
+  <title>1.1. ch1 神经网络概论 &mdash; Course Notes 0.2 文档</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
@@ -20,7 +20,8 @@
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="索引" href="../../../../genindex.html" />
-    <link rel="search" title="搜索" href="../../../../search.html" /> 
+    <link rel="search" title="搜索" href="../../../../search.html" />
+    <link rel="prev" title="1. NNDL" href="../index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -42,11 +43,21 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../Algos/index.html">数据结构与算法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../COA/index.html">计算机组成和架构</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../OS/index.html">操作系统</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../CV/index.html">计算机视觉 (CV) 课程笔记</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../index.html">深度学习</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">深度学习</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">1. 习题</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.1. 概论</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#relu-xor">第一题：使用ReLU激活函数学习异或（XOR）函数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -63,7 +74,9 @@
           <div role="navigation" aria-label="页面导航">
   <ul class="wy-breadcrumbs">
       <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">ch1 神经网络概论</li>
+          <li class="breadcrumb-item"><a href="../../index.html">深度学习</a></li>
+          <li class="breadcrumb-item"><a href="../index.html"><span class="section-number">1. </span>NNDL</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">1.1. </span>ch1 神经网络概论</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../../_sources/CS/DL/习题/NNDL/概论习题.md.txt" rel="nofollow"> 查看页面源码</a>
       </li>
@@ -74,7 +87,7 @@
            <div itemprop="articleBody">
              
   <section class="tex2jax_ignore mathjax_ignore" id="ch1">
-<h1>ch1 神经网络概论<a class="headerlink" href="#ch1" title="Link to this heading"></a></h1>
+<h1><span class="section-number">1.1. </span>ch1 神经网络概论<a class="headerlink" href="#ch1" title="Link to this heading"></a></h1>
 <section id="relu-xor">
 <h2>第一题：使用ReLU激活函数学习异或（XOR）函数<a class="headerlink" href="#relu-xor" title="Link to this heading"></a></h2>
 <p><strong>题目</strong>： 考虑异或（XOR）函数的情况：其中两个点 <span class="math notranslate nohighlight">\(\{(0,0), (1,1)\}\)</span> 属于一类，而另外两个点 <span class="math notranslate nohighlight">\(\{(1,0), (0,1)\}\)</span> 属于另一类。请展示如何利用 ReLU 激活函数，以类似于 图1.14 中的方式将这两类点分离开来</p>
@@ -114,7 +127,9 @@
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../index.html" class="btn btn-neutral float-left" title="1. NNDL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
 
   <hr/>
 

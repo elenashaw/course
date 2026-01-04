@@ -7,7 +7,7 @@
 ```{toctree}
 :maxdepth: 1
 
-ch1 引论 <MOS/引论习题>
+ch1-引论 <MOS/引论习题>
 
 ```
 

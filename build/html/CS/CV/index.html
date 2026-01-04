@@ -22,7 +22,7 @@
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
     <link rel="next" title="&lt;no title&gt;" href="1_intro.html" />
-    <link rel="prev" title="Elena&#39;s Space" href="../../index.html" /> 
+    <link rel="prev" title="2.1. 引论" href="../OS/%E4%B9%A0%E9%A2%98/MOS/%E5%BC%95%E8%AE%BA%E4%B9%A0%E9%A2%98.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,6 +45,9 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Algos/index.html">数据结构与算法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../COA/index.html">计算机组成和架构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../OS/index.html">操作系统</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">计算机视觉 (CV) 课程笔记</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html">Image Acquisition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-representation">Image Representation</a></li>
@@ -72,7 +75,7 @@
 <li class="toctree-l2"><a class="reference internal" href="12_representation_and_descriptions.html">representation and descriptions</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../Algos/index.html">算法与数据结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DL/index.html">深度学习</a></li>
 </ul>
 
         </div>
@@ -104,346 +107,30 @@
 <p>这里是我关于计算机视觉课程的详细笔记。</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="2_Image%20representation.html">Image Acquisition</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#id1">成像原理</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#id2">光照与阴影</a></li>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#sensor-type">sensor type</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#id3">Image Acquisition</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#id4">采样与量化</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="2_Image%20representation.html#image-representation">Image Representation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#basic-elements-we-can-use">Basic Elements We Can Use</a></li>
-<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-segment">image segment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#representation">representation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#image-as-a-matrix">image as a matrix</a></li>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#image-as-a-function">image as a function</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-transformation">image transformation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#image-quality">image quality</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#sampling">sampling</a></li>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#quantization">quantization</a></li>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#id5">对比度</a></li>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#id6">亮度</a></li>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#id7">尺寸</a></li>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#id8">饱和度</a></li>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#id9">灰度</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="2_Image%20representation.html">Image Acquisition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_Image%20representation.html#image-representation">Image Representation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="2_Image%20representation.html#image-format">image format</a></li>
-<li class="toctree-l1"><a class="reference internal" href="2_Image%20representation.html#image-processing-operations">image processing operations</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#point-operations">point operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#id10">一些规定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#e-g">e.g.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#id11">常见操作</a></li>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#algebraic-operation">algebraic operation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#geometric-operation">geometric operation</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#local-operations">local operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#global-operations">global operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="2_Image%20representation.html#basic-operations">basic operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#binary-image-analysis">Binary image analysis</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="2_Image%20representation.html#isodata-algorithm">Isodata Algorithm</a></li>
-<li class="toctree-l4"><a class="reference internal" href="2_Image%20representation.html#optimal-thresholding">optimal thresholding</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#interpolation-algorithm">interpolation algorithm</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="2_Image%20representation.html#nearest-neighbor-interpolation">最近邻插值（Nearest Neighbor Interpolation)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="2_Image%20representation.html#bilinear-square-interpolation">双线性插值(Bilinear/Square Interpolation)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="2_Image%20representation.html#id12">最近邻与双线性的比较</a></li>
-<li class="toctree-l4"><a class="reference internal" href="2_Image%20representation.html#higher-order">高阶插值(Higher Order)</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="2_Image%20representation.html#id13">形变</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="2_Image%20representation.html#id14">形变效果</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="3_pixel_neighborhood.html">pixel connectivity</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="3_pixel_neighborhood.html#neighbor-categories">neighbor categories</a></li>
-<li class="toctree-l2"><a class="reference internal" href="3_pixel_neighborhood.html#neighbor-connectivity">neighbor connectivity</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="3_pixel_neighborhood.html#connectivity-condition">connectivity condition</a></li>
-<li class="toctree-l3"><a class="reference internal" href="3_pixel_neighborhood.html#connected-components-labeling">connected components labeling</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="3_pixel_neighborhood.html#region-property">region property</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="3_pixel_neighborhood.html#properties">properties</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="3_pixel_neighborhood.html#perimeter-and-area">Perimeter and Area</a></li>
-<li class="toctree-l4"><a class="reference internal" href="3_pixel_neighborhood.html#center-radius-and-diameter">Center, Radius and Diameter</a></li>
-<li class="toctree-l4"><a class="reference internal" href="3_pixel_neighborhood.html#centroid-moments-and-orientation">Centroid Moments and Orientation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="3_pixel_neighborhood.html#extreme-points-and-curvature">Extreme Points and Curvature</a></li>
-<li class="toctree-l4"><a class="reference internal" href="3_pixel_neighborhood.html#intensity-properties">Intensity Properties</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="4_color.html"></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="4_color.html#color-science">color science</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="4_color.html#id2">光谱</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="4_color.html#id3">基色</a></li>
-<li class="toctree-l4"><a class="reference internal" href="4_color.html#id4">颜色光谱加减</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="4_color.html#id5">颜色的表示</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="4_color.html#cie-color-space">CIE color space</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="4_color.html#human-eyes">human eyes</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="4_color.html#id6">结构</a></li>
-<li class="toctree-l4"><a class="reference internal" href="4_color.html#id7">条件等色</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="4_color.html#grassmanns-laws-color-match">Grassmann’s Laws(color match)</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="4_color.html#color-image-processing">color image processing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="4_color.html#color-model">color model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="4_color.html#rgb">RGB</a></li>
-<li class="toctree-l3"><a class="reference internal" href="4_color.html#his">HIS</a></li>
-<li class="toctree-l3"><a class="reference internal" href="4_color.html#id8">两种模型的转换</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="4_color.html#color-image-enhancement">color image enhancement</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="4_color.html#id9">RGB通道操作原理</a></li>
-<li class="toctree-l3"><a class="reference internal" href="4_color.html#id10">饱和度增强</a></li>
-<li class="toctree-l3"><a class="reference internal" href="4_color.html#id11">色相调整</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="4_color.html#color-image-restoration">color image restoration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="4_color.html#pseudo-color">pseudo color</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="4_color.html#id12">规则</a></li>
-<li class="toctree-l3"><a class="reference internal" href="4_color.html#id13">应用</a></li>
-<li class="toctree-l3"><a class="reference internal" href="4_color.html#color-scale">color scale(色阶)</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="4_color.html#color-image-analysis">color image analysis</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="4_color.html#color-compensation">color compensation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="4_color.html#color-spread">color spread</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="4_color.html#loghtness-contancy-and-illusion">loghtness contancy and illusion</a></li>
-<li class="toctree-l3"><a class="reference internal" href="4_color.html#w">w</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html">contrast enhancement</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#gray-scale-transformation">gray scale transformation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#logarithmic-transformation">logarithmic transformation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#exponential-transformation">exponential transformation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#linear-gray-scale-transformation">linear gray scale transformation</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#histogram-adjustment">histogram adjustment</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#def-of-histogram">def of histogram</a></li>
-<li class="toctree-l3"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#id1">信息缺失</a></li>
-<li class="toctree-l3"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#histogram-equalization">直方图均衡（histogram equalization）</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#id2">直方图的均衡性</a></li>
-<li class="toctree-l4"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#id3">全局直方图均衡化</a></li>
-<li class="toctree-l4"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#id4">局部直方图</a></li>
-<li class="toctree-l4"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#id5">注意</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#id6">直方图匹配</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#id7">直方图均衡化</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#noise-reduction">Noise reduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#box">卷积/均值/box</a></li>
-<li class="toctree-l2"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#id8">高斯平滑</a></li>
-<li class="toctree-l2"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#id9">中值滤波</a></li>
-<li class="toctree-l2"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#id10">形态学滤波</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="6_edge.html">edge</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="6_edge.html#id1">边缘检测</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="6_edge.html#id2">边缘的产生</a></li>
-<li class="toctree-l3"><a class="reference internal" href="6_edge.html#id3">边缘类型</a></li>
-<li class="toctree-l3"><a class="reference internal" href="6_edge.html#id4">边缘检测</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="6_edge.html#differential-operator">differential operator</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="7_math%20morphology.html">Structure Element</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#intro">INTRO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#binary-dilation">binary dilation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="7_math%20morphology.html#def">def</a></li>
-<li class="toctree-l3"><a class="reference internal" href="7_math%20morphology.html#id1">操作结果</a></li>
-<li class="toctree-l3"><a class="reference internal" href="7_math%20morphology.html#role">role</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#binary-erosion">binary erosion</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="7_math%20morphology.html#id2">def</a></li>
-<li class="toctree-l3"><a class="reference internal" href="7_math%20morphology.html#id3">role</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#id4">复合操作</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="7_math%20morphology.html#fast-operation">fast operation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="7_math%20morphology.html#binary-opening">开操作（binary opening</a></li>
-<li class="toctree-l3"><a class="reference internal" href="7_math%20morphology.html#id5">闭操作</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#hit-or-miss">hit or miss</a></li>
-<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#pattern-spectrum">pattern spectrum</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="7_math%20morphology.html#parameters">parameters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="7_math%20morphology.html#process">process（二值图像）</a></li>
-<li class="toctree-l3"><a class="reference internal" href="7_math%20morphology.html#id6">作用</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="7_math%20morphology.html#distance-transform">distance transform</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#id7">intro</a></li>
-<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#method">method</a></li>
-<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#skeletonization">skeletonization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#region-filling">region filling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#thinning-thickening">thinning &amp; thickening</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="7_math%20morphology.html#application">application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#id8">圆盘与长条的分割</a></li>
-<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#id9">齿轮的缺齿检测</a></li>
-<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#id10">胸骨肋骨分割</a></li>
-<li class="toctree-l2"><a class="reference internal" href="7_math%20morphology.html#id11">指纹图像去噪</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="8_%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E6%93%8D%E4%BD%9C.html">膨胀与腐蚀</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="8_%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E6%93%8D%E4%BD%9C.html#id2">膨胀</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="8_%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E6%93%8D%E4%BD%9C.html#id3">数学运算</a></li>
-<li class="toctree-l3"><a class="reference internal" href="8_%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E6%93%8D%E4%BD%9C.html#id4">作用</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="8_%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E6%93%8D%E4%BD%9C.html#id5">腐蚀</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="8_%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E6%93%8D%E4%BD%9C.html#id6">数学运算</a></li>
-<li class="toctree-l3"><a class="reference internal" href="8_%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E6%93%8D%E4%BD%9C.html#id7">作用</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="9_texture.html">texture introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="9_texture.html#subtopics">subtopics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="9_texture.html#texture-spectrum">texture spectrum</a></li>
-<li class="toctree-l2"><a class="reference internal" href="9_texture.html#application-based-on-texture">application based on texture</a></li>
-<li class="toctree-l2"><a class="reference internal" href="9_texture.html#texture-analysis-methods">texture analysis methods</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="9_texture.html#structural-method">structural method</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="9_texture.html#texture-elements-texels">texture elements(texels)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="9_texture.html#groups">groups</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="9_texture.html#frieze">Frieze</a></li>
-<li class="toctree-l3"><a class="reference internal" href="9_texture.html#wallpaper">Wallpaper</a></li>
-<li class="toctree-l3"><a class="reference internal" href="9_texture.html#space">space</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="9_texture.html#representing-textures">representing textures</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="9_texture.html#finding-textons">finding textons</a></li>
-<li class="toctree-l3"><a class="reference internal" href="9_texture.html#multi-scale-analysis-pyramid-method">multi-scale analysis(pyramid method)</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="9_texture.html#final-texture-representation">final texture representation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="9_texture.html#process">process</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="9_texture.html#texture-synthesis">texture synthesis</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="9_texture.html#methods">methods</a></li>
-<li class="toctree-l2"><a class="reference internal" href="9_texture.html#analysis">analysis</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="9_texture.html#co-occurrence-matrix">co-occurrence matrix</a></li>
-<li class="toctree-l3"><a class="reference internal" href="9_texture.html#lbp">LBP</a></li>
-<li class="toctree-l3"><a class="reference internal" href="9_texture.html#non-parameter-sampling">non-parameter sampling</a></li>
-<li class="toctree-l3"><a class="reference internal" href="9_texture.html#chaos-mosaic">chaos mosaic</a></li>
-<li class="toctree-l3"><a class="reference internal" href="9_texture.html#image-quilting">image quilting</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="10_image_segmentation.html">image segmentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="10_image_segmentation.html#what-is-it">what is it</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="10_image_segmentation.html#id1">组件的组合原则</a></li>
-<li class="toctree-l3"><a class="reference internal" href="10_image_segmentation.html#id2">定义</a></li>
-<li class="toctree-l3"><a class="reference internal" href="10_image_segmentation.html#id3">基本思路</a></li>
-<li class="toctree-l3"><a class="reference internal" href="10_image_segmentation.html#id4">分割基准</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="10_image_segmentation.html#id5">阈值分割</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="10_image_segmentation.html#id6">直方图分割法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="10_image_segmentation.html#ostu">Ostu算法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="10_image_segmentation.html#id7">熵的分割</a></li>
-<li class="toctree-l3"><a class="reference internal" href="10_image_segmentation.html#id8">模糊阈值分割</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="10_image_segmentation.html#id9">边缘分割</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="10_image_segmentation.html#id10">点检测</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="10_image_segmentation.html#id11">线检测</a></li>
-<li class="toctree-l2"><a class="reference internal" href="10_image_segmentation.html#hough">Hough变换</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="10_image_segmentation.html#id12">基本原理</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="10_image_segmentation.html#m-b">m,b空间（不适用于无斜率的</a></li>
-<li class="toctree-l4"><a class="reference internal" href="10_image_segmentation.html#id13">极坐标空间（适用于无斜率的</a></li>
-<li class="toctree-l4"><a class="reference internal" href="10_image_segmentation.html#id14">累加器</a></li>
-<li class="toctree-l4"><a class="reference internal" href="10_image_segmentation.html#id15">应用</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="10_image_segmentation.html#id16">缺陷</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="10_image_segmentation.html#id17">梯度方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="10_image_segmentation.html#id18">基于区域形状的分割-区域合并</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="10_image_segmentation.html#id19">两个合并准则</a></li>
-<li class="toctree-l3"><a class="reference internal" href="10_image_segmentation.html#id20">分裂合并</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="10_image_segmentation.html#id21">运动图像的分割</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="2_Image%20representation.html#image-processing-operations">image processing operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_pixel_neighborhood.html">pixel connectivity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_color.html"></a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_color.html#color-image-processing">color image processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html">contrast enhancement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_image%20enhancement%20in%20spatial%20domain.html#noise-reduction">Noise reduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_edge.html">edge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_math%20morphology.html">Structure Element</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_math%20morphology.html#distance-transform">distance transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="7_math%20morphology.html#application">application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="8_%E7%81%B0%E5%BA%A6%E5%9B%BE%E5%83%8F%E7%9A%84%E5%BD%A2%E6%80%81%E5%AD%A6%E6%93%8D%E4%BD%9C.html">膨胀与腐蚀</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_texture.html">texture introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_texture.html#structural-method">structural method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="9_texture.html#texture-synthesis">texture synthesis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_image_segmentation.html">image segmentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="11_local_features_detect.html">review</a></li>
-<li class="toctree-l1"><a class="reference internal" href="11_local_features_detect.html#harris">harris 角点检测</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#id1">基本处理</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#id2">算法特性</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="11_local_features_detect.html#harris">harris 角点检测</a></li>
 <li class="toctree-l1"><a class="reference internal" href="11_local_features_detect.html#mops">MOPS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="11_local_features_detect.html#sift">SIFT</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#id3">步骤</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#id4">细节</a></li>
-<li class="toctree-l2"><a class="reference internal" href="11_local_features_detect.html#id5">缺陷：</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="11_local_features_detect.html#sift">SIFT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="11_local_features_detect.html#surf">SURF</a></li>
-<li class="toctree-l1"><a class="reference internal" href="12_representation_and_descriptions.html">representation and descriptions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="12_representation_and_descriptions.html#id1">标记符着色</a></li>
-<li class="toctree-l2"><a class="reference internal" href="12_representation_and_descriptions.html#chain-code">chain code(边界特性)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="12_representation_and_descriptions.html#polygonal-approximate-mpp">polygonal approximate（MPP 算法）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="12_representation_and_descriptions.html#scale-space">scale space</a></li>
-<li class="toctree-l2"><a class="reference internal" href="12_representation_and_descriptions.html#signature">signature</a></li>
-<li class="toctree-l2"><a class="reference internal" href="12_representation_and_descriptions.html#boundary-segment">boundary segment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="12_representation_and_descriptions.html#skeleton">skeleton</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="12_representation_and_descriptions.html">representation and descriptions</a></li>
 </ul>
 </div>
 </section>
@@ -452,7 +139,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
-        <a href="../../index.html" class="btn btn-neutral float-left" title="Elena&#39;s Space" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../OS/%E4%B9%A0%E9%A2%98/MOS/%E5%BC%95%E8%AE%BA%E4%B9%A0%E9%A2%98.html" class="btn btn-neutral float-left" title="2.1. 引论" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
         <a href="1_intro.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

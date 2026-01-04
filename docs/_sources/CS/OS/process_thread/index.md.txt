@@ -6,7 +6,8 @@
 :maxdepth: 2
 
 线程 <线程>
-进程间通信(IPX) <process_thread/communication>
+进程间通信(IPX) <communication>
+调度算法 <schedule>
 
 ```
 

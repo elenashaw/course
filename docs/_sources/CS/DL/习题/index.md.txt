@@ -6,6 +6,6 @@
 :maxdepth: 2
 :numbered: 2
 
-概论 <NNDL/概论习题 >
+概论 <NNDL/概论习题>
 ```
 
