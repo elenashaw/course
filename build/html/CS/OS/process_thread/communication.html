@@ -1,0 +1,336 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.2. 进程间通信（IPC） &mdash; Course Notes 0.2 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=65174f78"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <link rel="next" title="1.3. 调度" href="schedule.html" />
+    <link rel="prev" title="1.1. 线程" href="%E7%BA%BF%E7%A8%8B.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Course Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Algos/index.html">数据结构与算法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../COA/index.html">计算机组成和架构</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">操作系统</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 进程和线程</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="%E7%BA%BF%E7%A8%8B.html">1.1. 线程</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.2. 进程间通信(IPX)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">背景介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">IPC问题解决方案</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="schedule.html">1.3. 调度算法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../%E4%B9%A0%E9%A2%98/index.html">2. 习题</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../CV/index.html">计算机视觉 (CV) 课程笔记</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DL/index.html">深度学习</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Course Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">操作系统</a></li>
+          <li class="breadcrumb-item"><a href="index.html"><span class="section-number">1. </span>进程和线程</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">1.2. </span>进程间通信（IPC）</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/CS/OS/process_thread/communication.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="ipc">
+<h1><span class="section-number">1.2. </span>进程间通信（IPC）<a class="headerlink" href="#ipc" title="Link to this heading"></a></h1>
+<blockquote>
+<div><p>笔记参考资料： Modern Operating Systems(by Andrew Tanenbaum)</p>
+</div></blockquote>
+<section id="id1">
+<h2>背景介绍<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<section id="id2">
+<h3>IPC的三个方面<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+</section>
+<section id="id3">
+<h3>竞争条件<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+</section>
+<section id="id4">
+<h3>问题定义（临界区）<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<section id="id5">
+<h4>问题定义<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
+</section>
+<section id="id6">
+<h4>好的解决方案需要满足的条件<a class="headerlink" href="#id6" title="Link to this heading"></a></h4>
+</section>
+</section>
+<section id="id7">
+<h3>两个重要的问题<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<section id="id8">
+<h4>生产者-消费者问题（读写问题）<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
+</section>
+<section id="id9">
+<h4>哲学家就餐问题<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
+</section>
+</section>
+</section>
+<section id="id10">
+<h2>IPC问题解决方案<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<p><em>注意：下文所称“首次引入某概念”，仅指MOS一书在讲解/推导中的首次出现，并不意味着该概念在历史上首次提出或首次使用</em></p>
+<section id="id11">
+<h3>早期尝试方案<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<section id="disable-interrupt">
+<h4>屏蔽中断（disable interrupt)<a class="headerlink" href="#disable-interrupt" title="Link to this heading"></a></h4>
+<p><strong>试图解决的问题</strong></p>
+<p>​	在多个进程并发访问共享数据时，<strong>防止多个进程同时进入临界区</strong>，从而避免竞态条件（race condition）</p>
+<p><strong>方法</strong></p>
+<p>​	在进入临界区之前，<strong>临时关闭 CPU 的中断响应</strong>，使当前执行流在执行期间不会被中断；在离开临界区后，再重新开启中断。</p>
+<p><strong>本质手段</strong></p>
+<p>​	通过<strong>禁止中断触发上下文切换</strong>，保证当前处理器在执行临界区进程时不被其他进程抢占，从而实现互斥访问。</p>
+<p><strong>漏洞与不足</strong></p>
+<ul class="simple">
+<li><p>只适用于单核处理器, 不适用于多核处理器</p>
+<ul>
+<li><p>屏蔽中断只能阻止当前 CPU 被打断</p></li>
+<li><p>在多核系统中，其他 CPU 仍可并发访问共享数据</p></li>
+</ul>
+</li>
+<li><p>系统响应性差</p>
+<ul>
+<li><p>时钟中断无法触发</p></li>
+<li><p>调度器无法运行</p></li>
+<li><p>I/O 事件得不到处理</p></li>
+<li><p>系统表现为“假死”</p></li>
+</ul>
+</li>
+<li><p>不适用于用户态程序</p>
+<ul>
+<li><p>用户程序不允许关闭中断，这种方法只适用于内核态</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>该方法依赖的隐含前提</strong></p>
+<ul class="simple">
+<li><p>系统是单核的</p></li>
+<li><p>被保护代码执行时间极短</p></li>
+<li><p>执行者可信</p></li>
+</ul>
+</section>
+<section id="lock-variables">
+<h4>锁变量（Lock Variables）<a class="headerlink" href="#lock-variables" title="Link to this heading"></a></h4>
+<p><strong>试图解决的问题</strong></p>
+<p>​	防止多个进程同时进入临界区</p>
+<p><strong>方法</strong></p>
+<p>​	引入一个<strong>共享变量（lock）</strong></p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>lock = 0
+: 表示临界区空闲
+
+lock = 1
+: 表示临界区已被占用
+</pre></div>
+</div>
+<p><strong>代码逻辑</strong></p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="p">(</span><span class="n">lock</span><span class="o">==</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">lock</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="c1">//占用</span>
+<span class="n">critical_region</span><span class="p">();</span><span class="c1">//临界区操作</span>
+<span class="n">lock</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">//进程完成操作释放锁变量</span>
+</pre></div>
+</div>
+<p><strong>本质手段</strong></p>
+<p>​	使用软件共享状态变量来表达<strong>临界区占用状态</strong></p>
+<p><strong>创新点和新概念</strong></p>
+<ul class="simple">
+<li><p>不依赖关闭中断</p></li>
+<li><p>首次尝试将“互斥”抽象为一个<strong>共享变量</strong></p></li>
+<li><p>概念上独立于硬件，这是<strong>软件</strong>方法</p></li>
+</ul>
+<p><strong>漏洞与不足</strong></p>
+<ul>
+<li><p>读-改-写不是原子操作，<strong>仍然无法避免竞争条件</strong></p></li>
+<li><p>和假脱机目录问题一样，当一个进程A读取锁变量的值, 结果为lock==0时，恰好要执行</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">lock</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>之前，另一个进程B被调度运行。进程B也想要进入临界区，读取到未修改的锁变量值为lock==0。因而有两个进程同时进入临界区</p>
+</li>
+</ul>
+</section>
+<section id="id12">
+<h4>严格轮换法<a class="headerlink" href="#id12" title="Link to this heading"></a></h4>
+<p><strong>试图解决的问题</strong></p>
+<p>​	防止多个进程同时进入临界区</p>
+<p><strong>方法</strong></p>
+<p>​	引入一个共享变量 <code class="docutils literal notranslate"><span class="pre">turn</span></code>（取值通常为 0/1），规定“<strong>轮到谁，谁才能进入临界区</strong>”。每次离开临界区时，进程把 <code class="docutils literal notranslate"><span class="pre">turn</span></code> 交给对方</p>
+<p><strong>代码逻辑</strong></p>
+<ul class="simple">
+<li><p>进程0</p></li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nb">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">            </span><span class="c1">// 循环</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">turn</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">   </span><span class="c1">// 忙等，直到轮到自己</span>
+<span class="w">    </span><span class="n">critical_region</span><span class="p">();</span><span class="w">    </span><span class="c1">// 进程0进入临界区</span>
+<span class="w">    </span><span class="n">turn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">             </span><span class="c1">// 结束临界区操作，将权限给进程1</span>
+<span class="w">    </span><span class="n">noncritical_region</span><span class="p">();</span><span class="w"> </span><span class="c1">// 回到非临界区</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>进程1</p></li>
+</ul>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nb">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">            </span><span class="c1">// 循环</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">turn</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w">   </span><span class="c1">// 忙等，直到轮到自己</span>
+<span class="w">    </span><span class="n">critical_region</span><span class="p">();</span><span class="w">    </span><span class="c1">// 进程1进入临界区</span>
+<span class="w">    </span><span class="n">turn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">             </span><span class="c1">// 结束临界区操作，将权限给进程0</span>
+<span class="w">    </span><span class="n">noncritical_region</span><span class="p">();</span><span class="w"> </span><span class="c1">// 回到非临界区</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>本质手段</strong></p>
+<p>​	用<strong>强制交替执行顺序</strong>替代锁</p>
+<p><strong>新概念</strong></p>
+<ul class="simple">
+<li><p>忙等待（busy waiting）: 连续测试一个变量，直到某个值出现</p>
+<ul>
+<li><p>例如：<code class="docutils literal notranslate"> <span class="pre">while</span> <span class="pre">(turn</span> <span class="pre">!=</span> <span class="pre">1)</span></code></p></li>
+<li><p>通常地，浪费CPU时间</p>
+<ul>
+<li><p>应当避免</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>自旋锁（Spinlock）: 自旋锁是一种利用忙等待实现的互斥锁</p>
+<ul>
+<li><p>例如: <code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">(test_and_set(lock))</span> <span class="pre">{//</span> <span class="pre">spin}</span></code></p></li>
+<li><p>在锁持有时间<strong>极短</strong>的情况下**，忙等待比上下文切换更高效**</p>
+<ul>
+<li><p>忙等待开销：消耗 <strong>CPU 时间片</strong></p></li>
+<li><p>上下文切换开销：涉及保存当前进程的寄存器、堆栈信息，切换到内核态，再加载另一个进程的运行环境</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>漏洞与不足</strong></p>
+<ul class="simple">
+<li><p>违反了“进程被临界区外的另一个进程阻塞” 的标准</p>
+<ul>
+<li><p>若turn轮到进程1，但进程1长期不进入临界区，进程0即使急需进入临界区也必须等待</p></li>
+</ul>
+</li>
+<li><p>忙等待（Busy Waiting）浪费 CPU时间</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">(turn</span> <span class="pre">!=</span> <span class="pre">i)</span> <span class="pre">;</span></code> 会持续占用 CPU 周期，竞争激烈或等待长时效率极差。</p></li>
+</ul>
+</li>
+<li><p>单一且极其严格的公平标准，导致<strong>自适应性差</strong></p>
+<ul>
+<li><p>严格轮换法没有考虑两个进程分别占用临界区的时长，访问临界区的频率等的差异</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="busy-wait-mutual-exclusion">
+<h3>忙等待互斥（Busy-wait Mutual Exclusion）<a class="headerlink" href="#busy-wait-mutual-exclusion" title="Link to this heading"></a></h3>
+<section id="peterson">
+<h4>Peterson解法<a class="headerlink" href="#peterson" title="Link to this heading"></a></h4>
+<p><strong>试图解决的问题</strong></p>
+<p><strong>方法</strong></p>
+<p><strong>代码逻辑</strong></p>
+<p><strong>本质手段</strong></p>
+<p><strong>创新点与新概念</strong></p>
+<p><strong>漏洞与不足</strong></p>
+<p>阻塞式同步原语（Blocking Synchronization Primitives）</p>
+<p>结构化同步（Structured Concurrency Constructs）</p>
+<p>无共享内存/分布式 IPC（Shared-nothing IPC）</p>
+<p>群体同步与特化优化</p>
+<p><strong>试图解决的问题</strong></p>
+<p><strong>方法</strong></p>
+<p><strong>代码逻辑</strong></p>
+<p><strong>本质手段</strong></p>
+<p><strong>创新点与新概念</strong></p>
+<p><strong>漏洞与不足</strong></p>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="%E7%BA%BF%E7%A8%8B.html" class="btn btn-neutral float-left" title="1.1. 线程" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="schedule.html" class="btn btn-neutral float-right" title="1.3. 调度" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, Elena Shaw。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

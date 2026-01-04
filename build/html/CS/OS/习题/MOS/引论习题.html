@@ -1,0 +1,666 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.1. 引论 &mdash; Course Notes 0.2 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=65174f78"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../search.html" />
+    <link rel="next" title="计算机视觉 (CV) 课程笔记" href="../../../CV/index.html" />
+    <link rel="prev" title="2. 习题" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Course Notes
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../Algos/index.html">数据结构与算法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../COA/index.html">计算机组成和架构</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">操作系统</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../process_thread/index.html">1. 进程和线程</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">2. 习题</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.1. ch1-引论</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cache-cache-line">第四题：Cache 行（Cache Line）的设计优势</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#i-o">第六题：特权指令与 I/O 访问</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vs">第十题：内核态 vs 用户态</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#amat">第十五题: 平均存储访问时间 (AMAT) 计算</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#trap-instruction">第十七题: 陷阱指令 (Trap Instruction)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mos-ch1-q31">第三十三题：单位转换练习</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#shell">第 34 题：Shell 代码</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CV/index.html">计算机视觉 (CV) 课程笔记</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../DL/index.html">深度学习</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Course Notes</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">操作系统</a></li>
+          <li class="breadcrumb-item"><a href="../index.html"><span class="section-number">2. </span>习题</a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2.1. </span>引论</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/CS/OS/习题/MOS/引论习题.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">2.1. </span>引论<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<blockquote>
+<div><p>选自Modern Operating Systems, Fourth Edition, by Andrew S. Tanenbaum</p>
+</div></blockquote>
+<section id="cache-cache-line">
+<span id="mos-ch1-q4"></span><h2>第四题：Cache 行（Cache Line）的设计优势<a class="headerlink" href="#cache-cache-line" title="Link to this heading"></a></h2>
+<p>为了使用高速缓存，主存被划分为若干cache行，通常每行长32或64字节。每次缓存一整个cache行。每次缓存一整行而不是一个字节或一个字，这样做的优点是什么？</p>
+<ul class="simple">
+<li><p><em><strong>利用空间局部性：</strong> 程序通常会访问相邻的内存地址，将一整行载入 Cache 可以显著提高后续访问的</em><em>命中率</em>*。</p></li>
+<li><p><strong>提高总线传输效率：</strong> 主存与 Cache 之间的块交换能充分利用<strong>突发传输模式</strong>，提高带宽利用率，减少多次请求带来的握手开</p></li>
+<li><p><strong>降低硬件维护成本：</strong> 以行为单位存储可以减少 Cache 标签（Tag）的数量，简化地址映射逻辑。</p></li>
+</ul>
+</section>
+<section id="i-o">
+<span id="mos-ch1-q6"></span><h2>第六题：特权指令与 I/O 访问<a class="headerlink" href="#i-o" title="Link to this heading"></a></h2>
+<p>与访问I/O设备相关的指令通常是特权指令，也就是说，它们能在内核态执行而在用户态则不行。说明为什么这些指令是特权指令。</p>
+<ul class="simple">
+<li><p><strong>保护系统安全与隐私：</strong> I/O 设备（如磁盘、键盘、网卡）属于全局共享资源。如果允许用户程序直接执行 I/O 指令，恶意程序就能绕过权限直接读取他人的文件或监听键盘输入。通过设为特权指令，所有 I/O 操作必须由<strong>内核</strong>代为执行，内核会在操作前检查进程是否有相应权限。</p></li>
+<li><p><strong>防止硬件冲突与资源争用：</strong> 许多 I/O 设备在同一时刻只能由一个进程使用（如打印机）。如果多个用户程序同时直接向硬件发送指令，会导致数据混乱甚至硬件损坏。内核作为“管家”，通过特权指令统一接收请求并进行排队管理，确保了设备访问的有序性。</p></li>
+<li><p><strong>提高系统调度效率（回应学生的阻塞点）：</strong> I/O 操作通常比 CPU 慢得多。通过将 I/O 限制在内核态，当阻塞发生时，内核能<strong>立即感知</strong>并主动将当前进程挂起（切入等待态），将 CPU 资源分配给其他就绪进程，从而防止 CPU 因为等待某个用户程序的 I/O 响应而处于“盲等”状态。</p></li>
+</ul>
+<p>举个手机使用例子</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>手机操作</strong></p></th>
+<th class="head"><p><strong>计算机底层术语</strong></p></th>
+<th class="head"><p><strong>严谨的物理/逻辑发生过程</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>APP 正在滤镜处理</p></td>
+<td><p><strong>用户态 (User Mode)</strong></p></td>
+<td><p>CPU 仅执行算术逻辑指令。如果此时 APP 试图强行读闪存，硬件会触发“非法指令”异常直接关闭 APP。</p></td>
+</tr>
+<tr class="row-odd"><td><p>APP 点击“打开相册”</p></td>
+<td><p><strong>系统调用 (System Call)</strong></p></td>
+<td><p>APP 执行 <code class="docutils literal notranslate"><span class="pre">SVC</span></code> (iOS) 或 <code class="docutils literal notranslate"><span class="pre">INT</span></code> 指令触发 <strong>Trap</strong>，CPU 状态位由用户态切换为内核态。</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>系统核对权限</strong></p></td>
+<td><p><strong>内核态下的权限检查</strong></p></td>
+<td><p>内核查询权限数据库。<strong>若无授权且是首次申请</strong>，内核挂起该 APP，切换到 UI 进程弹出确认框。</p></td>
+</tr>
+<tr class="row-odd"><td><p>用户点击“允许”</p></td>
+<td><p><strong>状态恢复与调度</strong></p></td>
+<td><p>内核记录授权，将 APP 从“阻塞态”恢复。</p></td>
+</tr>
+<tr class="row-even"><td><p>读取照片数据流</p></td>
+<td><p><strong>特权模式执行 (Ring 0)</strong></p></td>
+<td><p>CPU 在内核态下，由驱动程序发出 <strong>I/O 特权指令</strong>（如读写 I/O 端口/寄存器），真正从闪存拉取数据。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="vs">
+<span id="mos-ch1-q10"></span><h2>第十题：内核态 vs 用户态<a class="headerlink" href="#vs" title="Link to this heading"></a></h2>
+<p>内核态和用户态有哪些区别？解释在设计操作系统时存在两种不同的模式有什么帮助。</p>
+<p><strong>区别：</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>维度</strong></p></th>
+<th class="head"><p><strong>用户态 (User Mode)</strong></p></th>
+<th class="head"><p><strong>内核态 (Kernel Mode)</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>指令权限</strong></p></td>
+<td><p><strong>受限</strong>。只能执行非特权指令。如果尝试执行特权指令，会触发硬件异常。</p></td>
+<td><p><strong>完全权限</strong>。可以执行所有指令，包括特权指令（如 I/O 控制、中断处理）。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>内存访问</strong></p></td>
+<td><p>只能访问分配给该进程的<strong>用户空间地址</strong>，受硬件保护。</p></td>
+<td><p>可以访问系统的<strong>所有内存空间</strong>（包括内核代码、数据及所有进程空间）。</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>运行角色</strong></p></td>
+<td><p>运行应用程序（如浏览器、办公软件、手机 APP）。</p></td>
+<td><p>运行操作系统的核心（内核），直接管理硬件资源。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>CPU 状态位</strong></p></td>
+<td><p>CPU 中的模式位（Mode Bit）通常为 1（代表低特权级）。</p></td>
+<td><p>CPU 中的模式位（Mode Bit）通常为 0（代表最高特权级）。</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>设计两种不同模式对操作系统的帮助</strong></p>
+<ol class="arabic">
+<li><p>保护系统<strong>安全</strong>（防范恶意与错误）</p>
+<p>通过限制特权指令，防止普通程序直接控制硬件或读取其他进程的数据。</p>
+</li>
+<li><p>提升系统<strong>稳定性</strong>（故障隔离）</p>
+<p>在用户态运行的程序即使发生崩溃（如死循环或内存越界），只会导致该进程被关闭，而不会导致整个操作系统宕机。</p>
+</li>
+<li><p>实现资源公平<strong>调度</strong>（防止独占）</p>
+<p>内核态下的特权指令可以控制<strong>时钟中断</strong>。即使一个用户程序卡死了，内核也能通过时钟中断强制夺回 CPU 控制权（切换到内核态），然后调度其他进程运行。</p>
+</li>
+<li><p>屏蔽底层细节（<strong>硬件抽象</strong>）</p>
+<p>用户态程序无需关心具体的硬件寄存器和握手协议。开发者只需调用简单的系统接口（系统调用），复杂的硬件控制由内核在内核态下安全、高效地完成。</p>
+</li>
+</ol>
+</section>
+<section id="amat">
+<span id="id2"></span><h2>第十五题: 平均存储访问时间 (AMAT) 计算<a class="headerlink" href="#amat" title="Link to this heading"></a></h2>
+<p>假设一个计算机系统有高速缓存、内存 (RAM) 以及磁盘，操作系统用虚拟内存。读取缓存中的一个词需要 1ns，RAM 需要 10ns，磁盘需要 10ms。如果缓存的命中率是 95%，内存的是 99% (缓存失效时)，读取一个词的平均时间是多少？</p>
+<ul>
+<li><p><strong>已知条件：</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(T_{cache} = 1\text{ ns}\)</span>，命中率 <span class="math notranslate nohighlight">\(H_1 = 95\%\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(T_{ram} = 10\text{ ns}\)</span>，命中率 <span class="math notranslate nohighlight">\(H_2 = 99\%\)</span> (在缓存未命中前提下)</p></li>
+<li><p><span class="math notranslate nohighlight">\(T_{disk} = 10\text{ ms} = 10,000,000\text{ ns}\)</span></p></li>
+</ul>
+</li>
+<li><p><strong>计算公式：</strong></p>
+<div class="math notranslate nohighlight">
+\[
+    AMAT=t1+m1×t2+(m1×m2)×t3​
+    \]</div>
+</li>
+<li><p><strong>计算过程：</strong></p>
+<ul>
+<li><p>直接命中缓存：<span class="math notranslate nohighlight">\(0.95 \times 1\text{ ns}\)</span></p></li>
+<li><p>缓存未命中 (<span class="math notranslate nohighlight">\(1 - 0.95 = 0.05\)</span>)，但内存命中：<span class="math notranslate nohighlight">\(0.05 \times 0.99 \times 10\text{ ns}\)</span></p></li>
+<li><p>缓存与内存皆未命中 (<span class="math notranslate nohighlight">\(0.05 \times 0.01\)</span>)，需读取磁盘：<span class="math notranslate nohighlight">\(0.05 \times 0.01 \times 10,000,000\text{ ns}\)</span>
+<div class="math notranslate nohighlight">
+\[T_{avg} = (0.95 \times 1) + (0.05 \times 0.99 \times 10) + (0.05 \times 0.01 \times 10,000,000)\]</div>
+
+<div class="math notranslate nohighlight">
+\[T_{avg} = 0.95 + 0.495 + 5000 = 5001.445\text{ ns}\]</div>
+​</p>
+<blockquote>
+<div><p>[!note]</p>
+<p>AMAT是个简化模型，具体请参考COA-&gt;层次化存储-&gt;AMAT</p>
+</div></blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="trap-instruction">
+<span id="mos-ch1-q17"></span><h2>第十七题: 陷阱指令 (Trap Instruction)<a class="headerlink" href="#trap-instruction" title="Link to this heading"></a></h2>
+<p>什么是陷阱指令？在操作系统中解释它的用途</p>
+<ul>
+<li><p class="rubric" id="definition">1. 陷阱指令的定义 (Definition)</p>
+<p><strong>陷阱指令</strong>（又称<strong>访管指令</strong>或<strong>自愿中断指令</strong>）是一种特殊的处理器指令，它通过触发一个<strong>同步异常</strong>（Synchronous Exception），使处理器主动从<strong>用户态</strong>（User Mode）切换到<strong>内核态</strong>（Kernel Mode）。</p>
+<ul class="simple">
+<li><p><strong>执行本质</strong>：它不是一种出错导致的意外，而是程序员在代码中显式编写的指令，旨在**“自愿**”进入内核空间。</p></li>
+<li><p><strong>硬件行为</strong>：执行该指令时，CPU 会自动完成以下操作：<strong>保存</strong>当前的程序状态（如 PC 指针、寄存器），提升特权等级，并根据<strong>中断向量表</strong>跳转到预设的<strong>内核处理程序入口</strong>。</p></li>
+</ul>
+<p class="rubric" id="purposes">2. 在操作系统中的用途 (Purposes)</p>
+<p class="rubric" id="a-system-call-interface">A. 实现系统调用 (System Call Interface) —— <strong>最主要用途</strong></p>
+<p>由于硬件保护机制，用户程序无法直接执行特权指令（如操作硬盘、分配物理内存）。陷阱指令充当了用户程序与内核之间的<strong>唯一合法接口</strong>。</p>
+<ul class="simple">
+<li><p><strong>例子</strong>：当程序需要打印文字到屏幕时，会调用 <code class="docutils literal notranslate"><span class="pre">printf()</span></code>，其底层最终执行一条陷阱指令，请求内核代为操作显示器。</p></li>
+</ul>
+<p class="rubric" id="b-privilege-transition-security">B. 权限切换与安全保护 (Privilege Transition &amp; Security)</p>
+<p>陷阱指令提供了一种<strong>受控的</strong>特权提升方式。</p>
+<ul class="simple">
+<li><p>它确保用户<strong>不能随意跳转到内核</strong>的任意位置执行代码，而只能跳转到内核<strong>指定的“门”或“服务例程”</strong>。这防止了恶意软件通过直接访问内存或硬件来破坏系统。</p></li>
+</ul>
+<p class="rubric" id="c-debugging-error-handling">C. 软件调试与错误处理 (Debugging &amp; Error Handling)</p>
+<ul class="simple">
+<li><p><strong>断点设置</strong>：调试器（如 GDB）通过在目标代码中<strong>插入陷阱指令</strong>来<strong>实现“断点”</strong>。当程序运行到此处，会产生陷阱并把控制权交给调试器，允许查看变量状态。</p></li>
+<li><p><strong>程序监控</strong>：当程序执行了某些<strong>非法操作</strong>（如除零）时，硬件也会触发类似陷阱的机制（有时统称为异常），让操作系统接管并优雅地处理。</p></li>
+</ul>
+<blockquote>
+<div><p>[!note]</p>
+<p id="os-exception"><strong>异常（exception）</strong></p>
+<ul class="simple">
+<li><p><strong>异常</strong>是指 CPU 在执行指令过程中检测到的、由于指令执行本身引起的“不寻常”事件。</p></li>
+</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>类别</strong></p></th>
+<th class="head"><p><strong>产生原因</strong></p></th>
+<th class="head"><p><strong>例子</strong></p></th>
+<th class="head"><p><strong>恢复行为 (返回地址)</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Trap (陷阱)</strong></p></td>
+<td><p><strong>指令有意触发</strong></p></td>
+<td><p>系统调用、程序断点</p></td>
+<td><p><strong>返回下一条指令</strong>：处理完后，CPU 执行 Trap 之后的指令。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Fault (故障)</strong></p></td>
+<td><p><strong>指令潜在错误</strong></p></td>
+<td><p>缺页异常、分段错误</p></td>
+<td><p><strong>重新执行当前指令</strong>：修复环境后（如把页调入内存），CPU 会尝试再次运行报错的那条指令。</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Abort (终止)</strong></p></td>
+<td><p><strong>不可恢复硬件错误</strong></p></td>
+<td><p>RAM 奇偶校验错、总线错误</p></td>
+<td><p><strong>无法返回</strong>：程序状态已损坏，操作系统通常直接终止该进程。</p></td>
+</tr>
+</tbody>
+</table>
+<p>**中断（Interrupt）**与异常的对比</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>特性</strong></p></th>
+<th class="head"><p><strong>异常 (Exception / Internal Interrupt)</strong></p></th>
+<th class="head"><p><strong>中断 (Interrupt / External Interrupt)</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>来源</strong></p></td>
+<td><p><strong>CPU 内部</strong>（当前执行的指令）。</p></td>
+<td><p><strong>CPU 外部</strong>（外部设备，如键盘、磁盘、时钟）。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>同步性</strong></p></td>
+<td><p><strong>同步</strong>。与指令执行节奏一致。</p></td>
+<td><p><strong>异步</strong>。随时可能发生，与当前指令无关。</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>典型例子</strong></p></td>
+<td><p>陷阱 (Trap)、故障 (Fault)、终止 (Abort)。</p></td>
+<td><p>键盘输入、磁盘 I/O 完成、时钟脉冲。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>处理逻辑</strong></p></td>
+<td><p>必须由当前指令的处理流程来响应。</p></td>
+<td><p>CPU 在执行完当前指令后，检查中断引脚。</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p class="rubric" id="multiplexing"><span id="mos-ch1-q21"></span>第 21 题：资源的多路复用 (Multiplexing)</p>
+<p>下列资源能使用哪种多路复用（时间、空间或者两者皆可）：CPU，内存，磁盘，网卡，打印机，键盘以及显示器？</p>
+<p class="rubric" id="time-multiplexing">1. 时间复用 (Time Multiplexing)</p>
+<p><strong>核心逻辑：</strong> 资源在不同的时间点分给不同的对象。</p>
+<ul class="simple">
+<li><p><strong>比喻</strong>：就像只有一架秋千，小朋友们排好队，每人玩 5 分钟，到点就换人。</p></li>
+<li><p><strong>物理本质</strong>：资源在空间上是不分割的，但在时间轴上被切成了很多细小的碎片。</p></li>
+<li><p><strong>典型资源</strong>：</p>
+<ul>
+<li><p><strong>CPU</strong>：通过时间片轮转（Round Robin）让每个进程轮流运行。</p></li>
+<li><p><strong>打印机</strong>：虽然可以有很多打印任务，但打印头在某一秒只能打印某一个文件。</p></li>
+<li><p><strong>网卡</strong>：在极短的时间内发送一个进程的数据包，下一刻发送另一个进程的。</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p class="rubric" id="space-multiplexing">2. 空间复用 (Space Multiplexing)</p>
+<p><strong>核心逻辑：</strong> 资源被划分为多个区域，同时分配给多个对象。</p>
+<ul class="simple">
+<li><p><strong>比喻</strong>：就像一个大操场，被画成了跑道、跳远区和足球场。大家互不干扰，<strong>同时</strong>在各自的区域内活动。</p></li>
+<li><p><strong>物理本质</strong>：资源在物理空间上被切割，每一块在同一时刻只服务于一个对象。</p></li>
+<li><p><strong>典型资源</strong>：</p>
+<ul>
+<li><p><strong>内存</strong>：操作系统将内存切成很多页（Pages），进程 A 占 0-10MB，进程 B 占 11-20MB，两者同时存在于内存中。</p></li>
+<li><p><strong>磁盘</strong>：磁盘被划分为很多扇区，不同文件占据不同的物理地址。</p></li>
+<li><p><strong>显示器</strong>：通过多窗口技术，屏幕左边显示浏览器，右边显示代码编辑器。</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p class="rubric" id="id3">3. 对比</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>特性</strong></p></th>
+<th class="head"><p><strong>时间复用</strong></p></th>
+<th class="head"><p><strong>空间复用</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>主要代价</strong></p></td>
+<td><p><strong>切换开销</strong>（上下文切换，如保存寄存器）。</p></td>
+<td><p><strong>管理开销</strong>（防止地址越界、碎片处理）。</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>独占感</strong></p></td>
+<td><p>逻辑上独占（感觉很快），但物理上不连续。</p></td>
+<td><p>物理上独占一部分空间，位置相对固定。</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>极端情况</strong></p></td>
+<td><p>如果某个进程死循环，可能导致资源“独占”失败。</p></td>
+<td><p>如果某个进程申请了全部空间，其他进程会无法运行。</p></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</section>
+<section id="mos-ch1-q31">
+<span id="id4"></span><h2>第三十三题：单位转换练习<a class="headerlink" href="#mos-ch1-q31" title="Link to this heading"></a></h2>
+<p>下面是单位转换的练习：</p>
+<ul class="simple">
+<li><p><strong>(a)</strong> 一微年 (microyear) 是多少秒？</p></li>
+<li><p><strong>(b)</strong> 微米常称为 micron。那么 megamicron 是多长？</p></li>
+<li><p><strong>(c)</strong> 1 PB 存储器中有多少字节？</p></li>
+<li><p><strong>(d)</strong> 地球的质量是 6000 yottagram，换算成 kilogram 是多少？</p></li>
+</ul>
+<p><strong>国际单位制（SI）词头：</strong></p>
+<ul class="simple">
+<li><p><strong>Micro (<span class="math notranslate nohighlight">\(\mu\)</span>)</strong> = <span class="math notranslate nohighlight">\(10^{-6}\)</span></p></li>
+<li><p><strong>Mega (M)</strong> = <span class="math notranslate nohighlight">\(10^6\)</span></p></li>
+<li><p><strong>Peta (P)</strong> = <span class="math notranslate nohighlight">\(10^{15}\)</span> (或二进制 <span class="math notranslate nohighlight">\(2^{50}\)</span>)</p></li>
+<li><p><strong>Yotta (Y)</strong> = <span class="math notranslate nohighlight">\(10^{24}\)</span></p></li>
+<li><p><strong>往上走 (<span class="math notranslate nohighlight">\(10^3\)</span>)</strong>：Kilo (K) <span class="math notranslate nohighlight">\(\to\)</span> <strong>Mega (M)</strong> <span class="math notranslate nohighlight">\(\to\)</span> Giga (G) <span class="math notranslate nohighlight">\(\to\)</span> Tera (T) <span class="math notranslate nohighlight">\(\to\)</span> <strong>Peta (P)</strong> <span class="math notranslate nohighlight">\(\to\)</span> Exa (E) <span class="math notranslate nohighlight">\(\to\)</span> <strong>Zetta (Z)</strong> <span class="math notranslate nohighlight">\(\to\)</span>​​ <strong>Yotta (Y)</strong></p></li>
+<li><p><strong>往下走 (<span class="math notranslate nohighlight">\(10^{-3}\)</span>)</strong>：milli (m) <span class="math notranslate nohighlight">\(\to\)</span> micro (<span class="math notranslate nohighlight">\(\mu\)</span>) <span class="math notranslate nohighlight">\(\to\)</span> nano (n) <span class="math notranslate nohighlight">\(\to\)</span> pico (p) <span class="math notranslate nohighlight">\(\to\)</span> femto (f) <span class="math notranslate nohighlight">\(\to\)</span> atto (a) <span class="math notranslate nohighlight">\(\to\)</span> zepto (z) <span class="math notranslate nohighlight">\(\to\)</span> yocto (y)</p></li>
+</ul>
+<section id="a-microyear">
+<h3>(a) 一微年 (Microyear) 换算<a class="headerlink" href="#a-microyear" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>推导</strong>：一年大约有 <span class="math notranslate nohighlight">\(365.25 \times 24 \times 3600 = 31,557,600\)</span> 秒。</p></li>
+<li><p><strong>计算</strong>：<span class="math notranslate nohighlight">\(1 \text{ microyear} = 10^{-6} \times 31,557,600 \text{ s} \approx \mathbf{31.56 \text{ s}}\)</span>。</p></li>
+</ul>
+</section>
+<section id="b-megamicron">
+<h3>(b) Megamicron 换算<a class="headerlink" href="#b-megamicron" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>推导</strong>：<span class="math notranslate nohighlight">\(1 \text{ micron} = 10^{-6} \text{ m}\)</span>；<span class="math notranslate nohighlight">\(1 \text{ mega} = 10^6\)</span>。</p></li>
+<li><p><strong>计算</strong>：<span class="math notranslate nohighlight">\(10^6 \times 10^{-6} \text{ m} = \mathbf{1 \text{ m}}\)</span>。</p></li>
+</ul>
+</section>
+<section id="c-1-pb">
+<h3>(c) 1 PB 的字节数<a class="headerlink" href="#c-1-pb" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>标准定义</strong>：<span class="math notranslate nohighlight">\(1 \text{ PB} = 10^{15} \text{ bytes}\)</span> (十进制常用)。</p></li>
+<li><p><strong>计算机定义</strong>：<span class="math notranslate nohighlight">\(1 \text{ PiB} = 2^{50} \text{ bytes}\)</span>。</p></li>
+</ul>
+</section>
+<section id="d">
+<h3>(d) 地球质量换算<a class="headerlink" href="#d" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>推导</strong>：<span class="math notranslate nohighlight">\(1 \text{ yottagram} = 10^{24} \text{ g}\)</span>。</p></li>
+<li><p><strong>计算</strong>：<span class="math notranslate nohighlight">\(6000 \times 10^{24} \text{ g} = 6 \times 10^{27} \text{ g}\)</span>。</p></li>
+<li><p><strong>单位转换</strong>：<span class="math notranslate nohighlight">\(6 \times 10^{27} \text{ g} = \mathbf{6 \times 10^{24} \text{ kg}}\)</span>。</p></li>
+</ul>
+</section>
+</section>
+<section id="shell">
+<span id="mos-ch1-q34"></span><h2>第 34 题：Shell 代码<a class="headerlink" href="#shell" title="Link to this heading"></a></h2>
+<p>写一个和图 1-19 类似的 shell，但是包含足够实际可工作的代码，这样可测试它。还可以添加某些功能，如输入输出重定向、管道以及后台作业等。</p>
+<p><img alt="image-20251227100209946" src="../../AppData/Roaming/Typora/typora-user-images/image-20251227100209946.png" /></p>
+<section id="id5">
+<h3>题目理解<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>理解这段代码的关键在于理解 <strong>“分身术”</strong>（<code class="docutils literal notranslate"><span class="pre">fork</span></code>）和 <strong>“变身术”</strong>（<code class="docutils literal notranslate"><span class="pre">execve</span></code>）是如何配合工作的。</p>
+<p>我们可以把这个过程拆解为一个 <strong>“老板与员工”</strong> 的故事：</p>
+<section id="id6">
+<h4>1. 核心流程：老板的一天<a class="headerlink" href="#id6" title="Link to this heading"></a></h4>
+<p>这段代码描述了一个 Shell（也就是老板）处理任务的循环：</p>
+<ol class="arabic simple">
+<li><p><strong>准备工作</strong>：老板坐在办公室里（执行 <code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">(TRUE)</span></code>），在桌面上放一个“请输入任务”的牌子（执行 <code class="docutils literal notranslate"><span class="pre">type_prompt()</span></code>）。</p></li>
+<li><p><strong>获取任务</strong>：老板听到有人（用户）说话，把任务内容记在纸条上（执行 <code class="docutils literal notranslate"><span class="pre">read_command()</span></code>）。</p></li>
+<li><p><strong>使出分身术 (<code class="docutils literal notranslate"><span class="pre">fork</span></code>)</strong>：</p>
+<ul class="simple">
+<li><p>老板喊了一声“分身！”。这时，办公室里突然多了一个和老板长得<strong>一模一样</strong>的员工。</p></li>
+<li><p><strong>关键点</strong>：<code class="docutils literal notranslate"><span class="pre">fork()</span></code> 函数在老板（父进程）那里返回一个<strong>员工 ID</strong>，在员工（子进程）那里返回 <strong>0</strong>。</p></li>
+</ul>
+</li>
+<li><p><strong>分工合作</strong>：</p>
+<ul class="simple">
+<li><p><strong>老板（父代码区）</strong>：看到 <code class="docutils literal notranslate"><span class="pre">fork()</span> <span class="pre">!=</span> <span class="pre">0</span></code>，知道自己是老板。他就在门口坐着（执行 <code class="docutils literal notranslate"><span class="pre">waitpid()</span></code>），等员工干完活回来汇报。</p></li>
+<li><p><strong>员工（子代码区）</strong>：看到自己拿到的结果是 <code class="docutils literal notranslate"><span class="pre">0</span></code>，知道自己是分身。他立刻拿着纸条去变身（执行 <code class="docutils literal notranslate"><span class="pre">execve()</span></code>）。</p></li>
+</ul>
+</li>
+<li><p><strong>变身执行 (<code class="docutils literal notranslate"><span class="pre">execve</span></code>)</strong>：</p>
+<ul class="simple">
+<li><p>员工瞬间丢掉“老板分身”的皮囊，变成了一个具体的程序（比如变成 <code class="docutils literal notranslate"><span class="pre">ls</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">date</span></code>），然后开始干活。</p></li>
+</ul>
+</li>
+<li><p><strong>任务结束</strong>：员工干完活就消失了。坐在门口的老板（父进程）收到信号，站起来拍拍屁股，回到第一步继续等下一个任务。</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="id7">
+<h4>2. 代码逐行拆解<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>代码行</strong></p></th>
+<th class="head"><p><strong>动作</strong></p></th>
+<th class="head"><p><strong>实际意义</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">(TRUE)</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code></p></td>
+<td><p><strong>循环</strong></p></td>
+<td><p>Shell 只要不关机，就永远在等命令。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">type_prompt();</span></code></p></td>
+<td><p><strong>提示</strong></p></td>
+<td><p>打印类似 <code class="docutils literal notranslate"><span class="pre">[user&#64;host</span> <span class="pre">~]$</span></code> 的符号。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">read_command(...);</span></code></p></td>
+<td><p><strong>读取</strong></p></td>
+<td><p>等你敲键盘，把 <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-l</span></code> 存进变量里。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(fork()</span> <span class="pre">!=</span> <span class="pre">0)</span></code></p></td>
+<td><p><strong>判断身份</strong></p></td>
+<td><p>区分现在是“本体”在跑，还是“分身”在跑。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">waitpid(-1,</span> <span class="pre">&amp;status,</span> <span class="pre">0);</span></code></p></td>
+<td><p><strong>父进程等待</strong></p></td>
+<td><p>老板不干活，只等员工干完。这是为了防止命令还没跑完，Shell 就抢着打出下一个提示符。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">execve(command,</span> <span class="pre">...);</span></code></p></td>
+<td><p><strong>子进程变身</strong></p></td>
+<td><p>子进程把自己的代码替换成 <code class="docutils literal notranslate"><span class="pre">ls</span></code> 或 <code class="docutils literal notranslate"><span class="pre">date</span></code> 的代码并运行。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="id8">
+<h4>3. 为什么第 34 题让你“改进”它？<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
+<p>图 1-19 的这个老板（Shell）非常固执，有很多事干不了：</p>
+<ul class="simple">
+<li><p><strong>没有后台功能</strong>：他必须等员工干完活才能处理下一个任务。第 34 题让你加 <strong>“后台作业”</strong>，其实就是让老板在 <code class="docutils literal notranslate"><span class="pre">fork</span></code> 完之后<strong>不要</strong> <code class="docutils literal notranslate"><span class="pre">waitpid</span></code>，直接回办公室等下一条命令。</p></li>
+<li><p><strong>没有管道</strong>：他不会让两个员工互相配合。第 34 题让你加 <strong>“管道”</strong>，就是让员工 A 的输出直接喂给员工 B 的输入。</p></li>
+<li><p><strong>没有重定向</strong>：员工干完活只能把结果喊出来（打在屏幕上）。第 34 题让你加 <strong>“重定向”</strong>，就是让员工干活前把“嘴巴”对准一个文件，把结果吐进文件里。</p></li>
+</ul>
+</section>
+<section id="id9">
+<h4><strong>Shell 运行的本质</strong>：父进程负责“管理循环”，子进程负责“变身干活”。<a class="headerlink" href="#id9" title="Link to this heading"></a></h4>
+</section>
+</section>
+<section id="id10">
+<h3>代码改进<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 核心循环：老板永远在办公室待命</span>
+<span class="k">while</span> <span class="n">TRUE</span><span class="p">:</span>
+    <span class="n">type_prompt</span><span class="p">()</span>                     <span class="c1"># 打印提示符，如 &quot;MyShell&gt; &quot;</span>
+    <span class="n">command_line</span> <span class="o">=</span> <span class="n">read_command</span><span class="p">()</span>     <span class="c1"># 读取用户整行输入，如 &quot;ls -l &gt; out.txt &amp;&quot;</span>
+    
+    <span class="c1"># --- 预处理阶段 ---</span>
+    <span class="n">is_background</span> <span class="o">=</span> <span class="n">check_if_ends_with_and</span><span class="p">(</span><span class="n">command_line</span><span class="p">)</span>  <span class="c1"># 检查是否有 &#39;&amp;&#39;</span>
+    <span class="n">has_pipe</span> <span class="o">=</span> <span class="n">check_if_contains_pipe</span><span class="p">(</span><span class="n">command_line</span><span class="p">)</span>      <span class="c1"># 检查是否有 &#39;|&#39;</span>
+    <span class="n">has_redirect</span> <span class="o">=</span> <span class="n">check_if_contains_redirect</span><span class="p">(</span><span class="n">command_line</span><span class="p">)</span> <span class="c1"># 检查是否有 &#39;&gt;&#39;</span>
+
+    <span class="c1"># --- 派生阶段 ---</span>
+    <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">()</span>                      <span class="c1"># 老板变出一个“分身”</span>
+
+    <span class="k">if</span> <span class="n">pid</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>                      <span class="c1"># --- 老板（父进程）的代码区 ---</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_background</span><span class="p">:</span>         <span class="c1"># 如果用户没要求后台运行</span>
+            <span class="n">waitpid</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>   <span class="c1"># 老板就在门口等着员工汇报，等完才接下一单</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># 如果是后台任务，老板直接不管了，回到循环开头接下一单</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;任务已在后台运行...&quot;</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>                             <span class="c1"># --- 分身（子进程）的代码区 ---</span>
+        <span class="c1"># 变身前的准备工作：</span>
+        <span class="k">if</span> <span class="n">has_redirect</span><span class="p">:</span>              <span class="c1"># 如果发现有 &#39;&gt;&#39; 重定向符号</span>
+            <span class="n">file</span> <span class="o">=</span> <span class="n">open_target_file</span><span class="p">()</span> <span class="c1"># 打开目标文件</span>
+            <span class="n">redirect_stdout</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>     <span class="c1"># 把“嘴巴”对准文件，不再对准屏幕</span>
+        
+        <span class="k">if</span> <span class="n">has_pipe</span><span class="p">:</span>                  <span class="c1"># 如果发现有 &#39;|&#39; 管道符号</span>
+            <span class="n">setup_pipe_connection</span><span class="p">()</span>   <span class="c1"># 创建管道，把输出接给另一个程序的输入</span>
+
+        <span class="c1"># 变身！执行真正的程序</span>
+        <span class="n">execve</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># 分身抹除记忆，变成 ls 或 date 开始干活</span>
+</pre></div>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;unistd.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;fcntl.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sys/wait.h&gt;</span>
+
+<span class="cp">#define MAX_LINE 80  </span><span class="c1">// 命令最大长度</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">input</span><span class="p">[</span><span class="n">MAX_LINE</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="n">MAX_LINE</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">status</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// 核心循环</span>
+<span class="w">        </span><span class="c1">// 1. 在屏幕上显示提示符</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;MyShell&gt; &quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// 2. 从终端读取输入</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">MAX_LINE</span><span class="p">,</span><span class="w"> </span><span class="n">stdin</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="n">input</span><span class="p">[</span><span class="n">strcspn</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;\0&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">// 去掉换行符</span>
+
+<span class="w">        </span><span class="c1">// 3. 解析命令和参数</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strtok</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">args</span><span class="p">[</span><span class="o">++</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strtok</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"> </span><span class="c1">// 处理空输入</span>
+
+<span class="w">        </span><span class="c1">// 4. 预处理：检查后台作业 (&amp;)</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">strcmp</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="s">&quot;&amp;&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">            </span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="c1">// 执行命令时不传入 &amp;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// 5. 派生子进程</span>
+<span class="w">        </span><span class="kt">pid_t</span><span class="w"> </span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fork</span><span class="p">();</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pid</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;Fork 失败&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pid</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="cm">/* --- 子进程（分身）代码区 --- */</span>
+
+<span class="w">            </span><span class="c1">// 处理输出重定向 (&gt;)</span>
+<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">args</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="w"> </span><span class="s">&quot;&gt;&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="c1">// 打开文件：只写、创建、清空</span>
+<span class="w">                    </span><span class="kt">int</span><span class="w"> </span><span class="n">fd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">open</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">O_WRONLY</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">O_CREAT</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">O_TRUNC</span><span class="p">,</span><span class="w"> </span><span class="mo">0644</span><span class="p">);</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fd</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;无法打开重定向文件&quot;</span><span class="p">);</span>
+<span class="w">                        </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                    </span><span class="c1">// 把“嘴巴”（标准输出）接到文件</span>
+<span class="w">                    </span><span class="n">dup2</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="w"> </span><span class="n">STDOUT_FILENO</span><span class="p">);</span><span class="w"> </span>
+<span class="w">                    </span><span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+<span class="w">                    </span><span class="n">args</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="c1">// 截断参数列表</span>
+<span class="w">                    </span><span class="k">break</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="c1">// 执行命令：变身！</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">execvp</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">perror</span><span class="p">(</span><span class="s">&quot;执行命令失败&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="cm">/* --- 父进程（老板）代码区 --- */</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">background</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// 如果不是后台任务，老板在门口等汇报</span>
+<span class="w">                </span><span class="n">waitpid</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="c1">// 后台运行则直接显示 PID 并继续接单</span>
+<span class="w">                </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;[后台运行 PID: %d]</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../index.html" class="btn btn-neutral float-left" title="2. 习题" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../../../CV/index.html" class="btn btn-neutral float-right" title="计算机视觉 (CV) 课程笔记" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, Elena Shaw。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

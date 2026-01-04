@@ -2,7 +2,7 @@ Elena's Space
 ================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :hidden:
 
    CS/Algos/index
@@ -10,6 +10,6 @@ Elena's Space
    CS/OS/index
    CS/CV/index
    CS/DL/index
-   CS/Mainfold/index
+   CS/Manifold/index
    MATH/calculus
   
