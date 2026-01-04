@@ -5,8 +5,8 @@
 ```{toctree}
 :maxdepth: 2
 
-线程 <线程.md>
-进程间通信(IPX) <communication.md>
+线程 <线程>
+进程间通信(IPX) <process_thread/communication>
 
 ```
 

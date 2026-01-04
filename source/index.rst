@@ -6,6 +6,7 @@ Elena's Space
    :hidden:
 
    CS/Algos/index
+   CS/COA/index
    CS/OS/index
    CS/CV/index
    CS/DL/index
