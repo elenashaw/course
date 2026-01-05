@@ -6,7 +6,7 @@
 :maxdepth: 2
 
 线程 <线程>
-进程间通信(IPX) <communication>
+进程间通信(IPC) <IPC>
 调度算法 <schedule>
 
 ```
