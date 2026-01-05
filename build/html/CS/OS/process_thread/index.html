@@ -16,6 +16,8 @@
       <script src="../../../_static/documentation_options.js?v=65174f78"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="索引" href="../../../genindex.html" />
     <link rel="search" title="搜索" href="../../../search.html" />
@@ -48,7 +50,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">操作系统</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1. 进程和线程</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="%E7%BA%BF%E7%A8%8B.html">1.1. 线程</a></li>
-<li class="toctree-l3"><a class="reference internal" href="communication.html">1.2. 进程间通信(IPX)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="IPC.html">1.2. 进程间通信(IPC)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="schedule.html">1.3. 调度算法</a></li>
 </ul>
 </li>
@@ -90,12 +92,56 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="%E7%BA%BF%E7%A8%8B.html">1.1. 线程</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="%E7%BA%BF%E7%A8%8B.html#id2">用户态线程和内核态线程模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="%E7%BA%BF%E7%A8%8B.html#id2">用户态线程和内核态线程模型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="%E7%BA%BF%E7%A8%8B.html#user-level-thread-ult">1. 用户线程 (User-Level Thread, ULT)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="%E7%BA%BF%E7%A8%8B.html#kernel-level-thread-klt">2. 内核线程 (Kernel-Level Thread, KLT)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="%E7%BA%BF%E7%A8%8B.html#hybrid-threading">3. 混合线程 (Hybrid Threading)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="%E7%BA%BF%E7%A8%8B.html#id3">核心区别总结表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="%E7%BA%BF%E7%A8%8B.html#id4"></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="communication.html">1.2. 进程间通信(IPX)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="communication.html#id1">背景介绍</a></li>
-<li class="toctree-l2"><a class="reference internal" href="communication.html#id10">IPC问题解决方案</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="IPC.html">1.2. 进程间通信(IPC)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="IPC.html#id1">背景介绍</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="IPC.html#id2">IPC的三个方面</a></li>
+<li class="toctree-l3"><a class="reference internal" href="IPC.html#id3">竞争条件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="IPC.html#id4">问题定义（临界区）</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="IPC.html#id5">问题定义</a></li>
+<li class="toctree-l4"><a class="reference internal" href="IPC.html#id6">好的解决方案需要满足的条件</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="IPC.html#id7">两个重要的问题</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="IPC.html#id8">生产者-消费者问题（读写问题）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="IPC.html#id9">哲学家就餐问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="IPC.html#id10">IPC问题解决方案</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="IPC.html#id11">早期尝试方案</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="IPC.html#disable-interrupt">屏蔽中断（disable interrupt)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="IPC.html#lock-variables">锁变量（Lock Variables）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="IPC.html#id12">严格轮换法</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="IPC.html#busy-wait-mutual-exclusion">忙等待互斥（Busy-wait Mutual Exclusion）</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="IPC.html#peterson">Peterson解法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="IPC.html#tsl">TSL指令</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="IPC.html#id13">生产者-消费者问题（读写问题</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="IPC.html#id14">问题描述和分析</a></li>
+<li class="toctree-l4"><a class="reference internal" href="IPC.html#id15">为什么这一章在这儿？</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="IPC.html#id16">阻塞式同步</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="IPC.html#id17">睡眠和唤醒</a></li>
+<li class="toctree-l4"><a class="reference internal" href="IPC.html#id18">信号量</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="schedule.html">1.3. 调度算法</a><ul>
