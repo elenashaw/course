@@ -370,7 +370,7 @@ lock = 1
 </section>
 </section>
 <section id="id13">
-<h3>生产者-消费者问题（读写问题<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<h3>生产者-消费者问题（有界缓冲区问题<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
 <section id="id14">
 <h4>问题描述和分析<a class="headerlink" href="#id14" title="Link to this heading"></a></h4>
 <ul class="simple">
@@ -385,14 +385,21 @@ lock = 1
 </ul>
 </li>
 </ul>
-<ul>
+<ul class="simple">
 <li><p>消费者问题的约束</p>
 <ul>
 <li><p><strong>互斥约束</strong>：缓冲区及其状态变量（如 <code class="docutils literal notranslate"><span class="pre">count</span></code>）是临界资源，操作必须具备<strong>原子性</strong></p></li>
 <li><p><strong>秩序约束</strong>：</p>
 <ul>
 <li><p>生产者：仅当 count &lt; N 时执行 produce</p>
-<p>消费者：仅当 count &gt; 0 时执行 consume</p>
+<ul>
+<li><p>若count=N, 若想produce则睡眠</p></li>
+</ul>
+</li>
+<li><p>消费者：仅当 count &gt; 0 时执行 consume</p>
+<ul>
+<li><p>若count=0, 若想consume则睡眠</p></li>
+</ul>
 </li>
 </ul>
 </li>
@@ -472,13 +479,112 @@ lock = 1
 <p><strong>试图解决的问题</strong></p>
 <p>​	忙等待的CPU浪费与低效；条件协作</p>
 <p><strong>方法</strong></p>
+<ul>
+<li><p>sleep():</p>
+<ul>
+<li><p>sleep() 是原子操作，不会阻塞其他进程</p></li>
+<li><p>和忙等待的区别</p>
+<ul>
+<li><p>忙等待是原地循环，一直占用CPU。直到符合条件，进程主动跳出循环</p>
+<ul>
+<li><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>睡眠是进程被切换到阻塞态/睡眠态，进入等待队列，不会一直占用CPU。直到被另一个进程唤醒</p>
+<ul>
+<li><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="p">(</span><span class="n">count</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">sleep</span><span class="p">();</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>wakeup(process)</p></li>
+</ul>
+<p><strong>代码逻辑</strong></p>
+<ul>
+<li><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define N 100               </span><span class="cm">/* 缓冲区中的槽位数量 */</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">              </span><span class="cm">/* 缓冲区中的项目数量 */</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">producer</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">item</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">TRUE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">          </span><span class="cm">/* 无限循环 */</span>
+<span class="w">        </span><span class="n">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">produce_item</span><span class="p">();</span><span class="w">             </span><span class="cm">/* 生成下一个项目 */</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="n">sleep</span><span class="p">();</span><span class="w">           </span><span class="cm">/* 如果缓冲区满了，进入睡眠 */</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="n">insert_item</span><span class="p">(</span><span class="n">item</span><span class="p">);</span><span class="w">                 </span><span class="cm">/* 将项目放入缓冲区 */</span>
+<span class="w">        </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">                 </span><span class="cm">/* 缓冲区项目计数加 1 */</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">wakeup</span><span class="p">(</span><span class="n">consumer</span><span class="p">);</span><span class="w">  </span><span class="cm">/* 如果缓冲区从空变为 1，唤醒消费者 */</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">consumer</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">item</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">TRUE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">          </span><span class="cm">/* 无限循环 */</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">sleep</span><span class="p">();</span><span class="w">           </span><span class="cm">/* 如果缓冲区是空的，进入睡眠 */</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="n">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">remove_item</span><span class="p">();</span><span class="w">              </span><span class="cm">/* 从缓冲区中取出一个项目 */</span>
+<span class="w">        </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">                 </span><span class="cm">/* 缓冲区项目计数减 1 */</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">count</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">wakeup</span><span class="p">(</span><span class="n">producer</span><span class="p">);</span><span class="w"> </span><span class="cm">/* 如果缓冲区从满变为有空位，唤醒生产者 */</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="n">consume_item</span><span class="p">(</span><span class="n">item</span><span class="p">);</span><span class="w">                </span><span class="cm">/* 处理（打印）该项目 */</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>本质手段</strong></p>
+<ul class="simple">
+<li><p><strong>状态切换：</strong> 将进程从“就绪态（Ready）”强制转变为“阻塞态（Blocked）”。</p></li>
+<li><p><strong>调度干预：</strong> 放弃 CPU 控制权，由内核管理进程的等待队列，直到明确的唤醒信号到达</p></li>
+</ul>
+<p><strong>创新点与新概念</strong></p>
+<ul class="simple">
+<li><p>非忙等待（睡眠/唤醒）</p></li>
+<li><p>信号丢失补偿的思考： 它引入了对“唤醒信号是否应该被存起来”的思考（这直接导向了后来的<strong>信号量 Semaphore</strong> 概念）。</p></li>
+</ul>
+<p><strong>漏洞与不足</strong>：竞态条件</p>
+<ul class="simple">
+<li><p>原因：对count的访问未加限制</p></li>
+<li><p>本质：wakeup唤醒信号丢失</p></li>
+<li><p>唤醒丢失过程：</p>
+<ol class="arabic simple">
+<li><p>消费者检查 <code class="docutils literal notranslate"><span class="pre">count</span></code> 发现是 0。</p></li>
+<li><p>此时时钟中断，操作系统切换到生产者。</p></li>
+<li><p>生产者放入一个产品，<code class="docutils literal notranslate"><span class="pre">count</span></code> 变成 1。因为 <code class="docutils literal notranslate"><span class="pre">count</span></code> 之前是 0，生产者调用 <code class="docutils literal notranslate"><span class="pre">wakeup(consumer)</span></code>。</p></li>
+<li><p><strong>关键点：</strong> 此时消费者还没真正“入睡”（它刚检查完条件，还没执行 <code class="docutils literal notranslate"><span class="pre">sleep</span></code>），所以这个唤醒信号发送给了一个清醒的进程，<strong>信号丢失了</strong>。</p></li>
+<li><p>轮到消费者运行时，它继续执行刚才的 <code class="docutils literal notranslate"><span class="pre">sleep()</span></code>，陷入沉睡。</p></li>
+<li><p>生产者继续生产直到填满缓冲区，也进入沉睡。</p></li>
+<li><p><strong>结果：</strong> 两个进程都永远地睡下去了，系统死锁。</p></li>
+</ol>
+</li>
+<li><p>一个不太好的解决方案（补丁）</p>
+<ul>
+<li><p>设置一个唤醒等待位</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id18">
+<h4>信号量<a class="headerlink" href="#id18" title="Link to this heading"></a></h4>
+<p><strong>试图解决的问题</strong></p>
+<p><strong>方法</strong></p>
 <p><strong>代码逻辑</strong></p>
 <p><strong>本质手段</strong></p>
 <p><strong>创新点与新概念</strong></p>
 <p><strong>漏洞与不足</strong></p>
-</section>
-<section id="id18">
-<h4>信号量<a class="headerlink" href="#id18" title="Link to this heading"></a></h4>
 <p>阻塞式同步原语（Blocking Synchronization Primitives）</p>
 <p>结构化同步（Structured Concurrency Constructs）</p>
 <p>无共享内存/分布式 IPC（Shared-nothing IPC）</p>
