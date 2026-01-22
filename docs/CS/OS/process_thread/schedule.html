@@ -50,7 +50,9 @@
 <li class="toctree-l3"><a class="reference internal" href="%E7%BA%BF%E7%A8%8B.html">1.1. 线程</a></li>
 <li class="toctree-l3"><a class="reference internal" href="IPC.html">1.2. 进程间通信(IPC)</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">1.3. 调度算法</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id2"></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">调度简介</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">进程调度算法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">线程调度</a></li>
 </ul>
 </li>
 </ul>
@@ -91,7 +93,217 @@
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">1.3. </span>调度<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <section id="id2">
-<h2><a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<h2>调度简介<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>调度算法在不同的情景有不同的优先级</p>
+<ul>
+<li><p>比如在移动设备中，要考虑用户的交互，也要考虑优化电池损耗</p></li>
+</ul>
+</li>
+<li><p>什么时候调度算法比较重要</p>
+<ul>
+<li><p>一般地，CPU资源稀缺</p>
+<ul>
+<li><p>比如网络服务器下，多个进程经常竞争CPU</p></li>
+<li><p>比如很多移动设备，CPU和内存都比较薄弱</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>进程切换的代价</p>
+<ul>
+<li><p>内核态切换：用户态必须切换到内核态</p></li>
+<li><p>状态保存：必须保存当前进程的状态（寄存器值、内存映像/页表访问位等）</p></li>
+<li><p>刷新MMU： 装入新进程的内存映像</p></li>
+<li><p>高速缓存失效：进程切换会导致内存高速缓存（Cache）失效，强迫缓存从内存中动态重新装入两次</p></li>
+<li><p>如果每秒钟切换进程次数太多，会耗费大量 CPU 时间，导致系统效率低下</p></li>
+</ul>
+</li>
+</ul>
+<section id="id3">
+<h3>进程行为<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p><img alt="image-20260122093650990" src="../../../_images/image-20260122093650990.png" /></p>
+<section id="compute-bound">
+<h4><strong>计算密集型 (Compute-bound)</strong>：<a class="headerlink" href="#compute-bound" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>具有较长时间的 CPU 连续使用和极低频率的 I/O 等待。</p></li>
+<li><p>绝大多数时间花在计算上。</p></li>
+</ul>
+</section>
+<section id="i-o-i-o-bound">
+<h4><strong>I/O 密集型 (I/O-bound)</strong>：<a class="headerlink" href="#i-o-i-o-bound" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>具有较短时间的 CPU 使用和频繁的 I/O 等待。</p></li>
+<li><p>主要时间花在等待外部设备完成请求上。</p></li>
+</ul>
+<p><strong>发展趋势</strong>：</p>
+<ul class="simple">
+<li><p>由于 CPU 性能提升速度远超磁盘，现代进程越来越倾向于成为 I/O 密集型, 由木桶效应可以直到，未来对I/O密集型的调度似乎更重要</p></li>
+<li><p><strong>I/O密集型的优先级：如果需要运行I/O密集型的进程，那么就应该尽快让他获得机会，一边发出磁盘请求并保持磁盘保持始终忙碌</strong></p></li>
+</ul>
+</section>
+</section>
+<section id="id4">
+<h3>何时调度<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<section id="id5">
+<h4><strong>需要调度的几种情形</strong><a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>创建新进程时：</strong> 当一个父进程创建子进程后，父子进程都处于“就绪”状态。调度程序需要决定是继续运行父进程，还是切换到子进程。</p></li>
+<li><p><strong>进程退出时：</strong> 当一个进程运行结束并退出，它不再占用 CPU。此时调度程序必须从就绪队列中选出下一个运行的进程。如果没有就绪进程，通常会运行系统的“空闲进程”（Idle Process）。</p></li>
+<li><p><strong>进程阻塞时：</strong> 当进程因为等待 I/O、信号量或其他原因进入阻塞状态时，它<strong>无法继续执行</strong>，调度程序必须选择另一个进程运行。</p></li>
+<li><p><strong>I/O 中断发生时：</strong> 硬件设备<strong>完成</strong>任务后会触发中断。这可能导致某个原本阻塞的进程变为“就绪”状态。调度程序需决定是让新就绪的进程抢占当前进程，还是让当前进程继续。</p></li>
+</ul>
+</section>
+</section>
+<section id="id6">
+<h3>调度算法分类<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<section id="id7">
+<h4>按照抢占进行分类<a class="headerlink" href="#id7" title="Link to this heading"></a></h4>
+<p>根据对<strong>时钟中断</strong>（Clock Interrupt）的处理方式，调度算法分为两类：</p>
+<p><strong>非抢占式调度 (Non-preemptive Scheduling)</strong></p>
+<ul class="simple">
+<li><p><strong>机制：</strong> 调度程序挑选一个进程后，就让该进程一直运行，<strong>直到该进程被阻塞</strong>（如等待 I/O）或<strong>自动释放 CPU</strong></p></li>
+<li><p><strong>特点：</strong> 即便有时钟中断发生，也不会强行挂起进程。只要进程没结束或没阻塞，它可以运行几个小时</p></li>
+<li><p><strong>优点：</strong> 简单，开销小</p></li>
+</ul>
+<p><strong>抢占式调度 (Preemptive Scheduling)</strong></p>
+<ul class="simple">
+<li><p><strong>机制：</strong> 允许进程运行一段固定的最大时间（<strong>时间片</strong>）。如果时间到了进程仍在运行，它会被<strong>强制挂起</strong></p></li>
+<li><p><strong>特点：</strong> 调度程序在时间片末端通过时钟中断夺回 CPU 控制权，并挑选下一个就绪进程。</p></li>
+<li><p><strong>前提条件：</strong> 必须有可用的硬件时钟</p></li>
+</ul>
+</section>
+<section id="id8">
+<h4>按照系统环境进行分类<a class="headerlink" href="#id8" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>批处理系统</p>
+<ul>
+<li><p>特点：由于<strong>没有用户在终端等待响应</strong>，因此<strong>非抢占式算法</strong>或<strong>周期较长的抢占式算法</strong>通常是可接受的。</p></li>
+<li><p>优势：这种方式<strong>减少了进程切换的频率</strong>，从而改善了系统的整体性能</p></li>
+<li><p>举例：广泛用于商业领域，如处理薪水册、存货清单、账目出入、利息计算以及保险理赔等周期性作业。</p></li>
+</ul>
+</li>
+<li><p>交互系统</p>
+<ul>
+<li><p>特点：为了避免某个进程霸占 CPU 而拒绝为其他进程服务，<strong>抢占是必须的</strong></p></li>
+<li><p>优势：抢占机制还可以防止因程序错误而导致某个进程无限期排斥其他进程的现象发生。<em>容错性</em>高</p></li>
+<li><p>举例：包括个人用户环境和服务器</p></li>
+</ul>
+</li>
+<li><p>实时系统</p>
+<ul>
+<li><p>特点：实时系统中的进程通常了解自己有<strong>时间限制</strong>，因此会快速完成工作并主动阻塞，所以<strong>有时并不需要抢占</strong></p></li>
+<li><p>工业控制、自动驾驶</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id9">
+<h3>调度的目标<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<p>目标取决于环境</p>
+<p><img alt="image-20260122104221083" src="../../../_images/image-20260122104221083.png" /></p>
+<section id="id10">
+<h4>所有系统<a class="headerlink" href="#id10" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>公平性 (Fairness)</strong>：确保每个进程获得合理的 CPU 份额。<strong>防止进程饥饿</strong></p></li>
+<li><p><strong>策略强制 (Policy Enforcement)</strong>：确保系统既定的调度策略（如优先级规则）得到有效执行</p></li>
+<li><p><strong>平衡性 (Balance)</strong>：优化资源利用，使系统各部分（如 CPU、内存与 I/O 设备）保持均衡的繁忙状态。<strong>防止部件空转</strong></p></li>
+</ul>
+</section>
+<section id="id11">
+<h4>批处理系统<a class="headerlink" href="#id11" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>吞吐量 (Throughput)</strong>：单位时间内系统所处理的作业（Jobs）数量最大化</p></li>
+<li><p><strong>周转时间 (Turnaround Time)</strong>：从作业提交到作业完成的总时长最小化。这是平均值</p>
+<ul>
+<li><p>注意：<strong>能够使吞吐量最大的算法未必有最短的周转时间</strong>，比如总是运行所需时间最短的进程，让一些用时长的进程一直保持<strong>饥饿状态</strong>。</p></li>
+</ul>
+</li>
+<li><p><strong>CPU 利用率 (CPU Utilization)</strong>：最大程度减少 CPU 闲置时间</p></li>
+</ul>
+</section>
+<section id="id12">
+<h4>交互系统<a class="headerlink" href="#id12" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>响应时间 (Response Time)</strong>：缩短从用户发出<strong>指令</strong>到系统<strong>产生响应</strong>的时间。</p></li>
+<li><p><strong>比例性 (Proportionality)</strong>：任务的处理时间应与用户的<strong>心理预期</strong>和任务本身的复杂度成正比</p>
+<ul>
+<li><p>例子：用户对拨通电话所需时间的心理预期远远长于挂断电话所需时间的心理预期</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id13">
+<h4>实时系统<a class="headerlink" href="#id13" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong>满足截止时间 (Meeting Deadlines)</strong>：</p>
+<ul>
+<li><p>确保关键任务在规定的硬性或软性截止时间内完成，防止数据丢失或系统故障。</p></li>
+<li><p>例子：汽车安全气囊。如果传感器检测到碰撞，气囊必须在几个毫秒内弹出，晚一点点就没意义了</p></li>
+</ul>
+</li>
+<li><p><strong>可预测性 (Predictability)</strong>：</p>
+<ul>
+<li><p>确保系统行为在时间上是确定的，避免在流媒体或控制系统中出现抖动或质量退化。</p></li>
+<li><p>例子：想象你在听数字音乐，如果 CPU 调度突然去处理后台任务，导致音频解码停顿了 10 毫秒，你听到的就是刺耳的杂音</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="id14">
+<h2>进程调度算法<a class="headerlink" href="#id14" title="Link to this heading"></a></h2>
+<section id="id15">
+<h3>批处理系统<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
+<p>按照前文分析，批处理系统一般是抢占式算法</p>
+<ul class="simple">
+<li><p>先来先服务 (First-Come, First-Served, FCFS)</p>
+<ul>
+<li><p><strong>基本原理</strong>：按照进程进入就绪队列的先后顺序进行调度。最简单的非抢占式算法。</p></li>
+<li><p><strong>特点</strong>：</p>
+<ul>
+<li><p><strong>优点</strong>：实现简单（使用 FIFO 队列），对长作业有利。</p></li>
+<li><p><strong>缺点</strong>：<strong>护送效应 (Convoy Effect)</strong>。如果一个 CPU 密集型长作业排在前面，后面所有的短作业（包括 I/O 密集型）都必须长时间等待，导致设备利用率降低。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>最短作业优先 (Shortest Job First, SJF)</p>
+<ul>
+<li><p><strong>基本原理</strong>：<strong>非抢占式</strong>。当 CPU 空闲时，从就绪队列中选择预计运行时间最短的任务执行。</p></li>
+<li><p><strong>优势</strong>：在所有任务<strong>同时到达</strong>的情况下，SJF 能够获得<strong>最小的平均等待时间</strong></p></li>
+<li><p><strong>局限性</strong>：</p>
+<ul>
+<li><p>必须预先知道作业的运行时间（在实际中很难精确预测）</p></li>
+<li><p>只能在所有作业可以同时运行的情况下，SJF算法才是最优的</p>
+<ul>
+<li><p>考虑 A 到 E 五个作业，它们的运行时间分别为 2, 4, 1, 1 和 1。它们的到达时间分别为 0, 0, 3, 3 和 3。起初，由于另外三个作业尚未到达，只能在 A 或 B 中进行选择。若使用最短作业优先算法，我们将按 A, B, C, D, E 的顺序运行作业，此时平均周转时间（Wait Time）为 4.6。然而，若按 B, C, D, E, A 的顺序运行，其平均周转时间仅为 4.4</p></li>
+<li><p><img alt="image-20260122111055665" src="../../../_images/image-20260122111055665.png" /></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>最短剩余时间优先 (Shortest Remaining Time Next, SRTN)</p>
+<ul>
+<li><p><strong>基本原理</strong>：<strong>抢占式版本</strong>的 SJF。</p></li>
+<li><p><strong>运作逻辑</strong>：每当一个新作业到达时，将其总运行时间与当前运行作业的“剩余时间”进行比较。如果新作业更短，则挂起当前作业，转而运行新作业。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id16">
+<h3>交互系统<a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+</section>
+<section id="id17">
+<h3>实时系统<a class="headerlink" href="#id17" title="Link to this heading"></a></h3>
+</section>
+</section>
+<section id="id18">
+<h2>线程调度<a class="headerlink" href="#id18" title="Link to this heading"></a></h2>
 </section>
 </section>
 
