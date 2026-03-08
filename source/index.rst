@@ -1,15 +1,16 @@
-Elena's Space
-================
+Welcome to My Knowledge Base
+===========================
 
 .. toctree::
    :maxdepth: 2
-   :hidden:
+   :caption: 学习笔记 (Xbomb-Note)
 
-   CS/Algos/index
-   CS/COA/index
-   CS/OS/index
-   CS/CV/index
-   CS/DL/index
-   CS/Manifold/index
-   MATH/calculus
-  
+   notes/CS/Algos/index
+   notes/CS/OS/index
+   notes/MATH/index
+
+.. toctree::
+   :maxdepth: 2
+   :caption: LeetCode
+
+   leetcode/index

@@ -1,29 +1,53 @@
-name: Deploy Sphinx
+name: Multi-Repo Notes Deploy
+
+# 触发条件：当你向这个“展示站”仓库推送代码，或者你手动点按钮时触发
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
+  workflow_dispatch: 
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python
+      # 1. 下载当前仓库（即包含 conf.py 和 index.rst 的展示站仓库）
+      - name: Checkout Config Repo
+        uses: actions/checkout@v4
+        with:
+          path: main_repo
+
+      # 2. 核心步骤：抓取你的 Xbomb-Note 笔记仓库
+      # 它会被下载到 main_repo/source/notes 文件夹下
+      - name: Checkout Xbomb-Note
+        uses: actions/checkout@v4
+        with:
+          repository: liz-shaw/Xbomb-Note
+          path: main_repo/source/notes
+          # 如果 Xbomb-Note 是私有库，请取消下面这行的注释并配置 PAT
+          # token: ${{ secrets.MY_PAT }}
+
+      # 3. 设置 Python 环境
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+
+      # 4. 安装 Sphinx 及其插件
       - name: Install Dependencies
-        run: pip install sphinx sphinx-rtd-theme myst-parser
-      - name: Build HTML
         run: |
-          # 关键：编译到 docs 文件夹，不占领根目录
-          sphinx-build -b html source docs
-          touch docs/.nojekyll
+          pip install sphinx sphinx-rtd-theme myst-parser
+
+      # 5. 运行 Sphinx 编译
+      # 我们告诉它：去 source 找源码，把生成的网页塞进 build/html
+      - name: Build Sphinx
+        run: |
+          cd main_repo
+          sphinx-build -b html source build/html
+
+      # 6. 发布到 GitHub Pages
+      # 这步会将生成的 html 文件夹推送到当前仓库的 gh-pages 分支
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          folder: .               # 包含 index.html 和 docs 文件夹
-          branch: gh-pages
-          target-folder: .
-          clean: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./main_repo/build/html
